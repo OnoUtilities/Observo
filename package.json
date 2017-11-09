@@ -13,9 +13,14 @@
   "author": "GitHub",
   "license": "Apache-2.0",
   "dependencies": {
-    "electron": "^1.8.1",
     "electron-config": "^1.0.0",
     "electron-window": "^0.8.1",
-    "xel": "0.0.63"
+    "forklift.js": "github:Import-Python/forklift.js",
+    "import-window": "github:Import-Python/import-window",
+    "xel": "0.0.63",
+    "xel-extend": "github:Import-Python/xel-extend"
+  },
+  "devDependencies": {
+    "electron": "1.8.1"
   }
 }
