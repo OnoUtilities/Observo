@@ -31,12 +31,22 @@ class Box extends forklift.PaletteBox {
     }   
 }
 
+class Content extends forklift.PaletteBox {
+    constructor(p) {
+       super(p) 
+       this.loadBox("elements/o-content/content.shadow.html")
+       this.loadContent("elements/o-content/content.html")
+    }   
+}
+
+
 class Palette extends forklift.PaletteLoader {
     constructor(p) {
         super(p)
         this.addBox("MENUBAR", "o-menubar", MenuBar)
         this.addBox("LOADING", "o-loader", Loader)
         this.addBox("BOX", "o-box", Box)
+        this.addBox("CONTENT", "o-content", Content)
     }
 }
 
