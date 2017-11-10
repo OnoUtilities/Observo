@@ -17,6 +17,7 @@
     "electron-window": "^0.8.1",
     "forklift.js": "github:Import-Python/forklift.js",
     "import-window": "github:Import-Python/import-window",
+    "less": "^2.7.3",
     "xel": "0.0.63",
     "xel-extend": "github:Import-Python/xel-extend"
   },

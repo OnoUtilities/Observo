@@ -1,13 +1,18 @@
 <html>
+
 <head>
     <title>
         Observo
-    </title>
+    </title> 
     <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
-    <script src ="./node_modules/forklift.js/forklift.js"></script>
+    <script src="./node_modules/forklift.js/forklift.js"></script>
     <script src="./node_modules/xel/xel.min.js"></script>
+
     
-       <style>
+    <link rel="stylesheet/less" type="text/css" href="assets\style\explorer.less" />
+    <script src="./node_modules/less/dist/less.min.js"></script>
+
+    <style>
         .x-menu-right {
             margin-left: auto;
             margin-right: 0;
@@ -60,29 +65,28 @@
             height: 100%;
             -webkit-app-region: drag;
         }
-         body {
-        background: #00c0ef;
-    }
-    </style>
-   
-</head>
-<body>
-    <o-menubar></o-menubar>
 
+        body {
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+
+<body class="theme-default">
+    <o-menubar></o-menubar>
 </body>
 <script>
+    const { remote } = require("electron")
+    const { BrowserWindow } = remote
 
-const {remote} = require("electron")
-const {BrowserWindow} = remote
+    const managerLocal = require("import-window")
 
-const managerLocal =require("import-window")
+    const xel = require("xel-extend")
 
-const xel = require("xel-extend")
-
-forklift.App.loadPalette("MAIN", "common/palettes/main/main.js")
-forklift.App.run()
+    forklift.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
+    forklift.App.run()
 
 </script>
+
 </html>
-
-
