@@ -1,6 +1,13 @@
 <template>
-        <o-box flex row style="flex: 0 0 auto; width: 10px;">
-                <o-box flex>
+        <o-box flex column style="flex: 0 0 auto; width: 0px;">
+                <o-box flex style="flex: 0 0 auto; min-height: 40%;"></o-box>
+
+                <o-box id="view" flex style="margin-right: 30px">
+                        <x-button>
+                                <x-icon name="keyboard-arrow-left"></x-icon>
+                        </x-button>
                 </o-box>
+
+                <o-box flex style="flex: 0 0 auto; min-height: 40%;"></o-box>
         </o-box>
 </template>
