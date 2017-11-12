@@ -1,0 +1,77 @@
+	Line 12:   #eeeeee; -
+	Line 17:   #009788; -
+	Line 18:   #2196f3; -
+	Line 19:   #ecec26; -
+	Line 20:   #009788; -
+	Line 79:   #F8F8FF; -
+	Line 161:  #d50000; -
+	Line 194:  #f9f9f9; - 
+	Line 195:  #e6e6e6; -
+	Line 196:  #e0e0e0; -
+	Line 403:  #FCFCFC, #F1F1F1 -
+	Line 403:  #FCFCFC, #F1F1F1 -
+	Line 471:  #4a4a4a; - 
+	Line 726:  #212121; -
+	Line 800:  #ffffff; - 
+	Line 836:  #6d6d6d; -
+	Line 884:  #525252; -
+	Line 948:  #646464; -
+	Line 969:  #b3b3b3; -
+	Line 983:  #c1c1c1; -
+	Line 991:  #d50000; -
+	Line 1018: #d50000; -
+	Line 1028: #565656; -
+	Line 1030: #c1c1c1; -
+	Line 1092: #d50000; -
+	Line 1112: #d50000; -
+	Line 1115: #d50000; -
+	Line 1131: #c1c1c1; -
+	Line 1140: #d50000; -
+	Line 1161: #d50000; -
+	Line 1201: #c1c1c1; -
+	Line 1207: #d50000; -
+	Line 1234: #d50000; -
+	Line 1247: #c1c1c1; -
+	Line 1272: #d50000; -
+	Line 1326: #d50000; -
+	Line 1329: #d50000; -
+	Line 1344: #B9B9B9; -
+	Line 1351: #B9B9B9; -
+	Line 1352: #B9B9B9; -
+	Line 1377: #3B99FB; - 
+	Line 1378: #4392F9; -
+	Line 1391: #fbfbfb; -
+	Line 1395: #009788; -
+	Line 1403: #009788; -
+	Line 1407: #009788; -
+	Line 1411: #009788; -
+	
+	#ffffff - 1 White
+	#fbfbfb - 1 White
+	#f9f9f9 - 1 White
+	#F8F8FF - 1 White
+	#EEEEEE - 1 White
+	#e6e6e6 - 1 White
+	#e0e0e0 - 1 White
+	
+    
+	#FCFCFC, #F1F1F1 - 2 Whites
+    
+	#b3b3b3 - 1 White (Dark)
+	#c1c1c1 - 5 White (Dark) same as below
+    #B9B9B9 - 3 Light Gray
+	
+
+	#525252 - 1 Gray same as below
+	#565656 - 1 Gray
+	#646464 - 1 Gray same as below
+	#6d6d6d - 1 Gray
+	#4a4a4a - 1 Dark Gray
+	#212121 - 1 Dark Gray
+	
+	#009788 - 6 Green
+	#2196f3 - 1 Blue
+	#3B99FB - 1 Blue same as below
+	#4392F9 - 1 Blue
+	#d50000 - 13 Red
+	#ecec26 - 1 Yellow
