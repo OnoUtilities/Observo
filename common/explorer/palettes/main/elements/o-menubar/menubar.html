@@ -6,15 +6,47 @@
                 <x-menuitem>
                     <x-icon name="wifi-tethering"></x-icon>
                     <x-label>Connect</x-label>
-                    <x-shortcut value="Control+Shift+C"></x-shortcut>
+                    <x-shortcut value="Control+Alt+C"></x-shortcut>
                 </x-menuitem>
                 <x-menuitem>
                     <x-icon name="content-copy"></x-icon>
                     <x-label>Make Copy</x-label>
-                    <x-shortcut value="Control+Shift+S"></x-shortcut>
+                    <x-shortcut value="Control+Shift+C"></x-shortcut>
+                </x-menuitem>
+                <x-menuitem>
+                    <x-icon name="format-paint"></x-icon>
+                    <x-label id="changeTheme">Change Theme</x-label>
+                    <x-shortcut value="Control+Alt+S"></x-shortcut>
                 </x-menuitem>
             </x-menu>
         </x-menuitem>
-        <div class="x-expand-drag"></div>
+<<<<<<< HEAD
+
+        <x-menuitem>
+                    <x-label>Edit</x-label>
+                    <x-menu>
+                        <x-menuitem>
+                            <x-icon name="settings"></x-icon>
+                            <x-label>Settings</x-label>
+                        </x-menuitem>
+                    </x-menu>
+                </x-menuitem>
+
+        <x-menuitem>
+                    <x-label>View</x-label>
+                <x-menu>
+                    <x-menuitem>
+                        <x-label>Edit Theme</x-label>
+                        <x-shortcut value="Control+Shift+S"></x-shortcut>
+                    </x-menuitem>
+                </x-menu>
+                </x-menuitem>
+        <div class="x-expand-drag"><p style="text-align: center;">OBSERVO</p></div>
+=======
+        
+        <div class="x-expand-drag">
+            <x-label id="windowTitle">Observo</x-label>
+        </div>
+>>>>>>> 637a376678559d1acd67a98ed82bef29e7628648
     </x-menubar>
 </template>
