@@ -4,11 +4,13 @@
     <title>
         Observo
     </title> 
-    <link rel="stylesheet" href="assets/style/theme/dark/material.dark.theme.css">
+    <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
     <script src="./node_modules/forklift.js/forklift.js"></script>
     <script src="./node_modules/xel/xel.min.js"></script>
 
-    <link rel="stylesheet/less" type="text/css" href="assets\style\explorer.less" />
+    <link rel="stylesheet/less" type="text/css" href="assets\style\main.less" />
+    
     <script src="./node_modules/less/dist/less.min.js"></script>
 
     <style>
@@ -86,7 +88,6 @@
 
     forklift.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
     forklift.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")
-    forklift.App.loadPalette("SEARCHBAR", "common/explorer/palettes/sidebar/searchbar.js")
     forklift.App.run()
 
 </script>
