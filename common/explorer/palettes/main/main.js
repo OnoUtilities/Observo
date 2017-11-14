@@ -17,6 +17,15 @@ class MenuBar extends forklift.PaletteBox {
         this.title_menubar.build()
     }
 }
+
+class TabBar extends forklift.PaletteBox{
+    constructor(p){
+        super(p)
+        this.loadBox("elements/o-tabbar/tabbar.shadow.html")
+        this.loadContent("elements/o-tabbar/tabbar.html")
+    }
+}
+
 class Loader extends forklift.PaletteBox {
     constructor(p) {
        super(p) 
@@ -46,6 +55,7 @@ class Palette extends forklift.PaletteLoader {
     constructor(p) {
         super(p)
         this.addBox("MENUBAR", "o-menubar", MenuBar)
+        this.addBox("TABBAR", "o-tabbar", TabBar)
         this.addBox("LOADING", "o-loader", Loader)
         this.addBox("BOX", "o-box", Box)
         this.addBox("CONTENT", "o-content", Content)
