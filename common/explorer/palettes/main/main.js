@@ -21,6 +21,7 @@ class Loader extends forklift.PaletteBox {
     constructor(p) {
        super(p) 
        this.loadBox("elements/o-loader/loader.shadow.html")
+       this.loadContent()
     }   
 }
 
@@ -28,6 +29,7 @@ class Box extends forklift.PaletteBox {
     constructor(p) {
        super(p) 
        this.loadBox("elements/o-box/box.shadow.html")
+       this.loadContent()
     }   
 }
 

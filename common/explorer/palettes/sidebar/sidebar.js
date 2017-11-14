@@ -5,7 +5,10 @@ class Sidebar extends forklift.PaletteBox {
         this.loadContent("elements/o-sidebar/sidebar.html")
     }
     onContentLoad() {
+        let me = this
         this.contentBox = this.element.querySelector("o-box")
+        
+        
     }
     show() {
         this.contentBox.style.width = "200px"
@@ -15,6 +18,7 @@ class Sidebar extends forklift.PaletteBox {
         this.contentBox.style.width = "0px"
         this.contentBox.style.display = "none"
     }
+
 }
 
 class View extends forklift.PaletteBox {
@@ -23,8 +27,10 @@ class View extends forklift.PaletteBox {
         this.loadBox("elements/o-sidebar-view/sidebar-view.shadow.html")
         this.loadContent("elements/o-sidebar-view/sidebar-view.html")
         this.toggle = false
+
+        this.menubar = forklift.App.getPaletteInstance("MAIN").getBoxObject("MENUBAR")
     }
-    onContentLoad() {
+    onUnitLoad() {
         let me = this
         let run = () => {
             if (me.toggle) {
@@ -34,6 +40,14 @@ class View extends forklift.PaletteBox {
             }
         }
         this.parent = forklift.App.getPaletteInstance("SIDEBAR").getBoxObject("SIDEBAR")
+
+        this.sidebarItem = new xel.MenuItem("#view-sidebar")
+    
+        this.sidebarItem.onClick(() => {
+            run()
+        });
+        this.sidebarItem.setIcon("check")
+
         this.element.addEventListener("click", run)
     }
     show(data) {
@@ -43,6 +57,7 @@ class View extends forklift.PaletteBox {
             this.element.setAttribute("show", "false")
             this.toggle = true
             this.wait = false
+            this.sidebarItem.setIcon("")
             this.callEvent("onSidebarResize", [false])
         } else {
             this.wait = true
@@ -50,6 +65,7 @@ class View extends forklift.PaletteBox {
             this.element.setAttribute("show", "true")
             this.toggle = false
             this.wait = false
+            this.sidebarItem.setIcon("check")
             this.callEvent("onSidebarResize", [true])
         }
     }
