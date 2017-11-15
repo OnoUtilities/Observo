@@ -75,7 +75,7 @@
 
 </head>
 
-<body class="theme-default">
+<body class="theme-dark">
     <o-menubar></o-menubar>
     <o-tabbar></o-tabbar>
     <o-content></o-content>
@@ -87,6 +87,11 @@
     const managerLocal = require("import-window")
 
     const xel = require("xel-extend")
+
+    let contextMenu = new xel.ContextMenu()
+    let dialogInput = new xel.DialogInput()
+    let prompt = new xel.Prompt()
+    let drawer = new xel.Drawer()
 
     forklift.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
     forklift.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")

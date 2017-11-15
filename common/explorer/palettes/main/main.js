@@ -42,12 +42,26 @@ class Box extends forklift.PaletteBox {
     }   
 }
 
+class Prefrences {
+    constructor(p) {
+        drawer.drawer.innerHTML = '<x-box vertical style="margin: 30px"><x-button><x-label>Change Theme</x-label></x-button></x-box>'
+        this.prefrenceButton = new xel.MenuItem("#file-prefrences")
+        this.prefrenceButton.onClick(() => {
+            drawer.open()
+        })
+    }
+}
+
 class Content extends forklift.PaletteBox {
     constructor(p) {
        super(p) 
        this.loadBox("elements/o-content/content.shadow.html")
        this.loadContent("elements/o-content/content.html")
     }   
+    onUnitLoad() {
+        let me = this
+        this.prefrences = new Prefrences(me)
+    }
 }
 
 
@@ -59,6 +73,7 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("LOADING", "o-loader", Loader)
         this.addBox("BOX", "o-box", Box)
         this.addBox("CONTENT", "o-content", Content)
+        this.addBox("CONNECT", "o-connect", Connect)
     }
 }
 
