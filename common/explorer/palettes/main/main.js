@@ -42,16 +42,44 @@ class Box extends forklift.PaletteBox {
     }   
 }
 
-class Prefrences {
+class Prefrences extends forklift.PaletteBox {
     constructor(p) {
-        drawer.drawer.innerHTML = '<x-box vertical style="margin: 30px"><x-button><x-label>Change Theme</x-label></x-button></x-box>'
+       super(p) 
+       this.loadBox("elements/o-prefrences/prefrences.shadow.html")
+       this.loadContent("elements/o-prefrences/prefrences.html")
+    }   
+}
+
+class PrefrencesHandler {
+    constructor(p) {
+        drawer.drawer.innerHTML = '<o-prefrences></o-prefrences>'
         this.prefrenceButton = new xel.MenuItem("#file-prefrences")
         this.prefrenceButton.onClick(() => {
             drawer.open()
         })
     }
 }
-
+/*
+class Connect extends forklift.PaletteBox {
+    constructor(p) {
+        super(p){
+            this.loadBox('elements/o-connect.shadow.html')
+            this.loadContent('elements/o-connect/conect.html')
+        }
+    }
+}
+/*
+class ConnectHandler {
+    constructor(p) {
+        let connectDrawer = drawer();
+        connectDrawer.drawer.innerHTML = '<o-connect></o-connect>'
+        this.connectButton = new xel.MenuItem('#connect')
+        this.connectButton.onClick(() => {
+            drawer.open()
+        })
+    }
+}
+*/
 class Content extends forklift.PaletteBox {
     constructor(p) {
        super(p) 
@@ -60,7 +88,7 @@ class Content extends forklift.PaletteBox {
     }   
     onUnitLoad() {
         let me = this
-        this.prefrences = new Prefrences(me)
+        this.prefrences = new PrefrencesHandler(me)
     }
 }
 
@@ -73,7 +101,8 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("LOADING", "o-loader", Loader)
         this.addBox("BOX", "o-box", Box)
         this.addBox("CONTENT", "o-content", Content)
-        this.addBox("CONNECT", "o-connect", Connect)
+        this.addBox("PREFRENCES", "o-prefrences", Prefrences)
+        //this.addBox("CONNECT", "o-connect", Connect)
     }
 }
 

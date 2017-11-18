@@ -6,13 +6,15 @@ Theme Dark (Observo)
 @dark-base: #383838;
 @dark-primary: #636363;
 @dark-secondary: darken(@dark-primary, 20%);
-@dark-text-color: #AAA;
+@dark-accent: #2196f3;
+@dark-text-color: lighten(#000, 10%);
 
 
 .theme-dark {
     /* Default Main Window Color */
     background: @dark-base;
-    
+    color: @dark-text-color;
+    --accent-color: @dark-text-color;
     /* Xel Elements */
     x-accordion{
         
@@ -52,9 +54,6 @@ Theme Dark (Observo)
     
     x-doctabs{
         background: lighten(@dark-base, 10%);
-        #shadow-root{
-            background: #0F0;
-        }
     }
     
     x-drawer{
@@ -70,12 +69,11 @@ Theme Dark (Observo)
     }
     
     x-label{
-        
+        color: @dark-text-color;
     }
     
     x-menu{
         background: @dark-primary;
-        color: @dark-text-color;
     }
     
     x-menubar{
@@ -103,7 +101,8 @@ Theme Dark (Observo)
     }
     
     x-select{
-        
+        background: @dark-primary;
+        color: @dark-text-color;
     }
     
     x-shortcut{
