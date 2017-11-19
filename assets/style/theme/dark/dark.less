@@ -14,7 +14,8 @@ Theme Dark (Observo)
     /* Default Main Window Color */
     background: @dark-base;
     color: @dark-text-color;
-    --accent-color: @dark-text-color;
+    --accent-color: @dark-accent;
+    --primary-color: @dark-accent;
     /* Xel Elements */
     x-accordion{
         
@@ -58,6 +59,10 @@ Theme Dark (Observo)
     
     x-drawer{
         background: lighten(@dark-base, 20%);
+    }
+    
+    x-drawer[position~="top"]{
+        height: 50%;
     }
     
     x-icon{

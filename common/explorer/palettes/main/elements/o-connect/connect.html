@@ -1,3 +1,37 @@
 <template>
-    <x-label>HELLO WORLD</x-label>
+    <x-box verticle style="display: flex; margin-top: 50px; flex: 1 0 auto; flex-flow: column; justify-content: center">
+        <x-box style="display: flex; flex-flow: column;">
+            <x-label>CONNECT</x-label>
+            <x-label>Enter your connection info below</x-label>
+        </x-box>
+        <x-box style="display: flex; flex-flow: column; margin-top: 10px;">
+            <x-input skin="flat"  id="username">
+              <x-icon name="person"></x-icon>
+              <x-label>Username</x-label>
+            </x-input>
+
+            <x-input skin="flat" type="email" id="email">
+              <x-icon name="email"></x-icon>
+              <x-label>E-mail</x-label> <! Remove?>
+            </x-input>
+
+            <x-input skin="flat" type="password" minlength="4" maxlength="12" id="password">
+                <x-icon name="lock"></x-icon>
+                <x-label>Password</x-label>
+            </x-input>
+        </x-box>
+        <x-box style="display: flex; flex-flow: row; margin-top: 50px">
+            <x-button>
+                <x-label>Connect</x-label>
+            </x-button>
+            <x-button style="margin-left: 10px">
+                <x-label>Cancel</x-label>
+            </x-button>
+        </x-box>
+    </x-box>
+    <script>
+        class InputChecker{
+            let usernameEntered = false;
+        }
+    </script>
 </template>
