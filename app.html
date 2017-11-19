@@ -3,14 +3,14 @@
 <head>
     <title>
         Observo
-    </title> 
+    </title>
     <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
     <script src="./node_modules/forklift.js/forklift.js"></script>
     <script src="./node_modules/xel/xel.min.js"></script>
 
     <link rel="stylesheet/less" type="text/css" href="assets\style\main.less" />
-    
+
     <script src="./node_modules/less/dist/less.min.js"></script>
 
     <style>
@@ -75,18 +75,53 @@
 
 </head>
 
-<body class="theme-dark">
+<body class="theme-default">
     <o-menubar></o-menubar>
     <o-tabbar></o-tabbar>
     <o-content></o-content>
 </body>
 <script>
-    const { remote } = require("electron")
-    const { BrowserWindow } = remote
+    const {
+        remote
+    } = require("electron")
+    const {
+        BrowserWindow
+    } = remote
 
     const managerLocal = require("import-window")
 
     const xel = require("xel-extend")
+
+    function preferencesManager() {
+        let fs = require('fs')
+
+        fs.access('./preferences.json', fs.constants.R_OK | fs.constants.W_OK, (err) => { //I don't know what the middle parts mean
+            if (err != null) { //If the file doesn't exist
+                fs.writeFile("./preferences.json", //File name
+                    //Below is the default preferances file as a literal (hence the lack of whitespace)
+                    `
+{
+    \"theme\":\"theme-dark\"
+}`,
+                    function (err) {
+                        if (err) throw err
+                        console.log("File written successfully") //Print out a success message
+                    })
+            }
+            fs.readFile('./preferences.json', 'utf8', (err, data) => {
+                var preferences = JSON.parse(data.toString()) //Preferences as JSON
+                console.log("[Preferences] " + document.getElementsByTagName('body').length +
+                    " values set in \"preferences.json\"")
+                theme = preferences.theme //How to access as well as get the theme
+                if (theme != "theme-default") {
+                    document.getElementsByTagName('body').item(0).className = theme //Sets the theme, if not default
+                    console.log("[Preferences] Theme changed to: " + theme)
+                }
+            })
+        });
+    }
+
+    window.onload = preferencesManager() //When "window" is fully loaded, apply preferances
 
     let contextMenu = new xel.ContextMenu()
     let dialogInput = new xel.DialogInput()
@@ -97,7 +132,6 @@
     forklift.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
     forklift.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")
     forklift.App.run()
-
 </script>
 
 </html>

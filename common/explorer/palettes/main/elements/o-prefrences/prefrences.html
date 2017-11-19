@@ -1,18 +1,18 @@
 <template>
     <x-box vertical style="display: flex; justify-content: center;">
-        <x-select>
+        <x-select id="themeSelector">
             <x-menu>
-                <x-menuitem value="observo" selected="true">
+                <x-menuitem value="observo" id="theme-default" selected="true"> <!-- TODO: Make theme declared in prefrances file the default selected theme-->
                     <x-label>Observo (default)</x-label>
                 </x-menuitem>
-                <x-menuitem value="dark">
+                <x-menuitem value="dark" id="theme-dark">
                     <x-label>Dark (beta)</x-label>
                 </x-menuitem>
             </x-menu>
         </x-select>
     </x-box>
     <x-box style="display: flex; justify-content: center; align-items: flex-end;">
-        <x-button>APPLY</x-button>
-        <x-button style="margin-left: 5px;">CANCEL</x-button>
+        <x-button id="applyPreferences">APPLY</x-button>
+        <x-button style="margin-left: 5px;" id="cancelPrefrances">CANCEL</x-button>
     </x-box>
 </template>

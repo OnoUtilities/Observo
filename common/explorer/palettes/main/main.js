@@ -18,8 +18,8 @@ class MenuBar extends forklift.PaletteBox {
     }
 }
 
-class TabBar extends forklift.PaletteBox{
-    constructor(p){
+class TabBar extends forklift.PaletteBox {
+    constructor(p) {
         super(p)
         this.loadBox("elements/o-tabbar/tabbar.shadow.html")
         this.loadContent("elements/o-tabbar/tabbar.html")
@@ -28,26 +28,26 @@ class TabBar extends forklift.PaletteBox{
 
 class Loader extends forklift.PaletteBox {
     constructor(p) {
-       super(p) 
-       this.loadBox("elements/o-loader/loader.shadow.html")
-       this.loadContent()
-    }   
+        super(p)
+        this.loadBox("elements/o-loader/loader.shadow.html")
+        this.loadContent()
+    }
 }
 
 class Box extends forklift.PaletteBox {
     constructor(p) {
-       super(p) 
-       this.loadBox("elements/o-box/box.shadow.html")
-       this.loadContent()
-    }   
+        super(p)
+        this.loadBox("elements/o-box/box.shadow.html")
+        this.loadContent()
+    }
 }
 
 class Prefrences extends forklift.PaletteBox {
     constructor(p) {
-       super(p) 
-       this.loadBox("elements/o-prefrences/prefrences.shadow.html")
-       this.loadContent("elements/o-prefrences/prefrences.html")
-    }   
+        super(p)
+        this.loadBox("elements/o-prefrences/prefrences.shadow.html")
+        this.loadContent("elements/o-prefrences/prefrences.html")
+    }
 }
 
 class PrefrencesHandler {
@@ -55,25 +55,32 @@ class PrefrencesHandler {
         drawer.drawer.innerHTML = '<o-prefrences></o-prefrences>'
         this.prefrenceButton = new xel.MenuItem("#file-prefrences")
         this.prefrenceButton.onClick(() => {
+            console.log("Got here")
             drawer.open()
         })
+        //Make current theme default selected
+        //this.selectedTheme = new
     }
 }
 
 class Connect extends forklift.PaletteBox {
     constructor(p) {
-       super(p) 
-       this.loadBox("elements/o-connect/connect.shadow.html")
-       this.loadContent("elements/o-connect/connect.html")
-    }   
+        super(p)
+        this.loadBox("elements/o-connect/connect.shadow.html")
+        this.loadContent("elements/o-connect/connect.html")
+    }
 }
 
 class ConnectHandler {
     constructor(p) {
         prompt.drawer.innerHTML = '<o-connect></o-connect>'
-        this.connectButton = new xel.MenuItem("#connect")
-        this.connectButton.onClick(() => {
+        this.connectMenuButton = new xel.MenuItem("#connect")
+        this.connectMenuButton.onClick(() => {
             prompt.open()
+        })
+        var connectButton = document.querySelector("#cancel");
+        connectButton.addEventListener("click", () => {
+            prompt.close()
         })
     }
 }
@@ -81,10 +88,10 @@ class ConnectHandler {
 
 class Content extends forklift.PaletteBox {
     constructor(p) {
-       super(p) 
-       this.loadBox("elements/o-content/content.shadow.html")
-       this.loadContent("elements/o-content/content.html")
-    }   
+        super(p)
+        this.loadBox("elements/o-content/content.shadow.html")
+        this.loadContent("elements/o-content/content.html")
+    }
     onUnitLoad() {
         let me = this
         this.prefrences = new PrefrencesHandler(me)
