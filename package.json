@@ -10,14 +10,17 @@
   "keywords": [
     "observo"
   ],
-  "author": "GitHub",
+  "author": "OnoUtilities",
   "license": "Apache-2.0",
   "dependencies": {
     "electron-config": "^1.0.0",
     "electron-window": "^0.8.1",
     "forklift.js": "github:Import-Python/forklift.js",
+    "fs-jetpack": "^1.2.0",
     "import-window": "github:Import-Python/import-window",
     "less": "^2.7.3",
+    "socket.io": "^2.0.4",
+    "vm2": "^3.5.2",
     "xel": "0.0.63",
     "xel-extend": "github:Import-Python/xel-extend"
   },

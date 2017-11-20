@@ -1,0 +1,6 @@
+{
+    "local_server": {
+      "name": "Local Server",
+      "ip": "http://localhost/"
+    }
+}

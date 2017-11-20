@@ -1,88 +1,65 @@
 class Sidebar extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
+    constructor(e) {
+        super(e)
         this.loadBox("elements/o-sidebar/sidebar.shadow.html")
         this.loadContent("elements/o-sidebar/sidebar.html")
     }
     onContentLoad() {
         let me = this
-        this.contentBox = this.element.querySelector("o-box")
-        
-        
-    }
-    show() {
-        this.contentBox.style.width = "200px"
-        this.contentBox.style.display = ""
-    }
-    hide() {
-        this.contentBox.style.width = "0px"
-        this.contentBox.style.display = "none"
-    }
+        let servers = forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").storage.getServers()
+        console.log(forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").storage)
+        for (var key in servers) {
+            console.log("KEY:" + key)
+            if (servers.hasOwnProperty(key)) {
+                let server = servers[key];
+                this.element.insertAdjacentHTML('beforeend', ` <x-box vertical class="box"></x-box>`)
+                let boxes = this.element.querySelectorAll("x-box");
+                let box = boxes[boxes.length - 1];
 
-}
+                box.insertAdjacentHTML('beforeend', `<x-label class="title"></x-label>`)
+                let labels = this.element.querySelectorAll("x-label");
+                let title = labels[labels.length - 1];
+                title.innerHTML = title.innerHTML = server.name;
+                box.insertAdjacentHTML('beforeend', `<x-label class="text"><span class="bold">Address: </span></x-label>`)
+                labels = this.element.querySelectorAll("x-label");
+                let location = labels[labels.length - 1];
+                location.innerHTML = location.innerHTML + server.ip
 
-class View extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
-        this.loadBox("elements/o-sidebar-view/sidebar-view.shadow.html")
-        this.loadContent("elements/o-sidebar-view/sidebar-view.html")
-        this.toggle = false
 
-        this.menubar = forklift.App.getPaletteInstance("MAIN").getBoxObject("MENUBAR")
-    }
-    onUnitLoad() {
-        let me = this
-        let run = () => {
-            if (me.toggle) {
-                me.show(true)
-            } else {
-                me.show(false)
+                box.addEventListener("click", function () {
+                    me.connect(server.ip)
+                })
             }
         }
-        this.parent = forklift.App.getPaletteInstance("SIDEBAR").getBoxObject("SIDEBAR")
-
-        this.sidebarItem = new xel.MenuItem("#view-sidebar")
-    
-        this.sidebarItem.onClick(() => {
-            run()
-        });
-        this.sidebarItem.setIcon("check")
-
-        this.element.addEventListener("click", run)
     }
-    show(data) {
-        if (data == false || data == "false") {
-            this.wait = true
-            this.parent.hide()
-            this.element.setAttribute("show", "false")
-            this.toggle = true
-            this.wait = false
-            this.sidebarItem.setIcon("")
-            this.callEvent("onSidebarResize", [false])
-        } else {
-            this.wait = true
-            this.parent.show()
-            this.element.setAttribute("show", "true")
-            this.toggle = false
-            this.wait = false
-            this.sidebarItem.setIcon("check")
-            this.callEvent("onSidebarResize", [true])
-        }
+    connect(ip) {
+        let mainWin = managerRemote.createWindow({
+            show: false,
+            width: 1000,
+            height: 800,
+            frame: false,
+            color: "#000",
+            webPreferences: {
+               zoomFactor: 0.9,
+             },
+            icon: path.join(managerRemote.getDir(), 'assets/icons/png/1024x1024.png')})
+          mainWin.setURL(managerRemote.getDir(),"project.html", {server_ip: ip})
+          mainWin.win.setMinimumSize(800,700);
+          mainWin.win.webContents.on('did-finish-load', () => {
+            mainWin.win.show()
+            win.close();
+          })
+          let content = forklift.App.getPaletteInstance("MAIN").getBox("CONTENTS")
+          content.style.display = "none"
     }
-    onAttributeChange(name, oldValue, newValue) {
-        if (name == "show" && !this.wait) {
-            this.show(newValue)
-        }
+    newProject() {
+
     }
 }
-
-
 class Palette extends forklift.PaletteLoader {
-    constructor(p) {
-        super(p)
+    constructor(id) {
+        super(id)
         this.addBox("SIDEBAR", "o-sidebar", Sidebar)
-        this.addBox("SIDEBAR-VIEW", "o-sidebar-view", View)
     }
 }
-
 module.exports = Palette

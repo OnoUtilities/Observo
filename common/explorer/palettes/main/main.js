@@ -1,116 +1,118 @@
-/**
- * MAIN Palette - Commonly used Box Elements
- */
-class MenuBar extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
+const jetpack = require('fs-jetpack')
+const path = require('path')
+
+class Menubar extends forklift.PaletteBox {
+    constructor(e) {
+        super(e)
         this.loadBox("elements/o-menubar/menubar.shadow.html")
         this.loadContent("elements/o-menubar/menubar.html")
     }
-    onContentLoad() {
-        let data = managerLocal.parseArgs()
-
-        this.title_menubar = new xel.TitleMenubar(data.id, "#menubar")
+    onContentLoad() { 
+        console.log("ADDED MENUBAR")
+        this.title_menubar = new xel.TitleMenubar(windowID, "#menubar")
         this.title_menubar.addClose()
         this.title_menubar.addMinimize()
-        this.title_menubar.addZoom()
         this.title_menubar.build()
     }
 }
+class StorageSystem {
+    constructor(parent) {
+        this.parent = parent
 
-class TabBar extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
-        this.loadBox("elements/o-tabbar/tabbar.shadow.html")
-        this.loadContent("elements/o-tabbar/tabbar.html")
+        this.loaded = false
+        this.file = ""
+
+        const cwd = process.cwd()
+        const portableHome = path.join(cwd, 'portable')
+        if (require('fs').existsSync(portableHome)) {
+            process.env.OBSERVO_HOME = portableHome
+        }
+        const home = process.env.ROBOBLOX_HOME || require('os').homedir()
+        this.home = home
+
+        this.presets = path.join(home, '.observo/presets/')
+
+        this.profilePath = path.join(home, '.observo/config.json')
+        this.serverList = path.join(home, '.observo/serverList.json')
+
+
+        if (!jetpack.exists(this.profilePath)) {
+            const template_c = require('./templates/config.json')
+            jetpack.write(this.profilePath, template_c)
+        }
+        try {
+            const config = require(this.profilePath)
+            this.config = config;
+        } catch (e) {
+            this.config = null
+        }
+
+        if (!jetpack.exists(this.serverList)) {
+            const template_r = require('./templates/serverList.json')
+            jetpack.write(this.serverList, template_r)
+        }
+        try {
+            const servers = require(this.serverList)
+            this.servers = servers
+        } catch (e) {
+            this.servers = null
+        }
+
+        this.data = {}
+    }
+    getServers() {
+        return this.servers
+    }
+    loadTemplate(file) {
+        try {
+            const data = require(file)
+            console.log(data)
+            return data
+        } catch (e) {
+            console.log(e)
+            return null
+        }
+    }
+    getStorageCell(id) {
+        if (this.data[id] != undefined) {
+            return this.data[id]
+        }
+    }
+    saveStorageCell(id, data) {
+        this.data[id] = data
+    }
+    isCell(id) {
+        if (this.data[id] != undefined) {
+            return true
+        }
+        return false
     }
 }
-
-class Loader extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
-        this.loadBox("elements/o-loader/loader.shadow.html")
-        this.loadContent()
+class Content extends forklift.PaletteBox {
+    constructor(e) {
+        super(e)
+        this.loadBox("elements/o-content/content.shadow.html")
+        this.loadContent("elements/o-content/content.html")
+        this.storage = new StorageSystem(this)
     }
 }
 
 class Box extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
+    constructor(e) {
+        super(e)
         this.loadBox("elements/o-box/box.shadow.html")
         this.loadContent()
     }
 }
 
-class Prefrences extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
-        this.loadBox("elements/o-prefrences/prefrences.shadow.html")
-        this.loadContent("elements/o-prefrences/prefrences.html")
-    }
-}
-
-class PrefrencesHandler {
-    constructor(p) {
-        drawer.drawer.innerHTML = '<o-prefrences></o-prefrences>'
-        this.prefrenceButton = new xel.MenuItem("#file-prefrences")
-        this.prefrenceButton.onClick(() => {
-            console.log("Got here")
-            drawer.open()
-        })
-        //Make current theme default selected
-        //this.selectedTheme = new
-    }
-}
-
-class Connect extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
-        this.loadBox("elements/o-connect/connect.shadow.html")
-        this.loadContent("elements/o-connect/connect.html")
-    }
-}
-
-class ConnectHandler {
-    constructor(p) {
-        prompt.drawer.innerHTML = '<o-connect></o-connect>'
-        this.connectMenuButton = new xel.MenuItem("#connect")
-        this.connectMenuButton.onClick(() => {
-            prompt.open()
-        })
-        var connectButton = document.querySelector("#cancel");
-        connectButton.addEventListener("click", () => {
-            prompt.close()
-        })
-    }
-}
-
-
-class Content extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
-        this.loadBox("elements/o-content/content.shadow.html")
-        this.loadContent("elements/o-content/content.html")
-    }
-    onUnitLoad() {
-        let me = this
-        this.prefrences = new PrefrencesHandler(me)
-        this.connectionInfo = new ConnectHandler(me)
-    }
-}
-
-
 class Palette extends forklift.PaletteLoader {
-    constructor(p) {
-        super(p)
-        this.addBox("MENUBAR", "o-menubar", MenuBar)
-        this.addBox("TABBAR", "o-tabbar", TabBar)
-        this.addBox("LOADING", "o-loader", Loader)
+    constructor(id) {
+        super(id)
+        this.addBox("CONTENTS", "o-content", Content)
         this.addBox("BOX", "o-box", Box)
-        this.addBox("CONTENT", "o-content", Content)
-        this.addBox("PREFRENCES", "o-prefrences", Prefrences)
-        this.addBox("CONNECT", "o-connect", Connect)
+        this.addBox("MENUBAR", "o-menubar", Menubar)
+
     }
 }
 
-module.exports = Palette //needed to work
+module.exports = Palette

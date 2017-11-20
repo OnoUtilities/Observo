@@ -1,0 +1,47 @@
+<template>
+    <x-menubar id="menubar">
+        <x-menuitem>
+            <x-label>File</x-label>
+            <x-menu>
+                <x-menuitem id="connect">
+                    <x-icon name="wifi-tethering"></x-icon>
+                    <x-label>Connect</x-label>
+                </x-menuitem>
+                <x-menuitem id="copy">
+                    <x-icon name="content-copy"></x-icon>
+                    <x-label>Make Copy</x-label>
+                </x-menuitem>
+                <x-menuitem id="file-prefrences">
+                    <x-icon name="settings"></x-icon>
+                    <x-label>Prefrences</x-label>
+                </x-menuitem>
+            </x-menu>
+        </x-menuitem>
+        <x-menuitem>
+            <x-label>View</x-label>
+            <x-menu>
+                <x-menuitem id="view-sidebar">
+                    <x-icon name="check"></x-icon>
+                    <x-label>Show Sidebar</x-label>
+                </x-menuitem>
+                <x-menuitem id="view-members">
+                    <x-icon name="person"></x-icon>
+                    <x-label>View Members</x-label>
+                </x-menuitem>
+            </x-menu>
+        </x-menuitem>
+
+        <x-menuitem>
+                <x-label>Users</x-label>
+                <x-menu>
+                    <x-menuitem id="users-mirror">
+                        <x-icon name="screen-share"></x-icon>
+                        <x-label>Mirror Screen</x-label>
+                    </x-menuitem>
+                </x-menu>
+            </x-menuitem>
+        <div class="x-expand-drag"></div>
+        <x-label class="observo-title">Observo</x-label>
+        <div class="x-expand-drag"></div>
+    </x-menubar>
+</template>

@@ -2,22 +2,58 @@
  Theme Default (Observo)
  (c) 2017 The Ono Team 
 */
+
+@mood-aqua: #00acd7;
+@dark-aqua: darken(@mood-aqua, 10%);
+@light-aqua: #99ceec;
+
 .theme-default {
     background: #0099bf;
     x-menubar {
         background: @aqua;
     }
-    x-doctabs{
-        background: darken(@aqua, 15%);
-    }
     o-content {
         o-sidebar {
             background: @lightgray;
-        }
-        o-sidebar-view {
-            #view {
-                background: @silver;
+            .box {
+                background: @light-aqua
+            }
+            .box:hover {
+                background: darken(@light-aqua, 10%)
             }
         }
-    } 
+        o-sidebar-view {
+            background: @dark-aqua;
+        }
+    }
+    o-doctabs {
+        x-doctabs{
+            background: @mood-aqua;
+        }
+        x-button {
+            background: @lightgray;
+            color: @mood-aqua;
+            x-popover {
+                background: @dark-aqua;
+            }
+        }
+        x-select {
+            background: @lightgray; 
+            x-menu {
+                background: @lightgray;
+            }
+        }
+    }
+    .o-footer {
+        background: @mood-aqua;
+        x-button {
+            background: @mood-aqua;
+            color: black;
+        }
+    }
+    .explorer {
+        .box {
+            background: @green
+        }
+    }
 }
