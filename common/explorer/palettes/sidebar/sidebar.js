@@ -31,6 +31,7 @@ class Sidebar extends forklift.PaletteBox {
                 })
             }
         }
+        //let addServerButton = //Planning to move "Add Server" button to sidebar
     }
     connect(ip) {
         let mainWin = managerRemote.createWindow({

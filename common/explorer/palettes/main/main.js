@@ -27,7 +27,7 @@ class StorageSystem {
         if (require('fs').existsSync(portableHome)) {
             process.env.OBSERVO_HOME = portableHome
         }
-        const home = process.env.ROBOBLOX_HOME || require('os').homedir()
+        const home = process.env.OBSERVO_HOME || require('os').homedir()
         this.home = home
 
         this.presets = path.join(home, '.observo/presets/')
