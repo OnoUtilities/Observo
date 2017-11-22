@@ -1,0 +1,24 @@
+<template>
+        <x-label style="font-size: 20px; text-align: center;">Please select the Presets you would like to use</x-label>
+    <x-box style="margin-left: 10px; margin-top: 5px; margin-bottom: 5px;">
+            <x-checkbox id="test"></x-checkbox>
+            <x-label for="checkbox" id="auto">
+              <x-box vertical>
+                <x-label><strong>Default</strong></x-label>
+              </x-box>
+            </x-label>
+          </x-box vertical>
+          <x-box style="margin-left: 10px; margin-top: 5px; margin-bottom: 5px;">
+            <x-checkbox id="test"></x-checkbox>
+            <x-label for"checkbox" id="auto">
+                <x-box vertical>
+                    <x-label><strong>FRC</strong></x-label>
+                    <x-label>Robot Scouting Programming</x-label>
+                </x-box>
+            </x-label>
+          </x-box>
+          <x-box style="display: flex; justify-content: center; align-items: flex-end;">
+                <x-button id="confirmPresets">SELECT</x-button>
+                <x-button style="margin-left: 5px;" id="cancelPrsets">CANCEL</x-button>
+            </x-box>
+</template>

@@ -94,6 +94,11 @@ class Content extends forklift.PaletteBox {
         this.loadBox("elements/o-content/content.shadow.html")
         this.loadContent("elements/o-content/content.html")
         this.storage = new StorageSystem(this)
+
+    }
+    onUnitLoad(){
+        let me = this
+        this.newProject = new NewProjectHandler(me)
     }
 }
 
@@ -105,12 +110,33 @@ class Box extends forklift.PaletteBox {
     }
 }
 
+class NewProject extends forklift.PaletteBox {
+    constructor(p){
+        super(p)
+        this.loadBox("elements/o-newproject/newproject.shadow.html")
+        this.loadContent("elements/o-newproject/newproject.html")
+    }
+}
+
+class NewProjectHandler {
+    constructor(p) {
+        prompt.drawer.innerHTML = '<o-newproject></o-newproject>'
+        this.projectButton = new xel.MenuItem("#open-project")
+        this.projectButton.onClick(() => {
+            prompt.open()
+    })
+    
+    }
+}
+//let sidebar = forklift.App.getPaletteInstance("SIDEBAR").getBoxObject("SIDEBAR")
+//Fix this - Bruce
 class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)
         this.addBox("CONTENTS", "o-content", Content)
         this.addBox("BOX", "o-box", Box)
         this.addBox("MENUBAR", "o-menubar", Menubar)
+        this.addBox("NEWPROJECT", "o-newproject", NewProject)
 
     }
 }

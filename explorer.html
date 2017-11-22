@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="assets/style/easyhelp.css" /> 
   <link rel="stylesheet/less" type="text/css" href="assets\style\main.less" />
   <link rel="stylesheet/less" type="text/css" href="assets\style\common\explorer.less" />
-  
+  <link rel="stylesheet/less" type="text/css" href="assets\style\easyhelp.ss" />
+
   <script src="./node_modules/less/dist/less.min.js"></script>
 
   <style>
@@ -112,8 +113,10 @@
   //Create a MenuTab and a the main ViewBox
   //let tabs = new xel.MenuTabs("#menutab")
   let contextmenu = new xel.ContextMenu()
-
+  let contextMenu = new xel.ContextMenu()
   let dialogInput = new xel.DialogInput()
+  let prompt = new xel.Prompt()
+  let drawer = new xel.Drawer()
 
   fl.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")
   fl.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
