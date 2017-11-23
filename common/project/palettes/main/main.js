@@ -84,6 +84,39 @@ class ConnectHandler {
     }
 }
 
+/*class Refresh extends forklift.PaletteBox {
+    constructor(p){
+        super(p)
+        this.refreshServer = new xel.MenuItem("#refresh-server")
+        this.refreshServer.onClick(() => {
+            this.loadBox("elements/o-refresh/refresh.shadow.html")
+            this.loadContent("elements/o-refresh/refresh.html")
+        })
+        
+    }
+}*/
+//Doesn't Work
+//Bruce Needs to fix this
+//Help Would be nice :P
+
+class Help extends forklift.PaletteBox {
+    constructor(p) {
+        super(p)
+        this.loadBox("elements/o-help/help.shadow.html")
+        this.loadContent("elements/o-help/help.html")
+    }
+}
+
+class HelpHandler {
+    constructor(p){
+        let helpMenu = new xel.Dialog()
+        helpMenu.dialog.innerHTML = '<o-help></o-help>'
+        this.help = new xel.MenuItem("#help")
+        this.help.onClick(() => {
+            helpMenu.dialog()
+        })
+    }
+}
 
 class Content extends forklift.PaletteBox {
     constructor(p) {
@@ -95,6 +128,7 @@ class Content extends forklift.PaletteBox {
         let me = this
         this.prefrences = new PrefrencesHandler(me)
         this.connectionInfo = new ConnectHandler(me)
+        this.helpInfo = new HelpHandler(me)
     }
 }
 
@@ -109,6 +143,8 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("CONTENT", "o-content", Content)
         this.addBox("PREFRENCES", "o-prefrences", Prefrences)
         this.addBox("CONNECT", "o-connect", Connect)
+        //this.addBox("REFRESH", "o-refresh", Refresh)
+        this.addBox("HELP", "o-help", Help)
     }
 }
 

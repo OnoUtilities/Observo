@@ -99,6 +99,7 @@ class Content extends forklift.PaletteBox {
     onUnitLoad(){
         let me = this
         this.newProject = new NewProjectHandler(me)
+        this.addServer = new AddServerHandler(me)
     }
 }
 
@@ -111,23 +112,58 @@ class Box extends forklift.PaletteBox {
 }
 
 class NewProject extends forklift.PaletteBox {
-    constructor(p){
-        super(p)
+    constructor(e){
+        super(e)
         this.loadBox("elements/o-newproject/newproject.shadow.html")
         this.loadContent("elements/o-newproject/newproject.html")
     }
 }
 
 class NewProjectHandler {
-    constructor(p) {
-        prompt.drawer.innerHTML = '<o-newproject></o-newproject>'
+    constructor(e) {
+        let newProject = new xel.Prompt()
+        newProject.drawer.innerHTML = '<o-newproject></o-newproject>'
         this.projectButton = new xel.MenuItem("#open-project")
         this.projectButton.onClick(() => {
-            prompt.open()
+            newProject.open()
     })
     
     }
 }
+
+class AddServer extends forklift.PaletteBox {
+    constructor(e) {
+        super(e)
+        this.loadBox("elements/o-server/server.shadow.html")
+        this.loadContent("elements/o-server/server.html")
+    }
+}
+
+class AddServerHandler {
+    constructor(e) {
+        
+        prompt.drawer.innerHTML = '<o-server></o-server>'
+        this.addServer = new xel.MenuItem("#new-project")
+        this.addServer.onClick(() => {
+            prompt.open()
+            let p = new xel.Prompt()
+            p.drawer.innerHTML = '<o-newserver></o-newserver>'
+            this.newServerButton = new xel.MenuItem("#create-server")
+            this.newServerButton.onClick(() => {
+                p.open()
+        })
+        })
+    }
+}
+
+class NewServer extends forklift.PaletteBox {
+    constructor(e) {
+        super(e)
+        this.loadBox("elements/o-newserver/newserver.shadow.html")
+        this.loadContent("elements/o-newserver/newserver.html")
+    }
+}
+
 //let sidebar = forklift.App.getPaletteInstance("SIDEBAR").getBoxObject("SIDEBAR")
 //Fix this - Bruce
 class Palette extends forklift.PaletteLoader {
@@ -137,6 +173,8 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("BOX", "o-box", Box)
         this.addBox("MENUBAR", "o-menubar", Menubar)
         this.addBox("NEWPROJECT", "o-newproject", NewProject)
+        this.addBox("NEWSERVER", "o-newserver", NewServer)
+        this.addBox("SERVER", "o-server", AddServer)
 
     }
 }

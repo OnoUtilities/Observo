@@ -1,0 +1,29 @@
+<template>
+    <x-box style="margin-left: 10px;">
+                    <header style="display: flex; flex-flow: column;">
+                        <h3>Connect to A Server</h3>
+                        <x-label>Enter your connection info below</x-label>
+                    </header>
+                    <x-box style="margin-left: 150px;">
+                            <x-button id="create-server">
+                                <x-icon name="add"></x-icon>
+                                <x-label>Create New Server</x-label>
+                            </x-button>
+                            </x-box>
+    </x-box>
+                    <x-box vertical style="display: flex; flex-flow: column; margin-left: 30px;">
+                        <x-input skin="flat" id="username">
+                            <x-icon name="person"></x-icon>
+                            <x-label>Username</x-label>
+                        </x-input>
+                        <x-input skin="flat" type="password" minlength="4" maxlength="12" id="password">
+                                <x-icon name="lock"></x-icon>
+                                <x-label>Password</x-label>
+                        </x-input>
+                        <x-input skin="flat" type="server-ip" id="server-ip">
+                            <x-icon name="dns"></x-icon>
+                            <x-label>Server IP Address</x-label>
+                        </x-input>
+                    </x-box>
+                        
+</template>

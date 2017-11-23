@@ -1,10 +1,20 @@
 <template>
-        <o-box flex row style="flex: 0 0 auto; width: 200px;">
-                <o-box style="display:flex; flex-flow:row; justify-content:center; margin-top: 15px">
-                        <x-button>
+        <o-box vertical flex row style="flex: 0 0 auto; width: 200px;">
+                <o-box style="display:flex; justify-content:center; margin-top: 15px">
+                        <x-button style="margin-left:15;">
                                 <x-icon name="add"></x-icon>
                                 <x-label>Add Element</x-label>
                         </x-button>
                 </o-box>
         </o-box>
+        <o-box style="display:flex; justify-content:left; margin: 15px;">
+                        <x-button>
+                                <x-icon name="undo"></x-icon>
+                                <x-label>Undo</x-label>
+                        </x-button>
+                        <x-button style="margin-left: 10px">
+                                <x-icon name="redo"></x-icon>
+                                <x-label>Redo</x-label>
+                        </x-button>
+                </o-box>
 </template>

@@ -30,16 +30,45 @@
                 </x-menuitem>
             </x-menu>
         </x-menuitem>
-
-        <x-menuitem>
-                <x-label>Users</x-label>
+            <x-menuitem>
+                <x-label>Server</x-label>
                 <x-menu>
-                    <x-menuitem id="users-mirror">
-                        <x-icon name="screen-share"></x-icon>
-                        <x-label>Mirror Screen</x-label>
+                    <x-menuitem>
+                            <x-label>Users</x-label>
+                            <x-menu>
+                                <x-menuitem id="users-mirror">
+                                    <x-icon name="screen-share"></x-icon>
+                                    <x-label>Mirror Screen</x-label>
+                                </x-menuitem>
+                            </x-menu>
+                    </x-menuitem>
+                    <x-menuitem>
+                        <x-icon name="rope"></x-icon>
+                        <x-label>Pull from Server</x-label>
+                    </x-menuitem>
+                    <x-menuitem>
+                        <x-icon name="refresh"></x-icon>
+                        <x-label>Refresh Server</x-label>
+                    </x-menuitem>
+                    <x-menuitem id="disconnect">
+                        <x-icon name="exit-to-app"></x-icon>
+                        <x-label>Disconnect</x-label>
                     </x-menuitem>
                 </x-menu>
-            </x-menuitem>
+        </x-menuitem>
+        <x-menuitem>
+            <x-icon name="help"></x-icon>
+            <x-menu>
+                <x-menuitem id="help">
+                    <x-icon name="help"></x-icon>
+                    <x-label>Help</x-label>
+                </x-menuitem>
+                <x-menuitem>
+                    <x-icon name="bug-report"></x-icon>
+                    <x-label>Report Bug</x-label>
+                </x-menuitem>
+            </x-menu>
+        </x-menuitem>
         <div class="x-expand-drag"></div>
         <x-label class="observo-title">Observo</x-label>
         <div class="x-expand-drag"></div>
