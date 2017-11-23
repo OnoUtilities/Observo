@@ -100,6 +100,7 @@ class Content extends forklift.PaletteBox {
         let me = this
         this.newProject = new NewProjectHandler(me)
         this.addServer = new AddServerHandler(me)
+        this.aboutOpen = new AboutHandler(me)
     }
 }
 
@@ -127,7 +128,7 @@ class NewProjectHandler {
         this.projectButton.onClick(() => {
             newProject.open()
     })
-    
+        
     }
 }
 
@@ -141,11 +142,11 @@ class AddServer extends forklift.PaletteBox {
 
 class AddServerHandler {
     constructor(e) {
-        
-        prompt.drawer.innerHTML = '<o-server></o-server>'
+        let addServerMenu = new xel.Prompt()
+        addServerMenu.drawer.innerHTML = '<o-server></o-server>'
         this.addServer = new xel.MenuItem("#new-project")
         this.addServer.onClick(() => {
-            prompt.open()
+            addServerMenu.open()
             let p = new xel.Prompt()
             p.drawer.innerHTML = '<o-newserver></o-newserver>'
             this.newServerButton = new xel.MenuItem("#create-server")
@@ -164,6 +165,25 @@ class NewServer extends forklift.PaletteBox {
     }
 }
 
+class About extends forklift.PaletteBox {
+    constructor(e) {
+        super(e)
+        this.loadBox("elements/o-about/about.shadow.html")
+        this.loadContent("elements/o-about/about.html")
+    }
+}
+
+class AboutHandler {
+    constructor(e) {
+        let aboutMenu = new xel.Prompt()
+        aboutMenu.drawer.innerHTML = '<o-about></o-about>'
+        this.about = new xel.MenuItem("#about")
+        this.about.onClick(() => {
+            aboutMenu.open()
+        })
+    }
+}
+
 //let sidebar = forklift.App.getPaletteInstance("SIDEBAR").getBoxObject("SIDEBAR")
 //Fix this - Bruce
 class Palette extends forklift.PaletteLoader {
@@ -175,6 +195,7 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("NEWPROJECT", "o-newproject", NewProject)
         this.addBox("NEWSERVER", "o-newserver", NewServer)
         this.addBox("SERVER", "o-server", AddServer)
+        this.addBox("ABOUT", "o-about", About)
 
     }
 }
