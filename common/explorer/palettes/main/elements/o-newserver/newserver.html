@@ -1,8 +1,15 @@
 <template>
         <x-label style="font-size: 24px; text-align: center;">Server Settings</x-label>
-        <x-label style="font-size: 18px; margin-left: 45px;"><strong>Presets</strong></x-label>
+        <x-box>
+        <x-label style="font-size: 18px; margin-left: 25px;"><strong>Server Name</strong></x-label>
+        <x-label style="font-size: 18px; margin-left: 90px;"><strong>Presets</strong></x-label>
+        </x-box>
     <x-box style="margin-left: 10px;">
-        <x-select>
+            <x-input style="margin-left: 10px;" skin="flat" id="server-name">
+                    <x-icon name="pensil"></x-icon>
+                    <x-label>Name</x-label>
+                </x-input>
+        <x-select style="margin-left: 15px;">
             <x-menu>
                 <x-menuitem value="defualt" selected="true">
             <x-checkbox id="defualt-preset" selected="true"></x-checkbox>
@@ -34,15 +41,15 @@
             </x-menu>
             </x-select>
           </x-box>
-          <x-label style="font-size: 18px;"><strong>Maximum Members</strong></x-label>
+          <x-label style="font-size: 18px; margin-left: 20px;"><strong>Maximum Members</strong></x-label>
           <x-box style="margin-left: 300;">
-              <x-input skin="flat" maxlength="2" >
+              <x-input style="margin-left: 20px;" skin="flat" maxlength="2" >
               <x-label>Max Members</x-label>
             </x-input>
             <x-stepper></x-stepper>
           </x-box>
           <x-box style="display: flex; justify-content: center; align-items: flex-end;">
-                <x-button id="confirmPresets">Start Server</x-button>
+                <x-button id="confirmPresets">Create Server</x-button>
                 <x-button style="margin-left: 5px;" id="cancelPrsets">CANCEL</x-button>
             </x-box>
 </template>
