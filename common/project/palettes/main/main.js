@@ -1,6 +1,10 @@
 /**
  * MAIN Palette - Commonly used Box Elements
  */
+
+const jetpack = require('fs-jetpack')
+const path = require('path')
+
 class MenuBar extends forklift.PaletteBox {
     constructor(p) {
         super(p)
@@ -15,6 +19,95 @@ class MenuBar extends forklift.PaletteBox {
         this.title_menubar.addMinimize()
         this.title_menubar.addZoom()
         this.title_menubar.build()
+    };
+}
+
+class StorageSystem {
+    constructor(parent) {
+        this.parent = parent
+
+        this.loaded = false
+        this.file = ""
+
+        const cwd = process.cwd()
+        const portableHome = path.join(cwd, 'portable')
+        if (require('fs').existsSync(portableHome)) {
+            process.env.OBSERVO_HOME = portableHome
+        }
+        const home = process.env.OBSERVO_HOME || require('os').homedir()
+        this.home = home
+
+        this.presets = path.join(home, '.observo/presets/')
+
+        this.profilePath = path.join(home, '.observo/config.json')
+        this.serverList = path.join(home, '.observo/serverList.json')
+
+
+        if (!jetpack.exists(this.profilePath)) {
+            const template_c = require('./templates/config.json')
+            jetpack.write(this.profilePath, template_c)
+        }
+        try {
+            const config = require(this.profilePath)
+            this.config = config;
+        } catch (e) {
+            this.config = null
+        }
+
+        if (!jetpack.exists(this.serverList)) {
+            const template_r = require('./templates/serverList.json')
+            jetpack.write(this.serverList, template_r)
+        }
+        try {
+            const servers = require(this.serverList)
+            this.servers = servers
+        } catch (e) {
+            this.servers = null
+        }
+
+        this.data = {}
+    }
+    getServers() {
+        return this.servers
+    }
+    loadTemplate(file) {
+        try {
+            const data = require(file)
+            console.log(data)
+            return data
+        } catch (e) {
+            console.log(e)
+            return null
+        }
+    }
+    getStorageCell(id) {
+        if (this.data[id] != undefined) {
+            return this.data[id]
+        }
+    }
+    saveStorageCell(id, data) {
+        this.data[id] = data
+    }
+    isCell(id) {
+        if (this.data[id] != undefined) {
+            return true
+        }
+        return false
+    }
+    /**
+ * Converts an inputed file into base64 with the option to convert it into a dataURL for img tags
+ * @param {String} file 
+ * @param {Boolean} returnDataURL 
+ */
+    fileToB64(file, returnDataURL) {
+        let fileContents = require("fs-jetpack").read(file, "buffer")   //import an image as binary buffer
+        let arr = new Uint8Array(fileContents); //Get an integer array based on the buffer
+        let raw = String.fromCharCode.apply(null, arr); //Passes the array to the string converter (Normally would have to be a for loop, but "apply" circumvents that)
+        let b64 = btoa(raw);    //Encodes a string into base64. Use "atob(b64);" for proof
+        if (returnDataURL) {    //If the caller would like just the base64, they specify otherwise
+            return "data:image/jpeg;base64," + b64;  //Put into a readable format for the "src" attribute
+        }
+        return b64.toString()   //Make sure that b64 is a String and return
     }
 }
 
@@ -55,7 +148,6 @@ class PrefrencesHandler {
         drawer.drawer.innerHTML = '<o-prefrences></o-prefrences>'
         this.prefrenceButton = new xel.MenuItem("#file-prefrences")
         this.prefrenceButton.onClick(() => {
-            console.log("Got here")
             drawer.open()
         })
     }
@@ -76,10 +168,6 @@ class ConnectHandler {
         this.connectMenuButton = new xel.MenuItem("#connect")
         this.connectMenuButton.onClick(() => {
             prompt.open()
-        })
-        var connectButton = document.querySelector("#cancel");
-        connectButton.addEventListener("click", () => {
-            prompt.close()
         })
     }
 }
@@ -108,7 +196,7 @@ class Help extends forklift.PaletteBox {
 }
 
 class HelpHandler {
-    constructor(p){
+    constructor(p) {
         let helpMenu = new xel.Dialog()
         helpMenu.dialog.innerHTML = '<o-help></o-help>'
         this.help = new xel.MenuItem("#help")
@@ -117,6 +205,77 @@ class HelpHandler {
         })
     }
 }
+
+class ListUsers {   //Orginize and document
+    constructor(p) {
+        let mainArea = document.querySelector("#userlist")
+        //Something to check if any values actually exist
+        mainArea.innerHTML = ""  //Get rid of default (no user) message
+        //Assumes that their avatar is already converted to base64 in storage. If not, add FileToB64 function
+        let userData = JSON.parse(jetpack.read("./assets/devUserList.json"))
+
+        function addUserToList(inputUserData) {
+            let currentUserInfo = userData.users[i]
+
+            let currentUserID = currentUserInfo.ID
+            let permissions = userData.roles[currentUserInfo.role];
+            let kickStatus = "disabled"
+            let banStatus = "disabled"
+            let editRoleStatus = "disabled"
+            if (permissions["Can kick"]) {
+                kickStatus = ""
+            }
+            if (permissions["Can ban"]) {
+                banStatus = ""
+            }
+            if (permissions["Can edit roles"]) {
+                editRoleStatus = ""
+            }
+            let template =
+                `<o-box flex row style="flex: 0 0 auto; height: 80px;" id="listItem-${currentUserID}">
+                        <o-box flex style="padding-top: 5px; flex: 0 0 auto; width: 100px;">
+                            <img style="border-radius: 50%; height: 64px; width: 64px" src="data:image/png;base64,${currentUserInfo.avatar}">
+                        </o-box>
+                        <o-box flex style="padding-top: 30px;">
+                            <x-label>${currentUserInfo.name}</x-label>
+                        </o-box>
+                        <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: 100px; margin-right: 5px;">
+                            <x-button>${userData.roles[currentUserInfo.role].name}</x-button>
+                        </o-box>
+                        <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: 150px;">
+                            <x-select>
+                                <x-menu>
+                                    <x-menuitem value="" selected="true">
+                                        <x-label>Actions...</x-label>
+                                    </x-menuitem>
+                                    <x-menuitem value="kick" ${kickStatus}>
+                                        <x-label>Kick</x-label>
+                                    </x-menuitem>
+                                    <x-menuitem value="ban" ${banStatus}>
+                                        <x-label>Ban</x-label>
+                                    </x-menuitem>
+                                    <x-menuitem value="editRole" ${editRoleStatus}>
+                                        <x-label>Edit Role</x-label>
+                                    </x-menuitem>
+                                </x-menu>
+                            </x-select>
+                        </o-box>
+                    </o-box>`
+            mainArea.insertAdjacentHTML("beforeend", template)
+        }
+
+        function removeUserFromList(userID) {
+            mainArea.removeChild(mainArea.querySelector("#listItem-" + userID))
+        }
+
+        for (var i = 0; i < userData.users.length; i++) {
+            addUserToList(userData.users[i])
+        }
+        removeUserFromList("c9c8d3ed90c055dd0b963aa1dd3d74ed")
+
+    }
+}
+
 
 class Content extends forklift.PaletteBox {
     constructor(p) {
@@ -129,6 +288,9 @@ class Content extends forklift.PaletteBox {
         this.prefrences = new PrefrencesHandler(me)
         this.connectionInfo = new ConnectHandler(me)
         this.helpInfo = new HelpHandler(me)
+        this.userList = new ListUsers(me)
+        let storageSystem = new StorageSystem(this);
+        //document.querySelector("#user1Icon").setAttribute("src", test.fileToB64("./assets/images/cat.png", true))
     }
 }
 

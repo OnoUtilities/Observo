@@ -15,7 +15,7 @@ class Menubar extends forklift.PaletteBox {
         this.title_menubar.build()
     }
 }
-class StorageSystem {
+class StorageSystem {   //TODO put into global-type file
     constructor(parent) {
         this.parent = parent
 
@@ -86,6 +86,21 @@ class StorageSystem {
             return true
         }
         return false
+    }
+    /**
+     * Converts an inputted file into base64 with the option to convert it into a dataURL for img tags
+     * @param {String} file 
+     * @param {Boolean} returnDataURL 
+     */
+    fileToB64(file, returnDataURL) {
+        let fileContents = require("fs-jetpack").read("./assets/images/corgi.png", "buffer")   //import an image as binary buffer
+        let arr = new Uint8Array(fileContents); //Get an integer array based on the buffer
+        let raw = String.fromCharCode.apply(null, arr); //Passes the array to the string converter (Normally would have to be a for loop, but "apply" circumvents that)
+        let b64 = btoa(raw);    //Encodes a string into base64. Use "atob(b64);" for proof
+        if (returnDataURL) {    //If the caller would like just the base64, they specify otherwise
+            return "data:image/jpeg;base64," + b64;  //Put into a readable format for the "src" attribute
+        }
+        return b64.toString()   //Make sure that b64 is a String and return
     }
 }
 class Content extends forklift.PaletteBox {
