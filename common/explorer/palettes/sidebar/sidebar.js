@@ -31,7 +31,6 @@ class Sidebar extends forklift.PaletteBox {
                 })
             }
         }
-        //let addServerButton = //Planning to move "Add Server" button to sidebar
     }
     autheticate(ip) {
         let auth = io.connect(`${ip}authenticate`) 
