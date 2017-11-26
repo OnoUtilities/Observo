@@ -25,7 +25,11 @@
                 -ms-flex-align: stretch;
                 align-items: stretch;
             }
-    
+            :host([row-center]) {
+                display: flex; 
+                flex-flow: row; 
+                justify-content:center;
+            }
              :host([column]) {
                 display: -webkit-box;
                 display: -ms-flexbox;
@@ -55,7 +59,11 @@
                 -ms-flex-direction: column;
                 flex-direction: column;
             }
-    
+            :host([column-center]) {
+                display: flex; 
+                flex-flow: column; 
+                justify-content:center;
+            }
             :host([flex]) {
                 -webkit-box-flex: 1;
                 -webkit-flex: 1;

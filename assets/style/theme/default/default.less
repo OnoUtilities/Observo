@@ -8,10 +8,26 @@
 @light-aqua: #99ceec;
 
 .theme-default {
+    --primary-color: black; //XEL
     background: #0099bf;
     x-menubar {
         background: @aqua;
+        x-menu {
+            background: @lightgray;
+        }
     }
+    x-select {
+        background: @lightgray; 
+        x-menu {
+            background: @lightgray;
+        }
+    }
+    x-input {
+        x-label {
+            color: black !important;
+        }
+    }
+    //Observo Elements
     o-content {
         o-sidebar {
             background: @lightgray;
@@ -37,10 +53,31 @@
                 background: @dark-aqua;
             }
         }
-        x-select {
-            background: @lightgray; 
-            x-menu {
-                background: @lightgray;
+    }
+    o-connect {
+        x-button {
+            background: @lightgray;
+            color: @mood-aqua;
+        }
+        .side {
+            background: @dark-aqua;
+        }
+        .main {
+            background: @mood-aqua;
+            .title {
+                
+            }
+            .input-text {
+    
+            }
+            .input-button {
+                font-weight: bold;
+                .cancel {
+                    color: @red;
+                }
+                .connect {
+                    color: @green;
+                }
             }
         }
     }

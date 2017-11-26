@@ -163,11 +163,13 @@ class Connect extends forklift.PaletteBox {
 
 class ConnectHandler {
     constructor(p) {
-        prompt.drawer.innerHTML = '<o-connect></o-connect>'
-
+        let connectDrawer = new xel.Dialog()
+        connectDrawer.dialog.innerHTML = '<o-connect></o-connect>'
+        connectDrawer.dialog.style.borderRadius="25px"
+        connectDrawer.dialog.style.width="400px"
         this.connectMenuButton = new xel.MenuItem("#connect")
         this.connectMenuButton.onClick(() => {
-            prompt.open()
+            connectDrawer.open()
         })
     }
 }

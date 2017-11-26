@@ -2,125 +2,131 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
-  <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
-  <script src="./node_modules/forklift.js/forklift.js"></script>
-  <script src="./node_modules/xel/xel.min.js"></script>
+    <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+    <script src="./node_modules/forklift.js/forklift.js"></script>
+    <script src="./node_modules/xel/xel.min.js"></script>
 
-  <link rel="stylesheet" href="assets/style/easyhelp.css" /> 
-  <link rel="stylesheet/less" type="text/css" href="assets\style\main.less" />
-  <link rel="stylesheet/less" type="text/css" href="assets\style\common\explorer.less" />
-  <link rel="stylesheet/less" type="text/css" href="assets\style\easyhelp.ss" />
+    <link rel="stylesheet" href="assets/style/easyhelp.css" />
+    <link rel="stylesheet/less" type="text/css" href="assets\style\main.less" />
+    <link rel="stylesheet/less" type="text/css" href="assets\style\common\explorer.less" />
+    <link rel="stylesheet/less" type="text/css" href="assets\style\easyhelp.ss" />
 
-  <script src="./node_modules/less/dist/less.min.js"></script>
+    <script src="./node_modules/less/dist/less.min.js"></script>
 
-  <style>
-      .x-menu-right {
-          margin-left: auto;
-          margin-right: 0;
-      }
+    <style>
+        .x-menu-right {
+            margin-left: auto;
+            margin-right: 0;
+        }
 
-      .x-menu-right .x-menuitem-right {
-          width: 60px;
-          padding: 1px;
-          overflow: none !important;
-          -webkit-app-region: none;
-      }
+        .x-menu-right .x-menuitem-right {
+            width: 60px;
+            padding: 1px;
+            overflow: none !important;
+            -webkit-app-region: none;
+        }
 
-      .x-menu-right .x-menuitem-right .x-icon {
-          padding-left: 15px;
-          height: 25px !important;
-          width: 25px !important;
-      }
+        .x-menu-right .x-menuitem-right .x-icon {
+            padding-left: 15px;
+            height: 25px !important;
+            width: 25px !important;
+        }
 
-      .x-menu-right .x-menuitem {
-          -webkit-app-region: no-drag;
-      }
+        .x-menu-right .x-menuitem {
+            -webkit-app-region: no-drag;
+        }
 
-      .x-menu-right .x-minimize:hover {
-          background: gray !important;
-      }
+        .x-menu-right .x-minimize:hover {
+            background: gray !important;
+        }
 
-      .x-menu-right .x-zoom:hover {
-          background: gray !important;
-      }
+        .x-menu-right .x-zoom:hover {
+            background: gray !important;
+        }
 
-      .x-menu-right .x-close:hover {
-          background: #dd4b39 !important;
-      }
+        .x-menu-right .x-close:hover {
+            background: #dd4b39 !important;
+        }
 
-      .x-menu-center {
-          margin: 0 auto;
-      }
+        .x-menu-center {
+            margin: 0 auto;
+        }
 
-      .x-menu-left {
-          width: 200px;
-          min-height: 100%;
-          height: 100%;
-      }
+        .x-menu-left {
+            width: 200px;
+            min-height: 100%;
+            height: 100%;
+        }
 
-      .x-expand-drag {
-          -webkit-box-flex: 1;
-          -webkit-flex: 1;
-          flex: 1;
-          -webkit-align-self: auto;
-          align-self: auto;
-          height: 100%;
-          -webkit-app-region: drag;
-      }
+        .x-expand-drag {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            -webkit-align-self: auto;
+            align-self: auto;
+            height: 100%;
+            -webkit-app-region: drag;
+        }
 
-      body {
-          overflow: hidden;
-      }
-  </style>
+        body {
+            overflow: hidden;
+        }
+    </style>
 
 </head>
 
 <body class="explorer theme-default">
-  <o-menubar></o-menubar>
-  <o-content></o-content>
-  <o-loader></o-loader>
+    <o-menubar></o-menubar>
+    <o-content></o-content>
+    <o-loader></o-loader>
 </body>
 
+<script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
 <script>
-  const { remote } = require('electron')
-  const { dialog } = remote
-  const { BrowserWindow } = remote;
+    //Observo API Version
+    const API = 1
 
-  const path = require('path')
+    const { remote } = require('electron')
+    const { dialog } = remote
+    const { BrowserWindow } = remote;
 
-  //Require Import-Window
-  const managerRemote = remote.require("import-window")
-  const managerLocal = require("import-window")
+    const path = require('path')
 
-  //Requires XEL-Extend
-  const xel = require('xel-extend')
+    //Require Import-Window
+    const managerRemote = remote.require("import-window")
+    const managerLocal = require("import-window")
 
-  //Require global configuration
-  /********************************************************************************************/
-  //Parse window arguments (for windowID)
-  let args = managerLocal.parseArgs()
+    //Requires XEL-Extend
+    const xel = require('xel-extend')
+
+    //Require global configuration
+    /********************************************************************************************/
+    //Parse window arguments (for windowID)
+    let args = managerLocal.parseArgs()
 
 
-  //Define the window
-  let windowID = args.id
-  
-  let win = new xel.Window(windowID)
-  //Create a menu bar and append buttons
+    //Define the window
+    let windowID = args.id
 
-  const globalLanguage = "en"
+    let win = new xel.Window(windowID)
+    //Create a menu bar and append buttons
 
-  //Create a MenuTab and a the main ViewBox
-  //let tabs = new xel.MenuTabs("#menutab")
-  let contextmenu = new xel.ContextMenu()
-  let contextMenu = new xel.ContextMenu()
-  let dialogInput = new xel.DialogInput()
-  let prompt = new xel.Prompt()
-  let drawer = new xel.Drawer()
+    const globalLanguage = "en"
 
-  fl.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")
-  fl.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
-  fl.App.loadPalette("LOADER", "common/explorer/palettes/loader/loader.js")
-  fl.App.run()
+    //Create a MenuTab and a the main ViewBox
+    //let tabs = new xel.MenuTabs("#menutab")
+    let contextmenu = new xel.ContextMenu()
+    let contextMenu = new xel.ContextMenu()
+    let dialogInput = new xel.DialogInput()
+    let prompt = new xel.Prompt()
+    let drawer = new xel.Drawer()
+
+    fl.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")
+    fl.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
+    fl.App.loadPalette("LOADER", "common/explorer/palettes/loader/loader.js")
+    fl.App.run()
+
 </script>
+
 </html>

@@ -61,25 +61,3 @@ app.on('activate', function () {
 })
 // In this file you can include the rest of your app's specific main process
 
-var appServer = require('http').createServer(handler)
-var io = require('socket.io')(appServer);
-var fs = require('fs');
-
-appServer.listen(80);
-
-function handler(req, res) {
-
-}
-io.on('connection', function (socket) {
-  socket.on('slider-change', function (data) {
-    console.log(data)
-    socket.broadcast.emit('slider-update', data);
-    //socket.emit('slider-update', data);
-  });
-
-  socket.on('input-change', function (data) {
-    console.log(data)
-    socket.broadcast.emit('input-update', data);
-    //socket.emit('slider-update', data);
-  });
-});

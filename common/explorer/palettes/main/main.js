@@ -7,7 +7,7 @@ class Menubar extends forklift.PaletteBox {
         this.loadBox("elements/o-menubar/menubar.shadow.html")
         this.loadContent("elements/o-menubar/menubar.html")
     }
-    onContentLoad() { 
+    onContentLoad() {
         console.log("ADDED MENUBAR")
         this.title_menubar = new xel.TitleMenubar(windowID, "#menubar")
         this.title_menubar.addClose()
@@ -103,19 +103,53 @@ class StorageSystem {   //TODO put into global-type file
         return b64.toString()   //Make sure that b64 is a String and return
     }
 }
-class Content extends forklift.PaletteBox {
-    constructor(e) {
-        super(e)
-        this.loadBox("elements/o-content/content.shadow.html")
-        this.loadContent("elements/o-content/content.html")
-        this.storage = new StorageSystem(this)
-
+class Connect extends forklift.PaletteBox {
+    constructor(p) {
+        super(p)
+        this.loadBox("elements/o-connect/connect.shadow.html")
+        this.loadContent("elements/o-connect/connect.html")
     }
-    onUnitLoad(){
-        let me = this
-        this.newProject = new NewProjectHandler(me)
-        this.addServer = new AddServerHandler(me)
-        this.aboutOpen = new AboutHandler(me)
+}
+
+class ConnectHandler {
+    constructor(p) { }
+    open(func) {
+        this.connectDialog = new xel.Dialog()
+        this.connectDialog.dialog.innerHTML = '<o-connect></o-connect>'
+        this.connectDialog.dialog.style.borderRadius = "25px"
+        this.connectDialog.dialog.style.width = "400px"
+        this.connectDialog.disableOverlayClose()
+
+        setTimeout(() => {
+
+            console.log(this.connectDialog.dialog.querySelector("#connect"))
+            this.connectBtn = this.connectDialog.dialog.querySelector("#connect")
+            this.cancelBtn = this.connectDialog.dialog.querySelector("#cancel")
+            this.connectDialog.open()
+            func.call()
+        }, 100)
+    }
+    close() {
+        this.connectDialog.close()
+    }
+    onConnect(func) {
+        this.connectBtn.addEventListener("click", () => {
+            func.call()
+        })
+    }
+    onCancel(func) {
+        this.cancelBtn.addEventListener("click", () => {
+            func.call()
+        })
+        this.connectDialog.onEscape(() => {
+            func.call()
+        })
+    }
+    getUsername() {
+        return this.connectDialog.dialog.querySelector("#username").value
+    }
+    getPassword() {
+        return this.connectDialog.dialog.querySelector("#password").value
     }
 }
 
@@ -128,7 +162,7 @@ class Box extends forklift.PaletteBox {
 }
 
 class NewProject extends forklift.PaletteBox {
-    constructor(e){
+    constructor(e) {
         super(e)
         this.loadBox("elements/o-newproject/newproject.shadow.html")
         this.loadContent("elements/o-newproject/newproject.html")
@@ -142,8 +176,8 @@ class NewProjectHandler {
         this.projectButton = new xel.MenuItem("#open-project")
         this.projectButton.onClick(() => {
             newProject.open()
-    })
-        
+        })
+
     }
 }
 
@@ -167,7 +201,7 @@ class AddServerHandler {
             this.newServerButton = new xel.MenuItem("#create-server")
             this.newServerButton.onClick(() => {
                 p.open()
-        })
+            })
         })
     }
 }
@@ -201,10 +235,27 @@ class AboutHandler {
 
 //let sidebar = forklift.App.getPaletteInstance("SIDEBAR").getBoxObject("SIDEBAR")
 //Fix this - Bruce
+class Content extends forklift.PaletteBox {
+    constructor(e) {
+        super(e)
+        this.loadBox("elements/o-content/content.shadow.html")
+        this.loadContent("elements/o-content/content.html")
+        this.storage = new StorageSystem(this)
+
+    }
+    onUnitLoad() {
+        let me = this
+        this.newProject = new NewProjectHandler(me)
+        this.addServer = new AddServerHandler(me)
+        this.aboutOpen = new AboutHandler(me)
+        this.connect = new ConnectHandler(me)
+    }
+}
 class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)
         this.addBox("CONTENTS", "o-content", Content)
+        this.addBox("CONNECT", "o-connect", Connect)
         this.addBox("BOX", "o-box", Box)
         this.addBox("MENUBAR", "o-menubar", Menubar)
         this.addBox("NEWPROJECT", "o-newproject", NewProject)
