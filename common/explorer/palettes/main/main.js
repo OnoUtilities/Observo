@@ -131,6 +131,7 @@ class ConnectHandler {
     }
     close() {
         this.connectDialog.close()
+    }
     onUnitLoad() {
         let me = this
         this.newProject = new NewProjectHandler(me)
