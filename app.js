@@ -3,6 +3,7 @@ const electron = require('electron')
 const path = require('path')
 const url = require('url')
 const win = require('import-window')
+const backend = require('./backend/backend.js')
 // Module to control application life.
 const app = electron.app
 

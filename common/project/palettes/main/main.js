@@ -238,16 +238,16 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
             }
             let template =
                 `<o-box flex row style="flex: 0 0 auto; height: 80px;" id="listItem-${currentUserID}">
-                <o-box flex style="padding-top: 5px; flex: 0 0 auto; width: 100px;">
+                <o-box flex style="padding-top: 5px; flex: 0 0 auto; width: fit-content;">
                     <img style="border-radius: 50%; height: 64px; width: 64px" src="data:image/png;base64,${currentUserInfo.avatar}">
                 </o-box>
-                <o-box flex style="padding-top: 30px;">
+                <o-box flex style="padding-top: 30px; width: fit-content;">
                     <x-label>${currentUserInfo.name}</x-label>
                 </o-box>
-                <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: 100px; margin-right: 5px;">
+                <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: fit-content; margin-right: 10px;">
                     <x-button id="roleButton-${currentUserID}">${userData.roles[currentUserInfo.role].name}</x-button>
                 </o-box>
-                <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: 150px;">
+                <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: fit-content; margin-right: 10px">
                     <x-menubar class="actionsMenuBar">
                         <x-menuitem id="actionsMenu-${currentUserID}">
                             <x-label>Actions</x-label>
@@ -267,16 +267,28 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
             </o-box>
             <hr />`
             mainArea.insertAdjacentHTML("beforeend", template)
-            mainArea.querySelector("#actionsMenu-" + currentUserID).addEventListener("click", userAction(currentUserID))
+            //mainArea.querySelector("#actionsMenu-" + currentUserID).addEventListener("click", userAction(currentUserID))
         }
 
-        function userAction(userID){
+        function userAction(userID){    //This will be used to add and remove event listeners in order to optimize the actions menu
+            mainArea.querySelector("#kickButton-" + userID).addEventListener("click", kick(userID))
+            mainArea.querySelector("#banButton-" + userID).addEventListener("click", ban(userID))
             mainArea.querySelector("#editRoleButton-" + userID).addEventListener("click", editRole(userID))
         }
 
-        function editRole(userID){
+        function kick(userID){
+            let kickDialog = new xel.Dialog()
+            kickDialog.dialog.innerHTML = `<h1>KICK ${userID}?</h1>`    //Placeholder HTML for kick dialog
+            kickDialog.open();
+        }
+        function ban(userID){
+            let banDialog = new xel.Dialog()
+            banDialog.dialog.innerHTML = `<h1>Ban ${userID}?</h1>`  //Placeholder HTML for ban dialog
+            banDialog.open();
+        }
+        function kick(userID){
             let editRoleDialog = new xel.Dialog()
-            editRoleDialog.dialog.innerHTML = `<h1>KICK ${userID}?</h1>`
+            editRoleDialog.dialog.innerHTML = `<h1>Edit role for ${userID}?</h1>`   //Placeholder HTML for edit user role dialog
             editRoleDialog.open();
         }
 
@@ -284,10 +296,15 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
             mainArea.removeChild(mainArea.querySelector("#listItem-" + userID))
         }
 
+        function getListedUsers(){
+            return connectedUsers
+        }
+
         for (var i = 0; i < userData.users.length; i++) { //For every user in devUserList.json, add an element
             addUserToList(userData.users[i])
         }
-        removeUserFromList("c9c8d3ed90c055dd0b963aa1dd3d74ed") //Test the functionality of the remove user function by removing the last user
+        console.log(getListedUsers())
+        //removeUserFromList("c9c8d3ed90c055dd0b963aa1dd3d74ed") //Test the functionality of the remove user function by removing the last user
     }
 }
 /*
