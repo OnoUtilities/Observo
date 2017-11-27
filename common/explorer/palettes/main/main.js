@@ -15,7 +15,7 @@ class Menubar extends forklift.PaletteBox {
         this.title_menubar.build()
     }
 }
-class StorageSystem {   //TODO put into global-type file
+class StorageSystem { //TODO put into global-type file
     constructor(parent) {
         this.parent = parent
 
@@ -93,14 +93,14 @@ class StorageSystem {   //TODO put into global-type file
      * @param {Boolean} returnDataURL 
      */
     fileToB64(file, returnDataURL) {
-        let fileContents = require("fs-jetpack").read("./assets/images/corgi.png", "buffer")   //import an image as binary buffer
+        let fileContents = require("fs-jetpack").read("./assets/images/corgi.png", "buffer") //import an image as binary buffer
         let arr = new Uint8Array(fileContents); //Get an integer array based on the buffer
         let raw = String.fromCharCode.apply(null, arr); //Passes the array to the string converter (Normally would have to be a for loop, but "apply" circumvents that)
-        let b64 = btoa(raw);    //Encodes a string into base64. Use "atob(b64);" for proof
-        if (returnDataURL) {    //If the caller would like just the base64, they specify otherwise
-            return "data:image/jpeg;base64," + b64;  //Put into a readable format for the "src" attribute
+        let b64 = btoa(raw); //Encodes a string into base64. Use "atob(b64);" for proof
+        if (returnDataURL) { //If the caller would like just the base64, they specify otherwise
+            return "data:image/jpeg;base64," + b64; //Put into a readable format for the "src" attribute
         }
-        return b64.toString()   //Make sure that b64 is a String and return
+        return b64.toString() //Make sure that b64 is a String and return
     }
 }
 class Connect extends forklift.PaletteBox {
@@ -132,6 +132,12 @@ class ConnectHandler {
     close() {
         this.connectDialog.close()
     }
+    onUnitLoad() {
+        let me = this
+        this.newProject = new NewProjectHandler(me)
+        this.addServer = new AddServerHandler(me)
+        this.aboutOpen = new AboutHandler(me)
+    }
     onConnect(func) {
         this.connectBtn.addEventListener("click", () => {
             func.call()
@@ -160,6 +166,26 @@ class Box extends forklift.PaletteBox {
         this.loadContent()
     }
 }
+/*
+// IN DEVELOPMENT //
+class UserSettings extends forklift.PaletteBox {
+    constructor(e) {
+        console.log("LOADED")
+        super(e)
+        console.log(e)
+        this.loadBox("elements/o-userSettings/userSettings.shadow.html")
+        this.loadContent("elements/o-userSettings/userSettings.html")
+    }
+    onContentLoad(){
+        this.settingsDrawer = new xel.Dialog()
+        settingsDrawer.innerHTML = '<o-userSettings></o-userSettings>'
+        settingsDrawer.open();
+        let button = document.querySelector("#userSettingsButton")
+        console.log(button)
+        button.addEventListener("click", settingsDrawer.show())
+    }
+}
+*/
 
 class NewProject extends forklift.PaletteBox {
     constructor(e) {
@@ -268,7 +294,7 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("NEWSERVER", "o-newserver", NewServer)
         this.addBox("SERVER", "o-server", AddServer)
         this.addBox("ABOUT", "o-about", About)
-
+        //this.addBox("USERSETTINGS", "o-userSettings", UserSettings)
     }
 }
 

@@ -95,19 +95,19 @@ class StorageSystem {
         return false
     }
     /**
- * Converts an inputed file into base64 with the option to convert it into a dataURL for img tags
- * @param {String} file 
- * @param {Boolean} returnDataURL 
- */
+     * Converts an inputed file into base64 with the option to convert it into a dataURL for img tags
+     * @param {String} file 
+     * @param {Boolean} returnDataURL 
+     */
     fileToB64(file, returnDataURL) {
-        let fileContents = require("fs-jetpack").read(file, "buffer")   //import an image as binary buffer
+        let fileContents = require("fs-jetpack").read(file, "buffer") //import an image as binary buffer
         let arr = new Uint8Array(fileContents); //Get an integer array based on the buffer
         let raw = String.fromCharCode.apply(null, arr); //Passes the array to the string converter (Normally would have to be a for loop, but "apply" circumvents that)
-        let b64 = btoa(raw);    //Encodes a string into base64. Use "atob(b64);" for proof
-        if (returnDataURL) {    //If the caller would like just the base64, they specify otherwise
-            return "data:image/jpeg;base64," + b64;  //Put into a readable format for the "src" attribute
+        let b64 = btoa(raw); //Encodes a string into base64. Use "atob(b64);" for proof
+        if (returnDataURL) { //If the caller would like just the base64, they specify otherwise
+            return "data:image/jpeg;base64," + b64; //Put into a readable format for the "src" attribute
         }
-        return b64.toString()   //Make sure that b64 is a String and return
+        return b64.toString() //Make sure that b64 is a String and return
     }
 }
 
@@ -182,7 +182,6 @@ class ConnectHandler {
             this.loadBox("elements/o-refresh/refresh.shadow.html")
             this.loadContent("elements/o-refresh/refresh.html")
         })
-        
     }
 }*/
 //Doesn't Work
@@ -208,18 +207,22 @@ class HelpHandler {
     }
 }
 
-class ListUsers {   //Orginize and document
+class ListUsers { //Orginize and document. Will be heavily modified for API integration
     constructor(p) {
-        let mainArea = document.querySelector("#userlist")
-        //Something to check if any values actually exist
-        mainArea.innerHTML = ""  //Get rid of default (no user) message
+        let mainArea = document.querySelector("#userlist") //Select the o-box with ID "userlist"
+
+        //Something to check if any values actually exist, so that the default message is displayed by default
+
+        mainArea.innerHTML = "" //Get rid of default (no user) message
         //Assumes that their avatar is already converted to base64 in storage. If not, add FileToB64 function
         let userData = JSON.parse(jetpack.read("./assets/devUserList.json"))
+        let connectedUsers = [] //A list of listed users available for other classes. called by ID and array position matches list position starting at 0
 
         function addUserToList(inputUserData) {
             let currentUserInfo = userData.users[i]
+            let currentUserID = currentUserInfo.ID //Get the unique hash ID of the user
+            connectedUsers.push(currentUserID)
 
-            let currentUserID = currentUserInfo.ID
             let permissions = userData.roles[currentUserInfo.role];
             let kickStatus = "disabled"
             let banStatus = "disabled"
@@ -235,49 +238,82 @@ class ListUsers {   //Orginize and document
             }
             let template =
                 `<o-box flex row style="flex: 0 0 auto; height: 80px;" id="listItem-${currentUserID}">
-                        <o-box flex style="padding-top: 5px; flex: 0 0 auto; width: 100px;">
-                            <img style="border-radius: 50%; height: 64px; width: 64px" src="data:image/png;base64,${currentUserInfo.avatar}">
-                        </o-box>
-                        <o-box flex style="padding-top: 30px;">
-                            <x-label>${currentUserInfo.name}</x-label>
-                        </o-box>
-                        <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: 100px; margin-right: 5px;">
-                            <x-button>${userData.roles[currentUserInfo.role].name}</x-button>
-                        </o-box>
-                        <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: 150px;">
-                            <x-select>
-                                <x-menu>
-                                    <x-menuitem value="" selected="true">
-                                        <x-label>Actions...</x-label>
-                                    </x-menuitem>
-                                    <x-menuitem value="kick" ${kickStatus}>
-                                        <x-label>Kick</x-label>
-                                    </x-menuitem>
-                                    <x-menuitem value="ban" ${banStatus}>
-                                        <x-label>Ban</x-label>
-                                    </x-menuitem>
-                                    <x-menuitem value="editRole" ${editRoleStatus}>
-                                        <x-label>Edit Role</x-label>
-                                    </x-menuitem>
-                                </x-menu>
-                            </x-select>
-                        </o-box>
-                    </o-box>`
+                <o-box flex style="padding-top: 5px; flex: 0 0 auto; width: fit-content;">
+                    <img style="border-radius: 50%; height: 64px; width: 64px" src="data:image/png;base64,${currentUserInfo.avatar}">
+                </o-box>
+                <o-box flex style="padding-top: 30px; width: fit-content;">
+                    <x-label>${currentUserInfo.name}</x-label>
+                </o-box>
+                <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: fit-content; margin-right: 10px;">
+                    <x-button id="roleButton-${currentUserID}">${userData.roles[currentUserInfo.role].name}</x-button>
+                </o-box>
+                <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: fit-content; margin-right: 10px">
+                    <x-menubar class="actionsMenuBar">
+                        <x-menuitem id="actionsMenu-${currentUserID}">
+                            <x-label>Actions</x-label>
+                            <x-menu>
+                                <x-menuitem value="kick" id="kickButton-${currentUserID}" ${kickStatus}>
+                                    <x-label>Kick</x-label>
+                                </x-menuitem>
+                                <x-menuitem value="ban" "banButton-${currentUserID}" ${banStatus}>
+                                    <x-label>Ban</x-label>
+                                </x-menuitem>
+                                <x-menuitem value="editRole" id="editRoleButton-${currentUserID}" ${editRoleStatus}>
+                                    <x-label>Edit Role</x-label>
+                                </x-menuitem>
+                            </x-menu>
+                    </x-menubar>
+                </o-box>
+            </o-box>
+            <hr />`
             mainArea.insertAdjacentHTML("beforeend", template)
+            //mainArea.querySelector("#actionsMenu-" + currentUserID).addEventListener("click", userAction(currentUserID))
         }
 
-        function removeUserFromList(userID) {
+        function userAction(userID){    //This will be used to add and remove event listeners in order to optimize the actions menu
+            mainArea.querySelector("#kickButton-" + userID).addEventListener("click", kick(userID))
+            mainArea.querySelector("#banButton-" + userID).addEventListener("click", ban(userID))
+            mainArea.querySelector("#editRoleButton-" + userID).addEventListener("click", editRole(userID))
+        }
+
+        function kick(userID){
+            let kickDialog = new xel.Dialog()
+            kickDialog.dialog.innerHTML = `<h1>KICK ${userID}?</h1>`    //Placeholder HTML for kick dialog
+            kickDialog.open();
+        }
+        function ban(userID){
+            let banDialog = new xel.Dialog()
+            banDialog.dialog.innerHTML = `<h1>Ban ${userID}?</h1>`  //Placeholder HTML for ban dialog
+            banDialog.open();
+        }
+        function kick(userID){
+            let editRoleDialog = new xel.Dialog()
+            editRoleDialog.dialog.innerHTML = `<h1>Edit role for ${userID}?</h1>`   //Placeholder HTML for edit user role dialog
+            editRoleDialog.open();
+        }
+
+        function removeUserFromList(userID) { //Pass just the ID string to remove user from list
             mainArea.removeChild(mainArea.querySelector("#listItem-" + userID))
         }
 
-        for (var i = 0; i < userData.users.length; i++) {
+        function getListedUsers(){
+            return connectedUsers
+        }
+
+        for (var i = 0; i < userData.users.length; i++) { //For every user in devUserList.json, add an element
             addUserToList(userData.users[i])
         }
-        removeUserFromList("c9c8d3ed90c055dd0b963aa1dd3d74ed")
-
+        console.log(getListedUsers())
+        //removeUserFromList("c9c8d3ed90c055dd0b963aa1dd3d74ed") //Test the functionality of the remove user function by removing the last user
     }
 }
-
+/*
+class userActions {
+    constructor(p) {
+        for ()
+    }
+}
+*/
 
 class Content extends forklift.PaletteBox {
     constructor(p) {
@@ -292,7 +328,6 @@ class Content extends forklift.PaletteBox {
         this.helpInfo = new HelpHandler(me)
         this.userList = new ListUsers(me)
         let storageSystem = new StorageSystem(this);
-        //document.querySelector("#user1Icon").setAttribute("src", test.fileToB64("./assets/images/cat.png", true))
     }
 }
 

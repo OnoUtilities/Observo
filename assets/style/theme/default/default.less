@@ -41,6 +41,13 @@
         o-sidebar-view {
             background: @dark-aqua;
         }
+        .userSettingsButton{
+            background: @dark-aqua;
+            width: 32px;
+            height: 32px;
+            border-radius: 3px;
+            border: 3px @lightgray solid;
+        }
     }
     o-doctabs {
         x-doctabs{
@@ -53,6 +60,13 @@
                 background: @dark-aqua;
             }
         }
+        x-popover{
+            width:fit-content;
+        }
+        
+        #userCard{
+            margin: 0px;
+        }
     }
     o-connect {
         x-button {
@@ -60,12 +74,10 @@
             color: @mood-aqua;
         }
         .side {
-            background: @dark-aqua;
+
         }
         .main {
-            background: @mood-aqua;
             .title {
-                
             }
             .input-text {
     
@@ -98,6 +110,15 @@
     .explorer {
         .box {
             background: @green
+        }
+    }
+    .actionsMenuBar{
+        background: @lightgray;
+        width: fit-content;
+        height: fit-content;
+        float: right;
+        x-label{
+            justify-content: center;
         }
     }
 }

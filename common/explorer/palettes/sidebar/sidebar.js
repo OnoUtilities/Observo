@@ -26,10 +26,15 @@ class Sidebar extends forklift.PaletteBox {
                 location.innerHTML = location.innerHTML + server.ip
 
                 box.addEventListener("click", function () {
+<<<<<<< HEAD
                     if (!me.connecting) {
                         me.connecting = true
                         me.autheticate(server.ip)
                     }
+=======
+                    //me.autheticate(server.ip) //Uncomment for testing
+                    me.connect(server.ip)
+>>>>>>> 59b75e8cd013bec68ca018ad5ea86f78d1b2a978
                 })
             }
         }
