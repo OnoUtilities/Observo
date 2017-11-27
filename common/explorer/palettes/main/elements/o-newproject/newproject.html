@@ -2,19 +2,17 @@
         <x-label style="font-size: 24px; text-align: center;">New Project Settings</x-label>
         <x-label style="font-size: 18px; margin-left: 45px;"><strong>Presets</strong></x-label>
     <x-box style="margin-left: 10px;">
-        <x-select>
+        <x-select style="height: 50px; width: 200px">
             <x-menu>
                 <x-menuitem value="defualt" selected="true">
-            <x-checkbox id="defualt-preset" selected="true"></x-checkbox>
-            <x-label for="checkbox">
+            <x-label >
               <x-box vertical>
                 <x-label><strong>Default</strong></x-label>
               </x-box>
             </x-label>
                 </x-menuitem>
                 <x-menuitem>
-            <x-checkbox id="test" style="margin-left: 10px"></x-checkbox>
-            <x-label for"checkbox" id="FRCPreset">
+            <x-label id="FRCPreset">
                 <x-box vertical>
                     <x-label><strong>FRC</strong></x-label>
                     <x-label style="font-size: 12px;">Robot Scouting</x-label>
@@ -22,12 +20,10 @@
             </x-label>
                 </x-menuitem>
                 <x-menuitem>
-            <x-checkbox style="margin-left: 10px;"></x-checkbox>
-            <x-label for"checkbox" id="calenderPreset">
+            <x-label  id="calenderPreset">
                 <x-box vertical>
                     <x-label><strong>Calender</strong></x-label>
-                    <x-label style="font-size: 12px;">Event and</x-label>
-                    <x-label style="font-size: 12px;">Time Management</x-label>
+                    <x-label style="font-size: 12px;">Event and Time Management</x-label>
                 </x-box>
             </x-label>
                 </x-menuitem>

@@ -1,10 +1,107 @@
 <template>
-    <x-box verticle style="display: flex; margin-top: 50px; flex: 1 0 auto; flex-flow: column; justify-content: center">
-        <header style="display: flex; flex-flow: column;">
-                        <h2><font color="#00c0ef">Observo</font></h2>
-                    </header>
-                    <p>Observo is a multi user data manipulation application. (More Soon)</p>
-                    <x-button "display: flex; flex-flow: column; margin-top: 10px;"></x-button>
-                    <a href="https://github.com/OnoUtilities/Observo">GitHub Page</a>
-                    </x-button>
+
+    <o-box flex row>
+        <o-box flex></o-box>
+        <o-box flex column style="flex: 0 0 auto; width: 500px;">
+            <o-box flex style="flex: 0 0 auto; height: 50px;">
+                <o-box class="center" flex>
+                    <x-label style="font-size: 50px; padding-top: 30px" class="rb-font observo-title">
+                        Observo
+                    </x-label>
+                </o-box>
+            </o-box>
+            <o-box flex class="center" style="padding-top: 100px" :>
+                <x-label>
+                    A multi-user data manipulation system
+                </x-label>
+            </o-box>
+            <o-box flex row style="flex: 0 0 auto; height: 100px; padding-top: 50px">
+                <o-box flex>
+                    <o-box flex row-center>
+                        <x-button>
+                            <x-box>
+                                <x-icon name="fa-github" iconset="assets/icons/icon.svg"></x-icon>
+                                <x-label>GITHUB</x-label>
+                            </x-box>
+                        </x-button>
+                    </o-box>
+                </o-box>
+                <o-box flex>
+                    <o-box flex row-center>
+                        <x-button>
+                            <x-box>
+                                <x-icon name="fa-book" iconset="assets/icons/icon.svg"></x-icon>
+                                <x-label>DOCS</x-label>
+                            </x-box>
+                        </x-button>
+                    </o-box>
+                </o-box>
+                <o-box flex>
+                        <o-box flex row-center>
+                            <x-button>
+                                <x-box>
+                                    <x-icon name="git-evenodd" iconset="assets/icons/icon.svg"></x-icon>
+                                    <x-label>LICENSES</x-label>
+                                </x-box>
+                            </x-button>
+                        </o-box>
+                    </o-box>
+            </o-box>
+        </o-box>
+        <o-box flex></o-box>
+    </o-box>
+
+
 </template>
+
+
+<o-box flex row>
+    <o-box flex row>
+        <o-box flex></o-box>
+    </o-box>
+    <o-box flex column>
+        <o-box flex style="flex: 0 0 auto; height: 50px;">
+            <o-box class="center" flex>
+                <x-label style="" class="rb-font observo-title">
+                    Observo
+                </x-label>
+            </o-box>
+        </o-box>
+        <o-box flex></o-box>
+        <o-box flex row style="flex: 0 0 auto; height: 100px;">
+            <o-box flex></o-box>
+            <o-box flex></o-box>
+            <o-box flex></o-box>
+        </o-box>
+    </o-box>
+    <o-box flex></o-box>
+</o-box>
+
+
+
+
+<x-box verticle style="display: flex; margin-top: 50px; flex: 1 0 auto; flex-flow: column; justify-content: center">
+    <header style="display: flex; flex-flow: column;">
+        <h2>
+            <font color="#00c0ef">Observo</font>
+        </h2>
+    </header>
+    <p>Observo is a multi user data manipulation application. (More Soon)</p>
+    <x-button "display: flex; flex-flow: column; margin-top: 10px;"></x-button>
+    <a href="https://github.com/OnoUtilities/Observo">GitHub Page</a>
+    </x-button>
+
+    <div id="container" class="flexChild rowParent columnParent">
+
+
+
+
+        <div id="columnChild61988" class="flexChild"></div>
+
+        <div id="columnChild86770" class="flexChild rowParent">
+            <div id="rowChild98933" class="flexChild selected"></div>
+
+            <div id="rowChild2963" class="flexChild"></div>
+            <div id="rowChild6077" class="flexChild"></div>
+        </div>
+    </div>

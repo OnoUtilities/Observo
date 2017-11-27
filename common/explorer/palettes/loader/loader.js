@@ -4,6 +4,21 @@ class Loader extends forklift.PaletteBox {
         this.loadBox("elements/o-loader/loader.shadow.html")
         this.loadContent("elements/o-loader/loader.html")
     }
+    onUnitLoad() {
+        this.spinner = this.element.shadow.querySelector("#spinner")
+        this.x = this.element.shadow.querySelector("#x")
+        this.title =  this.element.shadow.querySelector("#title")
+    }
+    showConnecting() {
+        this.x.style.display = "none"
+        this.spinner.style.display = ""
+        this.title.innerHTML = "Connecting..."
+    }
+    showError(text) {
+        this.x.style.display = ""
+        this.spinner.style.display = "none"
+        this.title.innerHTML = text
+    }
 }
 class Palette extends forklift.PaletteLoader {
     constructor(id) {

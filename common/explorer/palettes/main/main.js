@@ -250,6 +250,12 @@ class Content extends forklift.PaletteBox {
         this.aboutOpen = new AboutHandler(me)
         this.connect = new ConnectHandler(me)
     }
+    hide() {
+        this.element.style.display = "none"
+    }
+    show() {
+        this.element.style.display = ""
+    }
 }
 class Palette extends forklift.PaletteLoader {
     constructor(id) {

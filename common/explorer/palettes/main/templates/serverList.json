@@ -2,5 +2,9 @@
     "local_server": {
       "name": "Local Server",
       "ip": "http://localhost/"
+    },
+    "explorer": {
+      "name": "OPEN EXPLORER [DEV]",
+      "ip": "DEV:EXPLORER"
     }
 }
