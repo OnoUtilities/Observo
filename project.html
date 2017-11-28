@@ -3,7 +3,7 @@
 <head>
     <title>
         Observo
-    </title> 
+    </title>
     <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
     <script src="./node_modules/forklift.js/forklift.js"></script>
@@ -12,7 +12,7 @@
     <link rel="stylesheet/less" type="text/css" href="assets\style\main.less" />
     <link rel="stylesheet/less" type="text/css" href="assets\style\common\project.less" />
     <link rel="stylesheet/less" href="assets\style\easyhelp.css" />
-    
+
     <script src="./node_modules/less/dist/less.min.js"></script>
 
     <style>
@@ -95,6 +95,17 @@
 
     const xel = require("xel-extend")
 
+    //Parse window arguments (for windowID)
+    let args = managerLocal.parseArgs()
+
+
+    //Define the window
+    let windowID = args.id
+
+    let win = new xel.Window(windowID)
+    //Create a menu bar and append buttons
+
+    const globalLanguage = "en"
     let contextMenu = new xel.ContextMenu()
     let dialogInput = new xel.DialogInput()
     let prompt = new xel.Prompt()
@@ -103,7 +114,7 @@
     forklift.App.loadPalette("MAIN", "common/project/palettes/main/main.js")
     forklift.App.loadPalette("SIDEBAR", "common/project/palettes/sidebar/sidebar.js")
     forklift.App.run()
-    
+
 </script>
 
 </html>

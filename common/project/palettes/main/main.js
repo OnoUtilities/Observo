@@ -153,27 +153,6 @@ class PrefrencesHandler {
     }
 }
 
-class Connect extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
-        this.loadBox("elements/o-connect/connect.shadow.html")
-        this.loadContent("elements/o-connect/connect.html")
-    }
-}
-
-class ConnectHandler {
-    constructor(p) {
-        let connectDrawer = new xel.Dialog()
-        connectDrawer.dialog.innerHTML = '<o-connect></o-connect>'
-        connectDrawer.dialog.style.borderRadius="25px"
-        connectDrawer.dialog.style.width="400px"
-        this.connectMenuButton = new xel.MenuItem("#connect")
-        this.connectMenuButton.onClick(() => {
-            connectDrawer.open()
-        })
-    }
-}
-
 /*class Refresh extends forklift.PaletteBox {
     constructor(p){
         super(p)
@@ -206,7 +185,6 @@ class HelpHandler {
         })
     }
 }
-
 class ListUsers { //Orginize and document. Will be heavily modified for API integration
     constructor(p) {
         let mainArea = document.querySelector("#userlist") //Select the o-box with ID "userlist"
@@ -270,23 +248,23 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
             //mainArea.querySelector("#actionsMenu-" + currentUserID).addEventListener("click", userAction(currentUserID))
         }
 
-        function userAction(userID){    //This will be used to add and remove event listeners in order to optimize the actions menu
+        function userAction(userID) {    //This will be used to add and remove event listeners in order to optimize the actions menu
             mainArea.querySelector("#kickButton-" + userID).addEventListener("click", kick(userID))
             mainArea.querySelector("#banButton-" + userID).addEventListener("click", ban(userID))
             mainArea.querySelector("#editRoleButton-" + userID).addEventListener("click", editRole(userID))
         }
 
-        function kick(userID){
+        function kick(userID) {
             let kickDialog = new xel.Dialog()
             kickDialog.dialog.innerHTML = `<h1>KICK ${userID}?</h1>`    //Placeholder HTML for kick dialog
             kickDialog.open();
         }
-        function ban(userID){
+        function ban(userID) {
             let banDialog = new xel.Dialog()
             banDialog.dialog.innerHTML = `<h1>Ban ${userID}?</h1>`  //Placeholder HTML for ban dialog
             banDialog.open();
         }
-        function kick(userID){
+        function kick(userID) {
             let editRoleDialog = new xel.Dialog()
             editRoleDialog.dialog.innerHTML = `<h1>Edit role for ${userID}?</h1>`   //Placeholder HTML for edit user role dialog
             editRoleDialog.open();
@@ -296,7 +274,7 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
             mainArea.removeChild(mainArea.querySelector("#listItem-" + userID))
         }
 
-        function getListedUsers(){
+        function getListedUsers() {
             return connectedUsers
         }
 
@@ -314,7 +292,16 @@ class userActions {
     }
 }
 */
-
+class DisconnectHandler {
+    constructor(p) {
+        let item = new xel.MenuItem("#file-disconnect")
+        item.onClick(() => {
+            prompt.show("Do you want to disconnect?", () => {
+                p.openExplorer()
+            })
+        })
+    }
+}
 class Content extends forklift.PaletteBox {
     constructor(p) {
         super(p)
@@ -324,10 +311,34 @@ class Content extends forklift.PaletteBox {
     onUnitLoad() {
         let me = this
         this.prefrences = new PrefrencesHandler(me)
-        this.connectionInfo = new ConnectHandler(me)
+        this.connectionInfo = new DisconnectHandler(me)
         this.helpInfo = new HelpHandler(me)
         this.userList = new ListUsers(me)
-        let storageSystem = new StorageSystem(this);
+        let storageSystem = new StorageSystem(me);
+    }
+    openExplorer() {
+        let mainWin = managerRemote.createWindow({
+            show: false,
+            backgroundColor: '#420024',
+            frame: false,
+            resizable: true,
+            maximizable: true,
+            backgroundColor: 'gray',
+            webPreferences: {
+                zoomFactor: 0.9,
+            },
+            icon: path.join(managerRemote.getDir(), 'assets/icons/png/1024x1024.png')
+        })
+        mainWin.setURL(managerRemote.getDir(), "explorer.html")
+        mainWin.win.setFullScreenable(false)
+        mainWin.win.setResizable(false)
+        mainWin.win.setMinimumSize(800, 600);
+        mainWin.win.setMaximumSize(800, 600);
+        mainWin.win.webContents.on('did-finish-load', () => {
+            mainWin.win.show()
+            win.close();
+
+        });
     }
 }
 
@@ -341,7 +352,6 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("BOX", "o-box", Box)
         this.addBox("CONTENT", "o-content", Content)
         this.addBox("PREFRENCES", "o-prefrences", Prefrences)
-        this.addBox("CONNECT", "o-connect", Connect)
         //this.addBox("REFRESH", "o-refresh", Refresh)
         this.addBox("HELP", "o-help", Help)
     }
