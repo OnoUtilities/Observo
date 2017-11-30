@@ -224,9 +224,9 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
             editRoleStatus = ""
         }
         function listPermissions(userID){
-            let permissionsBox = `<x-popover style="flex-direction:column">`
+            let permissionsBox = `<x-popover>`
             for(var i = 1; i < Object.values(roles[currentUserInfo.role]).length; i++){   //Skips the role name and then lists out the permissions and their values
-                permissionsBox += `<x-label style="display:flex">` + Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i] + "</x-label>"
+                permissionsBox += `<x-label>` + Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i] + "</x-label>"
                 //console.log(Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i])
             }
             permissionsBox += "</x-popover>"
@@ -235,17 +235,17 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
         }
         
         let template =
-            `<o-box flex row style="flex: 0 0 auto; height: 80px; display: flex; justify-content: space-between;" id="listItem-${currentUserID}">
-                <o-box flex style="padding-top: 5px; width: fit-content;">
+            `<o-box flex row style="flex: 0 0 auto;" class="userListItem" id="listItem-${currentUserID}">
+                <o-box flex style="width: fit-content;">
                     <img style="border-radius: 5%; height: 64px; width: 64px" src="data:image/png;base64,${currentUserInfo.avatar}">
                 </o-box>
-                <o-box flex style="padding-top: 30px; width: fit-content;">
+                <o-box flex style="width: fit-content;">
                     <x-label>${currentUserInfo.name}</x-label>
                 </o-box>
-                <o-box flex style="padding-top: 20px; width: fit-content;">
-                    <x-button id="roleButton-${currentUserID}"><x-label>${this.userData.roles[currentUserInfo.role].name}</x-label>${listPermissions(currentUserID)}</x-button>
+                <o-box flex style="margin-right: 10px; width: fit-content;">
+                    <x-button style="width: fit-content" id="roleButton-${currentUserID}"><x-label>${this.userData.roles[currentUserInfo.role].name}</x-label>${listPermissions(currentUserID)}</x-button>
                 </o-box>
-                <o-box flex style="padding-top: 20px; width: fit-content;">
+                <o-box flex style="width: fit-content; margin-right: 5px">
                     <x-menubar class="actionsMenuBar">
                         <x-menuitem id="actionsMenu-${currentUserID}">
                             <x-label>Actions</x-label>
