@@ -1,6 +1,6 @@
 <template>
     <x-box vertical style="display: flex; justify-content: center;">
-        <x-select id="themeSelector">
+        <x-select id="themeSelector" style="margin:auto; margin-top: 10px">
             <x-menu>
                 <x-menuitem value="observo" id="theme-default" selected="true"> <!-- TODO: Make theme declared in prefrances file the default selected theme-->
                     <x-label>Observo (default)</x-label>
@@ -10,7 +10,8 @@
                 </x-menuitem>
             </x-menu>
         </x-select>
-        <x-box style="margin-left: 10px; margin-top: 5px; margin-bottom: 5px;">
+        <hr>
+        <x-box style="margin: auto; margin-top: 10px; margin-bottom: 5px;">
             <x-checkbox id="autosave"></x-checkbox>
             <x-label for="checkbox" id="auto">
               <x-box vertical>
@@ -20,6 +21,7 @@
             </x-label>
           </x-box>
     </x-box>
+    <hr>
     <x-box style="display: flex; justify-content: center; align-items: flex-end;">
         <x-button id="applyPreferences">APPLY</x-button>
         <x-button style="margin-left: 5px;" id="cancelPrefrances">CANCEL</x-button>

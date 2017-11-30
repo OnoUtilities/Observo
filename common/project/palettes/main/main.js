@@ -187,45 +187,65 @@ class HelpHandler {
 }
 class ListUsers { //Orginize and document. Will be heavily modified for API integration
     constructor(p) {
-        let mainArea = document.querySelector("#userlist") //Select the o-box with ID "userlist"
-
+        this.mainArea = document.querySelector("#userlist") //Select the o-box with ID "userlist"
+        this.userActionDialog= new xel.Dialog();
         //Something to check if any values actually exist, so that the default message is displayed by default
 
-        mainArea.innerHTML = "" //Get rid of default (no user) message
+        this.mainArea.innerHTML = "" //Get rid of default (no user) message
         //Assumes that their avatar is already converted to base64 in storage. If not, add FileToB64 function
-        let userData = JSON.parse(jetpack.read("./assets/devUserList.json"))
-        let connectedUsers = [] //A list of listed users available for other classes. called by ID and array position matches list position starting at 0
+        this.userData = JSON.parse(jetpack.read("./assets/devUserList.json"))
+        this.connectedUsers = [] //A list of listed users available for other classes. called by ID and array position matches list position starting at 0
 
-        function addUserToList(inputUserData) {
-            let currentUserInfo = userData.users[i]
-            let currentUserID = currentUserInfo.ID //Get the unique hash ID of the user
-            connectedUsers.push(currentUserID)
+        for (var i = 0; i < this.userData.users.length; i++) { //For every user in devUserList.json, add an element
+            this.addUser(this.userData.users[i])
+        }
 
-            let permissions = userData.roles[currentUserInfo.role];
-            let kickStatus = "disabled"
-            let banStatus = "disabled"
-            let editRoleStatus = "disabled"
-            if (permissions["Can kick"]) {
-                kickStatus = ""
+        //console.log(getListedUsers()) //Prints listed users
+        //removeUserFromList("c9c8d3ed90c055dd0b963aa1dd3d74ed") //Test the functionality of the remove user function by removing the last user
+    }
+
+    addUser(inputUserData) {
+        let currentUserInfo = inputUserData
+        let currentUserID = currentUserInfo.ID //Get the unique hash ID of the user
+        this.connectedUsers.push(currentUserID)
+
+        let roles = this.userData.roles
+        let permissions = roles[currentUserInfo.role];
+        let kickStatus = "disabled"
+        let banStatus = "disabled"
+        let editRoleStatus = "disabled"
+        if (permissions["Can kick"]) {
+            kickStatus = ""
+        }
+        if (permissions["Can ban"]) {
+            banStatus = ""
+        }
+        if (permissions["Can edit roles"]) {
+            editRoleStatus = ""
+        }
+        function listPermissions(userID){
+            let permissionsBox = `<x-popover style="flex-direction:column">`
+            for(var i = 1; i < Object.values(roles[currentUserInfo.role]).length; i++){   //Skips the role name and then lists out the permissions and their values
+                permissionsBox += `<x-label style="display:flex">` + Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i] + "</x-label>"
+                //console.log(Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i])
             }
-            if (permissions["Can ban"]) {
-                banStatus = ""
-            }
-            if (permissions["Can edit roles"]) {
-                editRoleStatus = ""
-            }
-            let template =
-                `<o-box flex row style="flex: 0 0 auto; height: 80px;" id="listItem-${currentUserID}">
-                <o-box flex style="padding-top: 5px; flex: 0 0 auto; width: fit-content;">
-                    <img style="border-radius: 50%; height: 64px; width: 64px" src="data:image/png;base64,${currentUserInfo.avatar}">
+            permissionsBox += "</x-popover>"
+            console.log(permissionsBox)
+            return permissionsBox
+        }
+        
+        let template =
+            `<o-box flex row style="flex: 0 0 auto; height: 80px; display: flex; justify-content: space-between;" id="listItem-${currentUserID}">
+                <o-box flex style="padding-top: 5px; width: fit-content;">
+                    <img style="border-radius: 5%; height: 64px; width: 64px" src="data:image/png;base64,${currentUserInfo.avatar}">
                 </o-box>
                 <o-box flex style="padding-top: 30px; width: fit-content;">
                     <x-label>${currentUserInfo.name}</x-label>
                 </o-box>
-                <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: fit-content; margin-right: 10px;">
-                    <x-button id="roleButton-${currentUserID}">${userData.roles[currentUserInfo.role].name}</x-button>
+                <o-box flex style="padding-top: 20px; width: fit-content;">
+                    <x-button id="roleButton-${currentUserID}"><x-label>${this.userData.roles[currentUserInfo.role].name}</x-label>${listPermissions(currentUserID)}</x-button>
                 </o-box>
-                <o-box flex style="padding-top: 20px; flex: 0 0 auto; width: fit-content; margin-right: 10px">
+                <o-box flex style="padding-top: 20px; width: fit-content;">
                     <x-menubar class="actionsMenuBar">
                         <x-menuitem id="actionsMenu-${currentUserID}">
                             <x-label>Actions</x-label>
@@ -233,7 +253,7 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
                                 <x-menuitem value="kick" id="kickButton-${currentUserID}" ${kickStatus}>
                                     <x-label>Kick</x-label>
                                 </x-menuitem>
-                                <x-menuitem value="ban" "banButton-${currentUserID}" ${banStatus}>
+                                <x-menuitem value="ban" id="banButton-${currentUserID}" ${banStatus}>
                                     <x-label>Ban</x-label>
                                 </x-menuitem>
                                 <x-menuitem value="editRole" id="editRoleButton-${currentUserID}" ${editRoleStatus}>
@@ -244,54 +264,38 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
                 </o-box>
             </o-box>
             <hr />`
-            mainArea.insertAdjacentHTML("beforeend", template)
-            //mainArea.querySelector("#actionsMenu-" + currentUserID).addEventListener("click", userAction(currentUserID))
-        }
+        this.mainArea.insertAdjacentHTML("beforeend", template)
+        this.mainArea.querySelector("#actionsMenu-" + currentUserID).addEventListener("click", () => {
+            this.mainArea.querySelector("#kickButton-" + currentUserID).addEventListener("click", () => {
+                let kickDialog = this.userActionDialog
+                kickDialog.dialog.innerHTML = `<h1>Kick <span title="ID - ${currentUserID}" class="name">${currentUserInfo.name}</span>?</h1><x-button><x-label id="confirm">Confirm</x-label></x-button>` //Placeholder HTML for kick dialog
+                kickDialog.open();
+            })
+            this.mainArea.querySelector("#banButton-" + currentUserID).addEventListener("click", () => {
+                let banDialog = this.userActionDialog
+                banDialog.dialog.innerHTML = `<h1>Ban ${currentUserID}?</h1>` //Placeholder HTML for ban dialog
+                banDialog.open();
+            })
+            this.mainArea.querySelector("#editRoleButton-" + currentUserID).addEventListener("click", () => {
+                let editRoleDialog = this.userActionDialog
+                editRoleDialog.dialog.innerHTML = `<h1>Edit role for ${currentUserID}?</h1>` //Placeholder HTML for edit user role dialog
+                editRoleDialog.open();
+            })
+        })
 
-        function userAction(userID) {    //This will be used to add and remove event listeners in order to optimize the actions menu
-            mainArea.querySelector("#kickButton-" + userID).addEventListener("click", kick(userID))
-            mainArea.querySelector("#banButton-" + userID).addEventListener("click", ban(userID))
-            mainArea.querySelector("#editRoleButton-" + userID).addEventListener("click", editRole(userID))
-        }
 
-        function kick(userID) {
-            let kickDialog = new xel.Dialog()
-            kickDialog.dialog.innerHTML = `<h1>KICK ${userID}?</h1>`    //Placeholder HTML for kick dialog
-            kickDialog.open();
-        }
-        function ban(userID) {
-            let banDialog = new xel.Dialog()
-            banDialog.dialog.innerHTML = `<h1>Ban ${userID}?</h1>`  //Placeholder HTML for ban dialog
-            banDialog.open();
-        }
-        function kick(userID) {
-            let editRoleDialog = new xel.Dialog()
-            editRoleDialog.dialog.innerHTML = `<h1>Edit role for ${userID}?</h1>`   //Placeholder HTML for edit user role dialog
-            editRoleDialog.open();
-        }
+    }
 
-        function removeUserFromList(userID) { //Pass just the ID string to remove user from list
-            mainArea.removeChild(mainArea.querySelector("#listItem-" + userID))
-        }
+    removeUser(userID) { //Pass just the ID string to remove user from list
+        mainArea.removeChild(mainArea.querySelector("#listItem-" + userID))
+    }
 
-        function getListedUsers() {
-            return connectedUsers
-        }
-
-        for (var i = 0; i < userData.users.length; i++) { //For every user in devUserList.json, add an element
-            addUserToList(userData.users[i])
-        }
-        console.log(getListedUsers())
-        //removeUserFromList("c9c8d3ed90c055dd0b963aa1dd3d74ed") //Test the functionality of the remove user function by removing the last user
+    getUsers() {
+        return connectedUsers
     }
 }
-/*
-class userActions {
-    constructor(p) {
-        for ()
-    }
-}
-*/
+
+
 class DisconnectHandler {
     constructor(p) {
         let item = new xel.MenuItem("#file-disconnect")

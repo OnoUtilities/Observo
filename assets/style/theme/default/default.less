@@ -27,6 +27,14 @@
             color: black !important;
         }
     }
+    x-dialog{
+        h1{
+            text-align: center;
+        }
+        .name{
+            color: @mood-aqua;
+        }
+    }
     //Observo Elements
     o-content {
         o-sidebar {
@@ -60,11 +68,14 @@
             background: @lightgray;
             color: @mood-aqua;
             x-popover {
-                background: @dark-aqua;
+                background: white;
             }
         }
         x-popover{
-            width:fit-content;
+            width:400px;
+            x-popover{
+                width: fit-content;
+            }
         }
         
         #userCard{
