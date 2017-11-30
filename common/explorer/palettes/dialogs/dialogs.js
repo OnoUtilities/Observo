@@ -6,6 +6,51 @@ class Connect extends forklift.PaletteBox {
     }
 }
 
+class Confirm extends forklift.PaletteBox {
+    constructor(p) {
+        super(p)
+        this.loadBox("elements/o-confirm/confirm.shadow.html")
+        this.loadContent("elements/o-confirm/confirm.html")
+    }
+    yes() {}
+    no() {}
+    onContentLoad() {
+        this.hide()
+        let me = this
+        this.yesBtn = this.element.querySelector("#yes").addEventListener("click", () => {
+            console.log("yes")
+            me.yes()
+        })
+        this.noBtn = this.element.querySelector("#no").addEventListener("click", () => {
+            me.no()
+        })
+        this.title = this.element.querySelector("#title")
+        this.message = this.element.querySelector("#message")
+    }
+    display(title, message, callback) {
+        let me = this
+
+        this.show()
+
+        this.title.innerHTML = title
+        this.message.innerHTML = message
+        me.yes = () => {
+            me.hide()
+            callback(true)
+        }
+        me.no = () => {
+            me.hide()
+            callback(false)
+        }
+    }
+    show() {
+        this.element.style.display = ""
+    }
+    hide() {
+        this.element.style.display = "none"
+    }
+}
+
 class ConnectHandler {
     constructor() { }
     open(func) {
@@ -17,9 +62,11 @@ class ConnectHandler {
 
         setTimeout(() => {
 
-            console.log(this.connectDialog.dialog.querySelector("#connect"))
+            this.sigin = this.connectDialog.dialog.querySelector("#sigin")
+            this.confirm = this.connectDialog.dialog.querySelector("o-confirm").object
             this.connectBtn = this.connectDialog.dialog.querySelector("#connect")
             this.cancelBtn = this.connectDialog.dialog.querySelector("#cancel")
+
             this.connectDialog.open()
             func.call()
         }, 100)
@@ -51,6 +98,13 @@ class ConnectHandler {
     }
     getPassword() {
         return this.connectDialog.dialog.querySelector("#password").value
+    }
+    //**//
+    show() {
+        this.sigin.style.display = ""
+    }
+    hide() {
+        this.sigin.style.display = "none"
     }
 }
 
@@ -135,6 +189,7 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("NEWSERVER", "o-newserver", NewServer)
         this.addBox("SERVER", "o-server", AddServer)
         this.addBox("ABOUT", "o-about", About)
+        this.addBox("CONFIRM", "o-confirm", Confirm)
     }
     onUnitLoad() {
         this.newProject = new NewProjectHandler()

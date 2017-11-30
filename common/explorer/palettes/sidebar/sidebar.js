@@ -106,36 +106,14 @@ class Sidebar extends forklift.PaletteBox {
                 auth.on("account", (data) => {
                     //data.username
                     if (data.state == "new") {
-                        connect.close()
-                        prompt.show("Do you want to create this new account?", (data) => {
+                        connect.hide()
+                        console.log("sauikjghfusdjkgsui7fghksyukgjhmfsgdvb")
+                        connect.confirm.display("New account?", `Do you want to create '${data.username}' as a new account?`, (data) => {
                             console.log(data)
-                            if (data == null) {
-                                connect.open(() => {
-                                    //When the box opens, use the callback to run further code
-                                    connect.onConnect(() => {
-                                        //When the connect button is pressed, send username and password
-                                        console.log(connect.getUsername())
-                                        console.log(connect.getPassword())
-                                        auth.emit("authenticate", { username: connect.getUsername(), password: connect.getPassword() })
-                                    })
-                                    connect.onCancel(() => {
-                                        //When the cancel button is pressed, close the box and send disconnect
-                                        let content = forklift.App.getPaletteInstance("MAIN").getBox("CONTENTS")
-                                        content.style.display = ""
-                                        connect.close()
-                                        auth.emit("end", [""])
-                                        me.connecting = false
-                                    })
-                                })
-                            } else if (data) {
+                            if (data) {
                                 auth.emit("createAccount", { username: connect.getUsername(), password: connect.getPassword()}) 
-                            } else if (!data) {
-                                let content = forklift.App.getPaletteInstance("MAIN").getBox("CONTENTS")
-                                content.style.display = ""
-                                connect.close()
-                                auth.emit("end", [""])
-                                me.connecting = false
                             }
+                            connect.show()
                         })
                     }
                 })

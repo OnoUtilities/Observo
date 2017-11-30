@@ -124,9 +124,10 @@ class RealTimeHandler {
             })
             socket.on("authenticate", function (data) {
                 console.log(data.username)
+                let username = data.username
                 _DataCore.isUser(data.username, (check) => {
                     if (!check) {
-                        socket.emit("account", { state: "new"})
+                        socket.emit("account", { state: "new", username: username })
                     } else {
                       //log user in  
                     }

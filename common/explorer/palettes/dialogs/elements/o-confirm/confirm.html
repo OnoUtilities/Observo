@@ -1,5 +1,5 @@
 <template>
-    <o-box flex columm id="sigin">
+    <o-box flex column id="confirm">
         <o-box flex row>
             <o-box flex class="side" style="border-top-left-radius:20px; border-bottom-left-radius:20px;"></o-box>
             <o-box flex class="main" column style="flex: 0 0 auto; width: 300px;">
@@ -7,34 +7,22 @@
                     <o-box flex column>
                         <o-box class="title center" flex>
                             <x-label>
-                                <h1>Signin</h1>
+                                <h1 id="title"></h1>
                             </x-label>
                             <hr/>
                         </o-box>
                         <o-box flex>
                             <o-box class="input-text" flex column-center style="margin-top: 10px;">
-                                <x-input skin="flat" id="username">
-                                    <x-icon name="person"></x-icon>
-                                    <x-label>Username</x-label>
-                                </x-input>
-
-                                <x-input skin="flat" type="password" minlength="4" maxlength="12" id="password">
-                                    <x-icon name="lock"></x-icon>
-                                    <x-label>Password</x-label>
-                                </x-input>
-                                <x-box style="margin-top: 40px">
-                                    <x-checkbox id="checkbox"></x-checkbox>
-                                    <x-label for="checkbox" id="label-1">Remember me?</x-label>
-                                  </x-box>
+                               <x-label id="message"><x-label>
                             </o-box>
                         </o-box>
                         <o-box class="input-button" flex style="margin-bottom: 30px">
                             <o-box flex row-center style="margin-top: 30px">
-                                <x-button id="connect">
-                                    <x-label class="connect">Connect</x-label>
+                                <x-button id="yes">
+                                    <x-label>Yes</x-label>
                                 </x-button>
-                                <x-button style="margin-left: 10px" id="cancel">
-                                    <x-label class="cancel">Cancel</x-label>
+                                <x-button style="margin-left: 10px" id="no">
+                                    <x-label>No</x-label>
                                 </x-button>
                             </o-box>
                         </o-box>
@@ -44,5 +32,4 @@
             <o-box flex class="side" style="border-top-right-radius:20px; border-bottom-right-radius:20px;"></o-box>
         </o-box>
     </o-box>
-    <o-confirm></o-confirm>
 </template>
