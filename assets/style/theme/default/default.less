@@ -39,6 +39,9 @@
     o-content {
         o-sidebar {
             background: @lightgray;
+            ::-webkit-scrollbar-thumb {
+                background-color: darken(@aqua, 20%);
+            }
             .box {
                 background: @light-aqua
             }
@@ -70,7 +73,9 @@
         }
         x-popover{
             width:400px;
+            
             x-popover{
+                flex-direction: column;
                 width: fit-content;
             }
         }
@@ -130,6 +135,15 @@
         float: right;
         x-label{
             justify-content: center;
+            align-items: center;
         }
     }
+    .userListItem{
+        display: flex;
+        height: 80px;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
 }
