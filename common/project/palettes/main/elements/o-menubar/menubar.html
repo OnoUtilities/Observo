@@ -18,6 +18,19 @@
             </x-menu>
         </x-menuitem>
         <x-menuitem>
+            <x-label>Edit</x-label>
+            <x-menu>
+                <x-menuitem id="undo">
+                    <x-icon name="undo"></x-icon>
+                    <x-label>Undo</x-label>
+                </x-menuitem>
+                <x-menuitem id="redo">
+                    <x-icon name="redo"></x-icon>
+                    <x-label>Redo</x-label>
+                </x-menuitem>
+            </x-menu>
+        </x-menuitem>
+        <x-menuitem>
             <x-label>View</x-label>
             <x-menu>
                 <x-menuitem id="view-sidebar">
@@ -41,10 +54,6 @@
                                     <x-label>Mirror Screen</x-label>
                                 </x-menuitem>
                             </x-menu>
-                    </x-menuitem>
-                    <x-menuitem>
-                        <x-icon name="rope"></x-icon>
-                        <x-label>Pull from Server</x-label>
                     </x-menuitem>
                     <x-menuitem>
                         <x-icon name="refresh"></x-icon>
