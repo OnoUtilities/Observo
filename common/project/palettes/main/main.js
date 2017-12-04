@@ -39,16 +39,16 @@ class StorageSystem {
 
         this.presets = path.join(home, '.observo/presets/')
 
-        this.profilePath = path.join(home, '.observo/config.json')
+        this.configPath = path.join(home, '.observo/config.json')
         this.serverList = path.join(home, '.observo/serverList.json')
 
 
-        if (!jetpack.exists(this.profilePath)) {
+        if (!jetpack.exists(this.configPath)) {
             const template_c = require('./templates/config.json')
-            jetpack.write(this.profilePath, template_c)
+            jetpack.write(this.configPath, template_c)
         }
         try {
-            const config = require(this.profilePath)
+            const config = require(this.configPath)
             this.config = config;
         } catch (e) {
             this.config = null
@@ -109,6 +109,32 @@ class StorageSystem {
         }
         return b64.toString() //Make sure that b64 is a String and return
     }
+    configManager() {
+        let configPath = this.configPath
+        let configContent = JSON.parse(require('fs-jetpack').read(this.configPath))
+        console.log(configContent)
+
+
+        return {
+            write: (contentIn) => {
+                require("fs-jetpack").write(this.configPath, contentIn)
+            },
+            read: () => {
+                return configContent
+            },
+            //If themeName is not defined or false, return just the index of the theme
+            getTheme: (themeName) => {
+                themeName = themeName || null
+                if(themeName != null){
+                    return configContent.themes[configContent.theme]
+                }
+                return configContent.theme
+            },
+            getVersion: () => {
+                return configContent.version;
+            }
+        }
+    }
 }
 
 class DocTabs extends forklift.PaletteBox {
@@ -141,15 +167,24 @@ class Prefrences extends forklift.PaletteBox {
         this.loadBox("elements/o-prefrences/prefrences.shadow.html")
         this.loadContent("elements/o-prefrences/prefrences.html")
     }
+    onContentLoad() {
+        let config = new StorageSystem(this).configManager()
+        console.log(config.getTheme(true))
+    }
 }
 
 class PrefrencesHandler {
     constructor(p) {
-        drawer.drawer.innerHTML = '<o-prefrences></o-prefrences>'
+        let prefrencesDialog = new xel.Dialog()
+        prefrencesDialog.dialog.innerHTML = '<o-prefrences></o-prefrences>'
+        prefrencesDialog.dialog.insertAdjacentHTML("afterbegin", `<style>color:#F0F;</style>`)
         this.prefrenceButton = new xel.MenuItem("#file-prefrences")
         this.prefrenceButton.onClick(() => {
-            drawer.open()
+            prefrencesDialog.open()
+            let config = new StorageSystem(p)
+            config.configManager().writeConfig("TEST")
         })
+        return this
     }
 }
 
@@ -188,7 +223,7 @@ class HelpHandler {
 class ListUsers { //Orginize and document. Will be heavily modified for API integration
     constructor(p) {
         this.mainArea = document.querySelector("#userlist") //Select the o-box with ID "userlist"
-        this.userActionDialog= new xel.Dialog();
+        this.userActionDialog = new xel.Dialog();
         //Something to check if any values actually exist, so that the default message is displayed by default
 
         this.mainArea.innerHTML = "" //Get rid of default (no user) message
@@ -223,17 +258,18 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
         if (permissions["Can edit roles"]) {
             editRoleStatus = ""
         }
-        function listPermissions(userID){
+
+        function listPermissions(userID) {
             let permissionsBox = `<x-popover>`
-            for(var i = 1; i < Object.values(roles[currentUserInfo.role]).length; i++){   //Skips the role name and then lists out the permissions and their values
+            for (var i = 1; i < Object.values(roles[currentUserInfo.role]).length; i++) { //Skips the role name and then lists out the permissions and their values
                 permissionsBox += `<x-label>` + Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i] + "</x-label>"
                 //console.log(Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i])
             }
             permissionsBox += "</x-popover>"
-            console.log(permissionsBox)
+            //console.log(permissionsBox)
             return permissionsBox
         }
-        
+
         let template =
             `<o-box flex row style="flex: 0 0 auto;" class="userListItem" id="listItem-${currentUserID}">
                 <o-box flex style="width: fit-content;">
