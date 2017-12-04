@@ -192,10 +192,10 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("CONFIRM", "o-confirm", Confirm)
     }
     onUnitLoad() {
-        this.newProject = new NewProjectHandler()
-        this.addServer = new AddServerHandler()
-        this.aboutOpen = new AboutHandler()
-        this.connect = new ConnectHandler()
+        //this.newProject = new NewProjectHandler()
+        //this.addServer = new AddServerHandler()
+        //this.aboutOpen = new AboutHandler()
+        //this.connect = new ConnectHandler()
     }
 }
 

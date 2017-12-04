@@ -120,8 +120,58 @@ class Content extends forklift.PaletteBox {
         this.loadBox("elements/o-content/content.shadow.html")
         this.loadContent("elements/o-content/content.html")
         this.storage = new StorageSystem(this)
+        this.pos = 0
+    }
+    onUnitLoad() {
+        this.servers = this.element.querySelector("#servers")
+        this.projects = this.element.querySelector("#projects")
+
+        
+        this.servers.addEventListener("click", () => {
+
+            this.moveLeft()
+        })
+        this.serversBack = this.element.querySelector("#serversBack")
+        this.serversBack.addEventListener("click", () => {
+            this.moveRight()
+        })
+
 
     }
+    moveLeft() {
+        if (this.pos == 0) {
+
+            this.element.classList.add("center-to-left");
+            this.element.classList.remove("left-to-center");
+            this.element.classList.remove("center-to-right");
+            this.element.classList.remove("right-to-center");
+            this.pos = -1
+        }
+        if (this.pos == 1) {
+            this.element.classList.remove("center-to-left");
+            this.element.classList.remove("left-to-center");
+            this.element.classList.remove("center-to-right");
+            this.element.classList.add("right-to-center");
+            this.pos = 0
+        }
+    }
+    moveRight() {
+        if (this.pos == 0) {
+            this.element.classList.remove("center-to-left");
+            this.element.classList.remove("left-to-center");
+            this.element.classList.add("center-to-right");
+            this.element.classList.remove("right-to-center");
+            this.pos = 1
+        }
+        if (this.pos == -1) {
+            this.element.classList.remove("center-to-left");
+            this.element.classList.add("left-to-center");
+            this.element.classList.remove("center-to-right");
+            this.element.classList.remove("right-to-center");
+            this.pos = 0
+        }
+    }
+    
     hide() {
         this.element.style.display = "none"
     }

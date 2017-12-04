@@ -1,53 +1,143 @@
 <template>
-    <o-box flex row id="container" style="justify-content: flex-start;">
-        <o-sidebar></o-sidebar>
-        <o-box flex column>
-            <o-box flex id="main" class="rb-main" style="align-self: stretch; flex-grow: 2;">
-                <section  style="position: relative;  margin: auto; top: 30%; right: 0; bottom: 0; left: 0; border-radius: 3px; text-align: center;">
-                    <x-label style="font-size: 72px;" class="rb-font observo-title">
-                        Observo
-                    </x-label>
-                    <x-label>A multi-user data manipulation system</x-label>
-                </section>
-            </o-box>
-            <o-box flex column class="o-footer" style="flex: 0 0 auto; height: 188px;">
-                <div class="fullwidth">
-                    <x-button toggled class="fg-black" style="width: 100%;" id="new-project">
-                        <div style="width: 10%;" style="center">
-                            <x-icon name="storage"></x-icon>
-                        </div>
-                        <div style="width: 80%;" class="center">
-                            Add Server
-                        </div>
-                        <div style="width: 10%;">
-                        </div>
-                    </x-button>
-                </div>
-                <div class="fullwidth">
-                    <x-button toggled class="fg-black" style="width: 100%;" id="open-project">
-                        <div style="width: 10%;" style="center">
-                            <x-icon name="add-to-queue"></x-icon>
-                        </div>
-                        <div style="width: 80%;" class="center">
-                            Add Local Project
-                        </div>
-                        <div style="width: 10%;">
-                        </div>
-                    </x-button>
-                </div>
-                <div class="fullwidth">
-                    <x-button toggled class="fg-black fullwidth" id="about">
-                        <div style="width: 10%;" style="center">
-                            <x-icon name="help"></x-icon>
-                        </div>
-                        <div style="width: 80%;" class="center">
-                            About
-                        </div>
-                        <div style="width: 10%;">
-                        </div>
-                    </x-button>
-                </div>
+    <o-box flex row style="justify-content: flex-start;">
+        <o-box flex row style="flex: 0 0 auto; width: 888px;">
+            <o-box flex row id="container" style="justify-content: flex-start;">
+                <o-sidebar></o-sidebar>
+                <o-box flex column>
+                    <o-box flex style="align-self: stretch; flex-grow: 2;">
+                        <o-box flex column>
+                            <o-box flex style="flex: 0 0 auto; height: 350px;">
+                                <section style="position: relative;  margin: auto; top: 30%; right: 0; bottom: 0; left: 0; border-radius: 3px; text-align: center;">
+                                    <x-label style="font-size: 72px;" class="rb-font observo-title">
+                                        Observo
+                                    </x-label>
+                                    <x-label>A multi-user data manipulation system</x-label>
+                                </section>
+                            </o-box>
+                            <o-box flex>
+                                <o-box flex row-center>
+                                    <x-button style="width: 200px; height: 100px;" id="addServer">
+                                        <x-box>
+                                            <x-icon name="dns" style="width: 50px; height: 50px;"></x-icon>
+                                            <x-label>SERVERS</x-label>
+                                        </x-box>
+                                    </x-button>
+                                </o-box>
+                            </o-box>
+                        </o-box>
+                    </o-box>
+                    <o-box flex row style="flex: 0 0 auto; height: 100px; margin-left: 10px;">
+                        <o-box flex>
+                        </o-box>
+                        <o-box flex style="flex: 0 0 auto; width: 60px;">
+                            <x-button id="serversBack">
+                                <x-box>
+                                    <x-icon name="keyboard-arrow-right"></x-icon>
+                                </x-box>
+                            </x-button>
+                        </o-box>
+                    </o-box>
+                </o-box>
             </o-box>
         </o-box>
+        <o-box flex row style="flex: 0 0 auto; width: 888px;">
+            <o-box flex row style="justify-content: flex-start;">
+                <o-box flex column>
+                    <o-box flex style="align-self: stretch; flex-grow: 2;">
+                        <o-box flex column>
+                            <o-box flex style="flex: 0 0 auto; height: 350px;">
+                                <section style="position: relative;  margin: auto; top: 30%; right: 0; bottom: 0; left: 0; border-radius: 3px; text-align: center;">
+                                    <x-label style="font-size: 72px;" class="rb-font observo-title">
+                                        Observo
+                                    </x-label>
+                                    <x-label>A multi-user data manipulation system</x-label>
+                                </section>
+                            </o-box>
+                            <o-box flex row>
+                                <o-box flex>
+                                    <o-box flex row-center>
+                                        <x-button style="width: 200px; height: 100px;" id="servers">
+                                            <x-box>
+                                                <x-icon name="dns" style="width: 50px; height: 50px;"></x-icon>
+                                                <x-label>SERVERS</x-label>
+                                            </x-box>
+                                        </x-button>
+                                    </o-box>
+                                </o-box>
+                                <o-box flex>
+                                    <o-box flex row-center>
+                                        <x-button style="width: 200px; height: 100px;" id="projects">
+                                            <x-box>
+                                                <x-icon name="folder" style="width: 50px; height: 50px;"></x-icon>
+                                                <x-label>PROJECTS</x-label>
+                                            </x-box>
+                                        </x-button>
+                                    </o-box>
+                                </o-box>
+                            </o-box>
+                        </o-box>
+                    </o-box>
+                    <o-box flex row style="flex: 0 0 auto; height: 100px; margin-left: 10px;">
+                        <o-box flex>
+                            <x-button>
+                                <x-box>
+                                    <x-icon name="language"></x-icon>
+                                </x-box>
+                            </x-button>
+                        </o-box>
+                        <o-box flex>
+                        </o-box>
+                        <o-box flex style="flex: 0 0 auto; width: 60px;">
+                            <x-button>
+                                <x-box>
+                                    <x-icon name="help"></x-icon>
+                                </x-box>
+                            </x-button>
+                        </o-box>
+                    </o-box>
+                </o-box>
+            </o-box>
+        </o-box>
+        <o-box flex style="flex: 0 0 auto; width: 888px;"></o-box>
     </o-box>
 </template>
+<o-box flex column class="o-footer" style="flex: 0 0 auto; height: 188px;">
+    <div class="fullwidth">
+        <x-button toggled class="fg-black" style="width: 100%;" id="new-project">
+            <div style="width: 10%;" style="center">
+                <x-icon name="storage"></x-icon>
+            </div>
+            <div style="width: 80%;" class="center">
+                Add Server
+            </div>
+            <div style="width: 10%;">
+            </div>
+        </x-button>
+    </div>
+    <div class="fullwidth">
+        <x-button toggled class="fg-black" style="width: 100%;" id="open-project">
+            <div style="width: 10%;" style="center">
+                <x-icon name="add-to-queue"></x-icon>
+            </div>
+            <div style="width: 80%;" class="center">
+                Add Local Project
+            </div>
+            <div style="width: 10%;">
+            </div>
+        </x-button>
+    </div>
+    <div class="fullwidth">
+        <x-button toggled class="fg-black fullwidth" id="about">
+            <div style="width: 10%;" style="center">
+                <x-icon name="help"></x-icon>
+            </div>
+            <div style="width: 80%;" class="center">
+                About
+            </div>
+            <div style="width: 10%;">
+            </div>
+        </x-button>
+    </div>
+</o-box>
+</o-box>
+</o-box>
