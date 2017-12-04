@@ -126,15 +126,47 @@ class Content extends forklift.PaletteBox {
         this.servers = this.element.querySelector("#servers")
         this.projects = this.element.querySelector("#projects")
 
-        
+        //When servers button is clicked, move to page
         this.servers.addEventListener("click", () => {
-
             this.moveLeft()
         })
+        //When projects button is clicked, move to page
+        this.projects.addEventListener("click", () => {
+            this.moveRight()
+        })
+
+        //Servers page back button
         this.serversBack = this.element.querySelector("#serversBack")
         this.serversBack.addEventListener("click", () => {
             this.moveRight()
         })
+
+        //Projects page back button
+        this.projectsBack = this.element.querySelector("#projectsBack")
+        this.projectsBack.addEventListener("click", () => {
+            this.moveLeft()
+        })
+
+        //Opens about page via about icon
+        let aboutMenu = new xel.Drawer()
+        aboutMenu.setPosition("top")
+        aboutMenu.drawer.innerHTML = '<o-about></o-about>'
+        this.about = this.element.querySelector("#about")
+        this.about.addEventListener("click", () => {
+            aboutMenu.open()
+        })
+       
+        //Opens about page via about icon
+        let settingsMenu = new xel.Drawer()
+        settingsMenu.setPosition("top")
+        settingsMenu.drawer.innerHTML = '<o-settings></o-settings>'
+        this.settings = this.element.querySelector("#settings")
+        this.settings.addEventListener("click", () => {
+            settingsMenu.open()
+        })
+
+  
+        
 
 
     }

@@ -172,12 +172,21 @@ class About extends forklift.PaletteBox {
 
 class AboutHandler {
     constructor() {
-        let aboutMenu = new xel.Prompt()
+        let aboutMenu = new xel.Drawer()
         aboutMenu.drawer.innerHTML = '<o-about></o-about>'
         this.about = new xel.MenuItem("#about")
         this.about.onClick(() => {
             aboutMenu.open()
         })
+    }
+
+}
+
+class Settings extends forklift.PaletteBox {
+    constructor(e) {
+        super(e)
+        this.loadBox("elements/o-settings/settings.shadow.html")
+        this.loadContent("elements/o-settings/settings.html")
     }
 }
 
@@ -185,17 +194,12 @@ class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)
         this.addBox("CONNECT", "o-connect", Connect)
-        this.addBox("NEWPROJECT", "o-newproject", NewProject)
-        this.addBox("NEWSERVER", "o-newserver", NewServer)
-        this.addBox("SERVER", "o-server", AddServer)
         this.addBox("ABOUT", "o-about", About)
         this.addBox("CONFIRM", "o-confirm", Confirm)
+        this.addBox("SETTINGS", "o-settings", Settings)
     }
     onUnitLoad() {
-        //this.newProject = new NewProjectHandler()
-        //this.addServer = new AddServerHandler()
-        //this.aboutOpen = new AboutHandler()
-        //this.connect = new ConnectHandler()
+        this.connect = new ConnectHandler()
     }
 }
 
