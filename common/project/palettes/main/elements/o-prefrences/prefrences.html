@@ -2,7 +2,8 @@
     <x-box vertical style="display: flex; justify-content: center;">
         <x-select id="themeSelector" style="margin:auto; margin-top: 10px">
             <x-menu>
-                <x-menuitem value="observo" id="theme-default" selected="true"> <!-- TODO: Make theme declared in prefrances file the default selected theme-->
+                <x-menuitem value="observo" id="theme-default" selected="true">
+                    <!-- TODO: Make theme declared in prefrances file the default selected theme-->
                     <x-label>Observo (default)</x-label>
                 </x-menuitem>
                 <x-menuitem value="dark" id="theme-dark">
@@ -14,12 +15,14 @@
         <x-box style="margin: auto; margin-top: 10px; margin-bottom: 5px;">
             <x-checkbox id="autosave"></x-checkbox>
             <x-label for="checkbox" id="auto">
-              <x-box vertical>
-                <x-label><strong>Auto Save</strong></x-label>
-                <x-label>Enables Auto Save</x-label>
-              </x-box>
+                <x-box vertical>
+                    <x-label>
+                        <strong>Auto Save</strong>
+                    </x-label>
+                    <x-label>Enables Auto Save</x-label>
+                </x-box>
             </x-label>
-          </x-box>
+        </x-box>
     </x-box>
     <hr>
     <x-box style="display: flex; justify-content: center; align-items: flex-end;">
