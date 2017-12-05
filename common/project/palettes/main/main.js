@@ -39,16 +39,16 @@ class StorageSystem {
 
         this.presets = path.join(home, '.observo/presets/')
 
-        this.profilePath = path.join(home, '.observo/config.json')
+        this.configPath = path.join(home, '.observo/config.json')
         this.serverList = path.join(home, '.observo/serverList.json')
 
 
-        if (!jetpack.exists(this.profilePath)) {
+        if (!jetpack.exists(this.configPath)) {
             const template_c = require('./templates/config.json')
-            jetpack.write(this.profilePath, template_c)
+            jetpack.write(this.configPath, template_c)
         }
         try {
-            const config = require(this.profilePath)
+            const config = require(this.configPath)
             this.config = config;
         } catch (e) {
             this.config = null
@@ -100,7 +100,7 @@ class StorageSystem {
      * @param {Boolean} returnDataURL 
      */
     fileToB64(file, returnDataURL) {
-        let fileContents = require("fs-jetpack").read(file, "buffer") //import an image as binary buffer
+        let fileContents = jetpack.read(file, "buffer") //import an image as binary buffer
         let arr = new Uint8Array(fileContents); //Get an integer array based on the buffer
         let raw = String.fromCharCode.apply(null, arr); //Passes the array to the string converter (Normally would have to be a for loop, but "apply" circumvents that)
         let b64 = btoa(raw); //Encodes a string into base64. Use "atob(b64);" for proof
@@ -108,6 +108,111 @@ class StorageSystem {
             return "data:image/jpeg;base64," + b64; //Put into a readable format for the "src" attribute
         }
         return b64.toString() //Make sure that b64 is a String and return
+    }
+    configManager() {
+        let configPath = this.configPath
+        let configContent = JSON.parse(jetpack.read(this.configPath))
+        return {
+            /**
+             * Returns entire JSON of config file
+             * @returns {Object} configContent JSON of entire file
+             */
+            readAll: () => {
+                return configContent
+            },
+
+
+            /**
+             * Overwrite entire file with string
+             * @param {string} contentIn Entire contents of file to write
+             */
+            write: (contentIn) => {
+                require("fs-jetpack").write(this.configPath, contentIn)
+            },
+
+
+            /**
+             * Writes a single value to the config file
+             * @param {string} key Key to write to.
+             * @param {any} value Value to write to selected key
+             */
+            writeValue: (key, value) => { //Change to accept array of values
+                if (configContent.hasOwnProperty(key)) {
+                    configContent[key] = value
+                    jetpack.write(configPath, JSON.stringify(configContent, null, 4))
+                    console.log("Value [" + key + "] written to " + configPath + " with value [" + value + "]")
+                } else {
+                    console.log("ERROR - [" + key + "] is not a valid key name")
+                }
+            },
+
+
+            /**
+             * Returns either the current theme name or the index of the current theme
+             * @param {boolean=} themeName If true, return the name of the current theme, not the index
+             * @returns {(number|string)} Index of current theme or name of current theme
+             */
+            getTheme: (themeName) => { //If themeName is not defined or false, return just the index of the theme
+                themeName = themeName || null
+                if (themeName != null && themeName) {
+                    return configContent.themes[configContent.theme]
+                }
+                return configContent.theme
+            },
+
+
+            /**
+             * Returns an array of installed theme names, or the number of installed themes
+             * @returns {(string[]|number)} A list of themes listed in the config file or the number of themes (starting at 0)
+             */
+            getInstalledThemes: (returnLength) => { //Returns as an array
+                returnLength = returnLength || null
+                if (returnLength != null && returnLength) {
+                    return configContent.themes.length
+                }
+                return configContent.themes
+            },
+
+
+            /**
+             * Returns an array of installed languages, or the number of installed languages
+             * @returns {string[]|number} A list of langues listed in the config file or the number of languages (starting at 0)
+             */
+            getInstalledLanguages: (returnLength) => {
+                returnLength = returnLength || null
+                if (returnLength != null && returnLength) {
+                    return configContent.languages.length
+                }
+                return configContent.languages
+            },
+
+
+            /**
+             * Returns the current version number
+             * @returns {string} Version number (with decimals) EX: "12.1.1"
+             */
+            getVersion: () => {
+                return configContent.version;
+            },
+
+
+            /**
+             * Returns the current language
+             * @returns {string} Current language in config file
+             */
+            getLanguage: () => {
+                return configContent.language
+            },
+
+
+            /**
+             * Returns whether or not this the first usage
+             * @returns {boolean} Whether or not this is the first time the user is using the program
+             */
+            isFirstUse: () => {
+                return configContent.first_use
+            }
+        }
     }
 }
 
@@ -141,15 +246,21 @@ class Prefrences extends forklift.PaletteBox {
         this.loadBox("elements/o-prefrences/prefrences.shadow.html")
         this.loadContent("elements/o-prefrences/prefrences.html")
     }
+    onUnitLoad() {
+        
+    }
 }
 
 class PrefrencesHandler {
     constructor(p) {
-        drawer.drawer.innerHTML = '<o-prefrences></o-prefrences>'
+        let prefrencesDialog = new xel.Dialog()
+        prefrencesDialog.dialog.innerHTML = '<o-prefrences></o-prefrences>'
+        prefrencesDialog.dialog.insertAdjacentHTML("afterbegin", `<style>color:#F0F;</style>`)
         this.prefrenceButton = new xel.MenuItem("#file-prefrences")
         this.prefrenceButton.onClick(() => {
-            drawer.open()
+            prefrencesDialog.open()
         })
+        return this
     }
 }
 
@@ -166,6 +277,7 @@ class PrefrencesHandler {
 //Doesn't Work
 //Bruce Needs to fix this
 //Help Would be nice :P
+//////////////////////////////////////////////////////////////
 
 class Help extends forklift.PaletteBox {
     constructor(p) {
@@ -188,7 +300,7 @@ class HelpHandler {
 class ListUsers { //Orginize and document. Will be heavily modified for API integration
     constructor(p) {
         this.mainArea = document.querySelector("#userlist") //Select the o-box with ID "userlist"
-        this.userActionDialog= new xel.Dialog();
+        this.userActionDialog = new xel.Dialog();
         //Something to check if any values actually exist, so that the default message is displayed by default
 
         this.mainArea.innerHTML = "" //Get rid of default (no user) message
@@ -223,17 +335,18 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
         if (permissions["Can edit roles"]) {
             editRoleStatus = ""
         }
-        function listPermissions(userID){
+
+        function listPermissions(userID) {
             let permissionsBox = `<x-popover>`
-            for(var i = 1; i < Object.values(roles[currentUserInfo.role]).length; i++){   //Skips the role name and then lists out the permissions and their values
+            for (var i = 1; i < Object.values(roles[currentUserInfo.role]).length; i++) { //Skips the role name and then lists out the permissions and their values
                 permissionsBox += `<x-label>` + Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i] + "</x-label>"
                 //console.log(Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i])
             }
             permissionsBox += "</x-popover>"
-            console.log(permissionsBox)
+            //console.log(permissionsBox)
             return permissionsBox
         }
-        
+
         let template =
             `<o-box flex row style="flex: 0 0 auto;" class="userListItem" id="listItem-${currentUserID}">
                 <o-box flex style="width: fit-content;">
