@@ -2,3 +2,5 @@
 package-lock.json
 /backend/archive
 /backend/mariadb
+/mariadb/
+/archive/

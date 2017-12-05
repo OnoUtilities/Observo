@@ -19,6 +19,12 @@ class Loader extends forklift.PaletteBox {
         this.spinner.style.display = "none"
         this.title.innerHTML = text
     }
+    hide() {
+        this.element.style.display = "none"
+    }
+    show() {
+        this.element.style.display = ""
+    }
 }
 class Palette extends forklift.PaletteLoader {
     constructor(id) {

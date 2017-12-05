@@ -1,11 +1,13 @@
 {
-    "version": "0.1.1",
-    "first_use": false,
-    "themes": [
-      "observo@theme-default"
-    ],
-    "languages": {
-      "en": "English"
-    },
-    "language": "en"
-  }
+  "themes": [
+    "default",
+	"dark"
+  ],
+  "languages": {
+    "en": "English"
+  },
+  "version": "0.1.1",
+  "first_use": false,
+  "language": "en",
+  "theme": 0
+}
