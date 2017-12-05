@@ -145,10 +145,41 @@ class Sidebar extends forklift.PaletteBox {
         content.style.display = "none"
     }
 }
+/*class SidebarHandler {
+    constructor(id) { }
+    onUnitLoad() {
+        let me = this
+        this.serverProjects = new ServerProjectsHandler(me)
+    }
+}
+class ServerProjects extends forklift.PaletteBox {
+    constructor(id) {
+        super(id)
+        this.loadBox("elements/o-projects/projects.shadow.html")
+        this.loadContent("elements/o-projects/projects.html")
+    }
+}
+
+class ServerProjectsHandler {
+    constructor(id) {
+        let projectsDrawer = new xel.Drawer()
+        projectsDrawer.drawer.innerHTML = '<o-projects></o-projects>'
+        this.projectButton = new xel.MenuItem("#projects")
+        this.projectButton.onClick(() => {
+            this.projectsDrawer.open()
+        })
+    }
+}*/
+/*<x-box>
+<x-button id="projects">TEST</x-button>
+</x-box>*/
+//put in sidebar.html o add the test button
+//Bruce needs to fix this 
 class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)
         this.addBox("SIDEBAR", "o-sidebar", Sidebar)
+      //  this.addBox("PROJECTS", "o-projects", ServerProjects)
     }
 }
 module.exports = Palette

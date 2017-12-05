@@ -1,15 +1,15 @@
 <template>
         <x-label style="font-size: 24px; text-align: center;">Server Settings</x-label>
         <x-box>
-        <x-label style="font-size: 18px; margin-left: 25px;"><strong>Server Name</strong></x-label>
-        <x-label style="font-size: 18px; margin-left: 90px;"><strong>Presets</strong></x-label>
+        <x-label style="font-size: 18px; margin-left: 300px;"><strong>Server Name</strong></x-label>
+        <x-label style="font-size: 18px; margin-left:90px;"><strong>Presets</strong></x-label>
         </x-box>
-    <x-box style="margin-left: 10px;">
+    <x-box style="margin-left: 300px;">
             <x-input style="margin-left: 10px;" skin="flat" id="server-name">
-                    <x-icon name="pensil"></x-icon>
-                    <x-label>Name</x-label>
+                    <x-icon name="fa-pencil" iconset="assets/icons/icon.svg"></x-icon>
+                    <x-label>Server Name</x-label>
                 </x-input>
-        <x-select style="margin-left: 15px;">
+        <x-select style="margin-left: 20px;">
             <x-menu>
                 <x-menuitem value="defualt" selected="true">
             <x-checkbox id="defualt-preset" selected="true"></x-checkbox>
@@ -41,15 +41,16 @@
             </x-menu>
             </x-select>
           </x-box>
-          <x-label style="font-size: 18px; margin-left: 20px;"><strong>Maximum Members</strong></x-label>
+          <x-label style="font-size: 18px; margin-left: 300px;"><strong>Maximum Members</strong></x-label>
           <x-box style="margin-left: 300;">
-              <x-input style="margin-left: 20px;" skin="flat" maxlength="2" >
+              <x-input style="margin-left: 315px;" skin="flat" maxlength="2" >
+                  <x-icon name="fa-maxcdn" iconset="assets/icons/icon.svg"></x-icon>
               <x-label>Max Members</x-label>
             </x-input>
             <x-stepper></x-stepper>
           </x-box>
-          <x-box style="display: flex; justify-content: center; align-items: flex-end;">
-                <x-button id="confirmPresets">Create Server</x-button>
-                <x-button style="margin-left: 5px;" id="cancelPrsets">CANCEL</x-button>
+          <x-box style="display: flex; justify-content: center; align-items: flex-end; margin-top: 15px;">
+                <x-button id="add-new-server">Create Server</x-button>
+                <x-button style="margin-left: 5px;" id="cancel-new">CANCEL</x-button>
             </x-box>
 </template>

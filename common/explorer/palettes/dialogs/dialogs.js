@@ -125,7 +125,7 @@ class NewProjectHandler {
         this.projectButton.onClick(() => {
             newProject.open()
         })
-
+        this.ipAddress = new xel.DialogInput("#server-ip")
     }
 }
 
@@ -138,7 +138,7 @@ class AddServer extends forklift.PaletteBox {
 }
 
 class AddServerHandler {
-    constructor() {
+    constructor(e) {
         let addServerMenu = new xel.Prompt()
         addServerMenu.drawer.innerHTML = '<o-server></o-server>'
         this.addServer = new xel.MenuItem("#new-project")
@@ -149,6 +149,10 @@ class AddServerHandler {
             this.newServerButton = new xel.MenuItem("#create-server")
             this.newServerButton.onClick(() => {
                 p.open()
+                this.newServer = new xel.MenuItem("#add-new-server")
+                this.newServer.onClick(() => {
+                    let addNewServer = forklift.App.getPaletteInstance("SIDEBAR").connect
+                })
             })
         })
     }
