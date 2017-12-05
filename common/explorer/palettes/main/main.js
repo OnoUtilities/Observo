@@ -120,6 +120,25 @@ class Content extends forklift.PaletteBox {
         this.loadBox("elements/o-content/content.shadow.html")
         this.loadContent("elements/o-content/content.html")
         this.storage = new StorageSystem(this)
+<<<<<<< HEAD
+=======
+        this.pos = 0
+    }
+    onUnitLoad() {
+        this.servers = this.element.querySelector("#servers")
+        this.projects = this.element.querySelector("#projects")
+
+        
+        this.servers.addEventListener("click", () => {
+
+            this.moveLeft()
+        })
+        this.serversBack = this.element.querySelector("#serversBack")
+        this.serversBack.addEventListener("click", () => {
+            this.moveRight()
+        })
+
+>>>>>>> parent of c64f5f2... Added PROJECTS menu column, fixed some LOADER bugs, etc
 
     }
     hide() {
