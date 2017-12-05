@@ -120,27 +120,90 @@ class Content extends forklift.PaletteBox {
         this.loadBox("elements/o-content/content.shadow.html")
         this.loadContent("elements/o-content/content.html")
         this.storage = new StorageSystem(this)
-<<<<<<< HEAD
-=======
         this.pos = 0
     }
     onUnitLoad() {
         this.servers = this.element.querySelector("#servers")
         this.projects = this.element.querySelector("#projects")
 
-        
+        //When servers button is clicked, move to page
         this.servers.addEventListener("click", () => {
-
             this.moveLeft()
         })
+        //When projects button is clicked, move to page
+        this.projects.addEventListener("click", () => {
+            this.moveRight()
+        })
+
+        //Servers page back button
         this.serversBack = this.element.querySelector("#serversBack")
         this.serversBack.addEventListener("click", () => {
             this.moveRight()
         })
 
->>>>>>> parent of c64f5f2... Added PROJECTS menu column, fixed some LOADER bugs, etc
+        //Projects page back button
+        this.projectsBack = this.element.querySelector("#projectsBack")
+        this.projectsBack.addEventListener("click", () => {
+            this.moveLeft()
+        })
+
+        //Opens about page via about icon
+        let aboutMenu = new xel.Drawer()
+        aboutMenu.setPosition("top")
+        aboutMenu.drawer.innerHTML = '<o-about></o-about>'
+        this.about = this.element.querySelector("#about")
+        this.about.addEventListener("click", () => {
+            aboutMenu.open()
+        })
+       
+        //Opens about page via about icon
+        let settingsMenu = new xel.Drawer()
+        settingsMenu.setPosition("top")
+        settingsMenu.drawer.innerHTML = '<o-settings></o-settings>'
+        this.settings = this.element.querySelector("#settings")
+        this.settings.addEventListener("click", () => {
+            settingsMenu.open()
+        })
+
+  
+        
+
 
     }
+    moveLeft() {
+        if (this.pos == 0) {
+
+            this.element.classList.add("center-to-left");
+            this.element.classList.remove("left-to-center");
+            this.element.classList.remove("center-to-right");
+            this.element.classList.remove("right-to-center");
+            this.pos = -1
+        }
+        if (this.pos == 1) {
+            this.element.classList.remove("center-to-left");
+            this.element.classList.remove("left-to-center");
+            this.element.classList.remove("center-to-right");
+            this.element.classList.add("right-to-center");
+            this.pos = 0
+        }
+    }
+    moveRight() {
+        if (this.pos == 0) {
+            this.element.classList.remove("center-to-left");
+            this.element.classList.remove("left-to-center");
+            this.element.classList.add("center-to-right");
+            this.element.classList.remove("right-to-center");
+            this.pos = 1
+        }
+        if (this.pos == -1) {
+            this.element.classList.remove("center-to-left");
+            this.element.classList.add("left-to-center");
+            this.element.classList.remove("center-to-right");
+            this.element.classList.remove("right-to-center");
+            this.pos = 0
+        }
+    }
+    
     hide() {
         this.element.style.display = "none"
     }
