@@ -33,10 +33,10 @@ function window() { //WindowManager
     }
   })
   mainWin.setURL(__dirname, "explorer.html")
-  //mainWin.win.setFullScreenable(false)
+  mainWin.win.setFullScreenable(false)
   //mainWin.win.setResizable(false)
   //mainWin.win.setMinimumSize(800, 600);
-  //mainWin.win.setMaximumSize(800, 600);
+  //ainWin.win.setMaximumSize(800, 600);
   //mainWin.openDevTools();
   mainWin.win.once('ready-to-show', () => {
     mainWin.win.show()
