@@ -22,7 +22,7 @@ class MenuBar extends forklift.PaletteBox {
     };
 }
 
-class StorageSystem {
+class ConfigManager {
     constructor(parent) {
         this.parent = parent
 
@@ -42,9 +42,8 @@ class StorageSystem {
         this.configPath = path.join(home, '.observo/config.json')
         this.serverList = path.join(home, '.observo/serverList.json')
 
-
         if (!jetpack.exists(this.configPath)) {
-            const template_c = require('./templates/config.json')
+            const template_c = require('./common/explorer/palettes/main/templates/config.json')
             jetpack.write(this.configPath, template_c)
         }
         try {
@@ -55,7 +54,7 @@ class StorageSystem {
         }
 
         if (!jetpack.exists(this.serverList)) {
-            const template_r = require('./templates/serverList.json')
+            const template_r = require('./common/explorer/palettes/main/templates/serverList.json')
             jetpack.write(this.serverList, template_r)
         }
         try {
@@ -65,35 +64,14 @@ class StorageSystem {
             this.servers = null
         }
 
+        this.configContent = JSON.parse(jetpack.read(this.configPath))
+
         this.data = {}
     }
     getServers() {
         return this.servers
     }
-    loadTemplate(file) {
-        try {
-            const data = require(file)
-            console.log(data)
-            return data
-        } catch (e) {
-            console.log(e)
-            return null
-        }
-    }
-    getStorageCell(id) {
-        if (this.data[id] != undefined) {
-            return this.data[id]
-        }
-    }
-    saveStorageCell(id, data) {
-        this.data[id] = data
-    }
-    isCell(id) {
-        if (this.data[id] != undefined) {
-            return true
-        }
-        return false
-    }
+
     /**
      * Converts an inputed file into base64 with the option to convert it into a dataURL for img tags
      * @param {String} file 
@@ -109,110 +87,107 @@ class StorageSystem {
         }
         return b64.toString() //Make sure that b64 is a String and return
     }
-    configManager() {
-        let configPath = this.configPath
-        let configContent = JSON.parse(jetpack.read(this.configPath))
-        return {
-            /**
-             * Returns entire JSON of config file
-             * @returns {Object} configContent JSON of entire file
-             */
-            readAll: () => {
-                return configContent
-            },
 
+    /**
+     * Returns entire JSON of config file
+     * @returns {Object} configContent JSON of entire file
+     */
+    readAll() {
+        return this.configContent
+    }
 
-            /**
-             * Overwrite entire file with string
-             * @param {string} contentIn Entire contents of file to write
-             */
-            write: (contentIn) => {
-                require("fs-jetpack").write(this.configPath, contentIn)
-            },
+    /**
+     * Overwrite entire file with string
+     * @param {string} contentIn Entire contents of file to write
+     */
+    write(contentIn) {
+        require("fs-jetpack").write(this.configPath, contentIn)
+    }
 
-
-            /**
-             * Writes a single value to the config file
-             * @param {string} key Key to write to.
-             * @param {any} value Value to write to selected key
-             */
-            writeValue: (key, value) => { //Change to accept array of values
-                if (configContent.hasOwnProperty(key)) {
-                    configContent[key] = value
-                    jetpack.write(configPath, JSON.stringify(configContent, null, 4))
-                    console.log("Value [" + key + "] written to " + configPath + " with value [" + value + "]")
-                } else {
-                    console.log("ERROR - [" + key + "] is not a valid key name")
-                }
-            },
-
-
-            /**
-             * Returns either the current theme name or the index of the current theme
-             * @param {boolean=} themeName If true, return the name of the current theme, not the index
-             * @returns {(number|string)} Index of current theme or name of current theme
-             */
-            getTheme: (themeName) => { //If themeName is not defined or false, return just the index of the theme
-                themeName = themeName || null
-                if (themeName != null && themeName) {
-                    return configContent.themes[configContent.theme]
-                }
-                return configContent.theme
-            },
-
-
-            /**
-             * Returns an array of installed theme names, or the number of installed themes
-             * @returns {(string[]|number)} A list of themes listed in the config file or the number of themes (starting at 0)
-             */
-            getInstalledThemes: (returnLength) => { //Returns as an array
-                returnLength = returnLength || null
-                if (returnLength != null && returnLength) {
-                    return configContent.themes.length
-                }
-                return configContent.themes
-            },
-
-
-            /**
-             * Returns an array of installed languages, or the number of installed languages
-             * @returns {string[]|number} A list of langues listed in the config file or the number of languages (starting at 0)
-             */
-            getInstalledLanguages: (returnLength) => {
-                returnLength = returnLength || null
-                if (returnLength != null && returnLength) {
-                    return configContent.languages.length
-                }
-                return configContent.languages
-            },
-
-
-            /**
-             * Returns the current version number
-             * @returns {string} Version number (with decimals) EX: "12.1.1"
-             */
-            getVersion: () => {
-                return configContent.version;
-            },
-
-
-            /**
-             * Returns the current language
-             * @returns {string} Current language in config file
-             */
-            getLanguage: () => {
-                return configContent.language
-            },
-
-
-            /**
-             * Returns whether or not this the first usage
-             * @returns {boolean} Whether or not this is the first time the user is using the program
-             */
-            isFirstUse: () => {
-                return configContent.first_use
-            }
+    /**
+     * Writes a single value to the config file
+     * @param {string} key Key to write to.
+     * @param {any} value Value to write to selected key
+     */
+    writeValue(key, value) { //Change to accept array of values
+        if (this.configContent.hasOwnProperty(key)) {
+            this.configContent[key] = value
+            jetpack.write(this.configPath, JSON.stringify(this.configContent, null, 4))
+            console.log("Value [" + key + "] written to " + this.configPath + " with value [" + value + "]")
+        } else {
+            console.log("ERROR - [" + key + "] is not a valid key name")
         }
+    }
+
+    /**
+     * Returns either the current theme name or the index of the current theme
+     * @param {boolean=} themeName If true, return the name of the current theme, not the index
+     * @returns {(number|string)} Index of current theme or name of current theme
+     */
+    getTheme(themeName) { //If themeName is not defined or false, return just the index of the theme
+        themeName = themeName || null
+        if (themeName != null && themeName) {
+            return Object.keys(this.configContent.themes)[this.configContent.theme]
+        }
+        return this.configContent.theme
+    }
+
+    /**
+     * Returns an array of installed theme names, or the number of installed themes
+     * @returns {(string[]|number)} A list of themes listed in the config file or the number of themes (starting at 0)
+     */
+    getInstalledThemes(returnLength) { //Returns as an array
+        returnLength = returnLength || null
+        if (returnLength != null && returnLength) {
+            return Object.keys(this.configContent.themes).length
+        }
+        return Object.keys(this.configContent.themes)
+    }
+
+    /**
+     * Returns the current language
+     * @returns {string} Current language in config file
+     */
+    getLanguage(languageName) {
+        languageName = languageName || null
+        if (languageName != null && languageName) {
+            return Object.keys(this.configContent.languages)[this.configContent.language]
+        }
+        return this.configContent.language
+    }
+
+    /**
+     * Returns an array of installed languages, or the number of installed languages
+     * @param {boolean} nameOfLanguages return the name of the languages rather than their values [MUST BE TRUE TO GET LENGTH]
+     * @param {boolean} returnLength return the number of installed languages (Starting at 1) [nameOfLanguages MUST BE SPECIFIED TO GET LENGTH]
+     * @returns {string[]|number} A list of langues listed in the config file or the number of languages (starting at 0)
+     */
+    getInstalledLanguages(nameOfLanguages, returnLength) {
+        nameOfLanguages = nameOfLanguages || null
+        returnLength = returnLength || null
+        if (returnLength != null && returnLength) {
+            return Object.keys(this.configContent.languages).length
+        }
+        if (nameOfLanguages != null && nameOfLanguages) {
+            return Object.values(this.configContent.languages)
+        }
+        return Object.keys(this.configContent.languages)
+    }
+
+    /**
+     * Returns the current version number
+     * @returns {string} Version number (with decimals) EX: "12.1.1"
+     */
+    getVersion() {
+        return this.configContent.version;
+    }
+
+    /**
+     * Returns whether or not this the first usage
+     * @returns {boolean} Whether or not this is the first time the user is using the program
+     */
+    isFirstUse() {
+        return this.configContent.first_use
     }
 }
 
@@ -246,8 +221,26 @@ class Prefrences extends forklift.PaletteBox {
         this.loadBox("elements/o-prefrences/prefrences.shadow.html")
         this.loadContent("elements/o-prefrences/prefrences.html")
     }
-    onUnitLoad() {
-        
+    onContentLoad() {
+        let config = new ConfigManager(this)
+        console.log(config.getInstalledLanguages(true))
+        console.log(config.getInstalledLanguages(true, true))
+        console.log(config.getInstalledLanguages())
+        console.log(config.getInstalledThemes(true))
+        console.log(config.getInstalledThemes())
+        console.log(config.getLanguage())
+        console.log(config.getServers())
+        console.log(config.getTheme(true))
+        console.log(config.getTheme())
+        console.log(config.getVersion())
+        let themeSelector = new xel.Select(document.getElementById("themeSelector"))
+        let languageSelector = new xel.Select(document.getElementById("languageSelector"))
+        themeSelector.onChange(() => {
+            console.log("lknaleFJHNalwefjn")
+            console.log(themeSelector.value)
+            //document.getElementsByTagName("body")[0].className = themeSelector.value ///////////////Possibly add theme preview////////////////
+        })
+        return this
     }
 }
 //Theme selector & Autosave toggle
@@ -258,7 +251,7 @@ class PrefrencesHandler {
         let autosave = 0;
         let changes = 0;
         prefrencesDialog.dialog.innerHTML = '<o-prefrences></o-prefrences>'
-        prefrencesDialog.dialog.insertAdjacentHTML("afterbegin", `<style>color:#F0F;</style>`)
+        prefrencesDialog.dialog.className = "prefrences"
         this.prefrenceButton = new xel.MenuItem("#file-prefrences")
         this.prefrenceButton.onClick(() => {
             prefrencesDialog.open()
@@ -308,7 +301,7 @@ class PrefrencesHandler {
             })
             
         })
-        return this
+
     }
 }
 
@@ -479,7 +472,7 @@ class Content extends forklift.PaletteBox {
         this.connectionInfo = new DisconnectHandler(me)
         this.helpInfo = new HelpHandler(me)
         this.userList = new ListUsers(me)
-        let storageSystem = new StorageSystem(me);
+        let configManager = new ConfigManager(me);
     }
     openExplorer() {
         let mainWin = managerRemote.createWindow({
