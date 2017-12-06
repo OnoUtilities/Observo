@@ -250,15 +250,63 @@ class Prefrences extends forklift.PaletteBox {
         
     }
 }
-
+//Theme selector & Autosave toggle
 class PrefrencesHandler {
     constructor(p) {
         let prefrencesDialog = new xel.Dialog()
+        let theme = "defualt"
+        let autosave = 0;
+        let changes = 0;
         prefrencesDialog.dialog.innerHTML = '<o-prefrences></o-prefrences>'
         prefrencesDialog.dialog.insertAdjacentHTML("afterbegin", `<style>color:#F0F;</style>`)
         this.prefrenceButton = new xel.MenuItem("#file-prefrences")
         this.prefrenceButton.onClick(() => {
             prefrencesDialog.open()
+            this.themeDark = new xel.MenuItem("#theme-dark")
+            this.themeDark.onClick(() => {
+                console.log("The theme is now Dark")
+                theme = "dark"
+                changes++
+                this.apply = new xel.MenuItem("#applyPreferences")
+                this.apply.onClick(() => {
+                    if(theme=="dark") {
+                    console.log("Changes have been saved")
+                    changes=0;
+                    }
+                })
+            })
+            this.themeDefualt = new xel.MenuItem("#theme-default")
+            this.themeDefualt.onClick(() => {
+                theme = "defualt"
+                changes++
+                console.log("The theme is now the defualt")
+                this.apply = new xel.MenuItem("#applyPreferences")
+                this.apply.onClick(() => {
+                    if(theme=="defualt"&&changes==1) {
+                    console.log("Changes have been saved")
+                    changes=0;
+                    }
+                })
+            })
+            this.autoSave = new xel.MenuItem("#autosave")
+            this.autoSave.onClick(() => {
+                autosave += 1;
+                changes++
+                if(autosave%2==1){
+                    console.log("The autosave has been enabled")
+                    this.apply = new xel.MenuItem("#applyPreferences")
+                    this.apply.onClick(() => {
+                        if(changes==1){
+                        console.log("Changes have been saved")
+                        changes=0;
+                        }
+                    })
+                } else {
+                    console.log("The autosave has been diabled")
+                    changes=0;
+                }
+            })
+            
         })
         return this
     }
