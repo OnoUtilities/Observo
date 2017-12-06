@@ -3,13 +3,13 @@ body {
     overflow: hidden;
     user-select: none;
     o-menubar {
+        z-index: 100;
         x-menubar {
-            z-index: 1000;
             -webkit-app-region: drag;   
         }
     }
     o-content {
-        z-index: -10000;
+        z-index: 1;
         o-sidebar {
             .div {
                 ::-webkit-scrollbar {

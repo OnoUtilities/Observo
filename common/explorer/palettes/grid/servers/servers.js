@@ -11,7 +11,7 @@ class Servers extends forklift.PaletteBox {
         })
         this.addServer = this.element.querySelector("#addServer")
         this.addServer.addEventListener("click", () => {
-            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveUp()
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveDown()
         })
     }
 }
