@@ -211,6 +211,7 @@ class Content extends forklift.PaletteBox {
         this.element.style.display = ""
     }
 }
+
 class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)

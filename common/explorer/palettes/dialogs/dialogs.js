@@ -153,7 +153,7 @@ class AddServerHandler {
                 this.newServer.onClick(() => {
                     let addNewServer = forklift.App.getPaletteInstance("SIDEBAR").connect
                 })
-            })
+            }) 
         })
     }
 }
