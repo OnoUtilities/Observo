@@ -4,10 +4,12 @@ body {
     user-select: none;
     o-menubar {
         x-menubar {
+            z-index: 1000;
             -webkit-app-region: drag;   
         }
     }
     o-content {
+        z-index: -10000;
         o-sidebar {
             .div {
                 ::-webkit-scrollbar {
@@ -107,6 +109,69 @@ body {
         }
         to {
             -webkit-transform: translate(-888px);
+        }
+    } 
+
+    /*---------------------------------------------------*/
+    .center-to-top {
+        -webkit-animation-name: centertotop;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-timing-function: ease;
+        -webkit-animation-fill-mode: forwards;
+    }
+    @-webkit-keyframes centertotop {
+        from {
+            -webkit-transform: translateY(666px);
+        }
+        to {
+            -webkit-transform: translateY(0px);
+        }
+     }
+    .top-to-center {
+        -webkit-animation-name: toptocenter;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-timing-function: ease;
+        -webkit-animation-fill-mode: forwards;
+           
+    }
+    @-webkit-keyframes toptocenter {
+        from {
+            -webkit-transform: translateY(0px);
+        }
+        to {
+            -webkit-transform: translateY(666px);
+        }
+    } 
+    .center-to-bottom {
+        -webkit-animation-name: centertobottom;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-timing-function: ease;
+        -webkit-animation-fill-mode: forwards;
+    }
+    @-webkit-keyframes centertobottom {
+        from {
+            -webkit-transform: translateY(0px);
+        }
+        to {
+            -webkit-transform: translateY(-666px);
+        }
+    }
+    .bottom-to-center {
+        -webkit-animation-name: bottomtocenter;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-timing-function: ease;
+        -webkit-animation-fill-mode: forwards;
+    }
+    @-webkit-keyframes bottomtocenter {
+        from {
+            -webkit-transform: translateY(-666px);
+        }
+        to {
+            -webkit-transform: translateY(0px);
         }
     } 
     

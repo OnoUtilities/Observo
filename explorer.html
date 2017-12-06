@@ -122,11 +122,17 @@
     let dialogInput = new xel.DialogInput()
     let prompt = new xel.Prompt()
     let drawer = new xel.Drawer()
+    fl.App.loadPalette("GRID-HOME", "common/explorer/palettes/grid/home/home.js")
+    fl.App.loadPalette("GRID-SERVERS", "common/explorer/palettes/grid/servers/servers.js")
+    fl.App.loadPalette("GRID-PROJECTS", "common/explorer/palettes/grid/projects/projects.js")
+
 
     fl.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")
     fl.App.loadPalette("DIALOGS", "common/explorer/palettes/dialogs/dialogs.js")
     fl.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
-    fl.App.loadPalette("LOADER", "common/explorer/palettes/loader/loader.js")
+
+
+
     fl.App.run()
 
 </script>

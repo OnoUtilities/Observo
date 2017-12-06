@@ -1,0 +1,37 @@
+<template>
+    <o-box flex row id="container" style="justify-content: flex-start; height: 100%;">
+        <o-box flex column>
+            <o-box flex style="align-self: stretch; flex-grow: 2;">
+                <o-box flex column>
+                    <o-box flex style="flex: 0 0 auto; height: 350px;">
+                        <section style="position: relative;  margin: auto; top: 30%; right: 0; bottom: 0; left: 0; border-radius: 3px; text-align: center;">
+                            <x-label style="font-size: 72px;" class="rb-font observo-title">
+                                Projects
+                            </x-label>
+                        </section>
+                    </o-box>
+                    <o-box flex>
+                        <o-box flex row-center>
+                            <x-button style="width: 200px; height: 100px;" id="addServer">
+                                <x-box>
+                                    <x-icon name="dns" style="width: 50px; height: 50px;"></x-icon>
+                                    <x-label>ADD PROJECTS</x-label>
+                                </x-box>
+                            </x-button>
+                        </o-box>
+                    </o-box>
+                </o-box>
+            </o-box>
+            <o-box flex row style="flex: 0 0 auto; height: 100px; margin-left: 10px;">
+                <o-box flex>
+                    <x-button id="projectsBack">
+                        <x-box>
+                            <x-icon name="keyboard-arrow-left"></x-icon>
+                        </x-box>
+                    </x-button>
+                </o-box>
+            </o-box>
+        </o-box>
+        <o-sidebar></o-sidebar>
+    </o-box>
+</template>
