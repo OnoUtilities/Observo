@@ -6,9 +6,27 @@ class Projects extends forklift.PaletteBox {
     }
     onUnitLoad() {
         //Projects page back button
-        this.projectsBack = this.element.querySelector("#projectsBack")
-        this.projectsBack.addEventListener("click", () => {
+        this.back = this.element.querySelector("#back")
+        this.back.addEventListener("click", () => {
             forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveLeft()
+        })
+        this.addProject = this.element.querySelector("#addProject")
+        this.addProject.addEventListener("click", () => {
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveDown()
+        })
+    }
+}
+
+class AddProject extends forklift.PaletteBox {
+    constructor(e) {
+        super(e)
+        this.loadBox("elements/o-grid-add-project/grid-add-project.shadow.html")
+        this.loadContent("elements/o-grid-add-project/grid-add-project.html")
+    }
+    onUnitLoad() {
+        this.back = this.element.querySelector("#back")
+        this.back.addEventListener("click", () => {
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveUp()
         })
     }
 }
@@ -16,6 +34,7 @@ class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)
         this.addBox("PROJECTS", "o-grid-projects", Projects)
+        this.addBox("ADDPROJECT", "o-grid-add-project", AddProject)
     }
 }
 

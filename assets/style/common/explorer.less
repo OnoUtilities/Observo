@@ -8,6 +8,10 @@ body {
             -webkit-app-region: drag;   
         }
     }
+    o-loader {
+        width: 888px;
+        height: 666px;
+    }
     o-content {
         z-index: 1;
         o-sidebar {
@@ -36,20 +40,12 @@ body {
         x-button {
             height: 50px;
         }
-        .add-server {
-            
-        }
-        .create-local {
-            
-        }
-        .about {
-                            
-        }
     }
     .fullwidth {
         width: 100%;
         min-width: 100%;
     }
+    /* Wonderful Animations*/
     .center-to-left {
         -webkit-animation-name: centertoleft;
         -webkit-animation-duration: 1s;
@@ -59,10 +55,10 @@ body {
     }
     @-webkit-keyframes centertoleft {
         from {
-            -webkit-transform: translate(-888px);
+            -webkit-transform: translateX(-888px);
         }
         to {
-            -webkit-transform: translate(0);
+            -webkit-transform: translateX(0);
         }
      }
     .left-to-center {
@@ -75,10 +71,10 @@ body {
     }
     @-webkit-keyframes lefttocenter {
         from {
-            -webkit-transform: translate(0px);
+            -webkit-transform: translateX(0px);
         }
         to {
-            -webkit-transform: translate(-888px);
+            -webkit-transform: translateX(-888px);
         }
     } 
     .center-to-right {
@@ -90,10 +86,10 @@ body {
     }
     @-webkit-keyframes centertoright {
         from {
-            -webkit-transform: translate(-888px);
+            -webkit-transform: translateX(-888px);
         }
         to {
-            -webkit-transform: translate(-1776px);
+            -webkit-transform: translateX(-1776px);
         }
     }
     .right-to-center {
@@ -105,10 +101,10 @@ body {
     }
     @-webkit-keyframes righttocenter {
         from {
-            -webkit-transform: translate(-1776px);
+            -webkit-transform: translateX(-1776px);
         }
         to {
-            -webkit-transform: translate(-888px);
+            -webkit-transform: translateX(-888px);
         }
     } 
 

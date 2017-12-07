@@ -123,64 +123,73 @@ class Content extends forklift.PaletteBox {
         this.posX = 0
         this.posY = 0
     }
+    removeXClasses()  {
+        this.element.classList.remove("center-to-left");
+        this.element.classList.remove("left-to-center");
+        this.element.classList.remove("center-to-right");
+        this.element.classList.remove("right-to-center");
+    }
+    removeYClasses() {
+        this.element.classList.remove("center-to-bottom");
+        this.element.classList.remove("bottom-to-center");
+        this.element.classList.remove("center-to-top");
+        this.element.classList.remove("top-to-center");
+    }
+    removeAllClasses() {
+        this.removeYClasses()
+        this.removeXClasses()
+    }
     moveLeft() {
         if (this.posX == 0) {
-
+            this.removeAllClasses()
             this.element.classList.add("center-to-left");
-            this.element.classList.remove("left-to-center");
-            this.element.classList.remove("center-to-right");
-            this.element.classList.remove("right-to-center");
             this.posX = -1
         }
         if (this.posX == 1) {
-            this.element.classList.remove("center-to-left");
-            this.element.classList.remove("left-to-center");
-            this.element.classList.remove("center-to-right");
+            this.removeAllClasses()
             this.element.classList.add("right-to-center");
             this.posX = 0
         }
     }
     moveRight() {
         if (this.posX == 0) {
-            this.element.classList.remove("center-to-left");
-            this.element.classList.remove("left-to-center");
+            this.removeAllClasses()
             this.element.classList.add("center-to-right");
-            this.element.classList.remove("right-to-center");
             this.posX = 1
         }
         if (this.posX == -1) {
-            this.element.classList.remove("center-to-left");
+            this.removeAllClasses()
             this.element.classList.add("left-to-center");
-            this.element.classList.remove("center-to-right");
-            this.element.classList.remove("right-to-center");
             this.posX = 0
         }
+        console.log(this.posX)
     }
 
     moveUp() {
         if (this.posY == 0) {
-            this.element.classList.remove("center-to-bottom");
-            this.element.classList.remove("bottom-to-center");
+            this.removeYClasses()
             this.element.classList.add("center-to-top");
-            this.element.classList.remove("top-to-center");
             this.posY = 1
         }
+        if (this.posY == -1) {
+            this.removeYClasses()
+            this.element.classList.add("bottom-to-center");
+            this.posY = 0
+        }
+        console.log(this.posY)
+    }
+    moveDown() {
         if (this.posY == 1) {
-            this.element.classList.remove("center-to-bottom");
-            this.element.classList.remove("bottom-to-center");
-            this.element.classList.remove("center-to-top");
+            this.removeYClasses()
             this.element.classList.add("top-to-center");
             this.posY = 0
         }
-    }
-    moveDown() {
         if (this.posY == 0) {
+            this.removeYClasses()
             this.element.classList.add("center-to-bottom");
-            this.element.classList.remove("bottom-to-center");
-            this.element.classList.remove("center-to-top");
-            this.element.classList.remove("top-to-center");
             this.posY = -1
         }
+        
     }
     
     hide() {

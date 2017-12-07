@@ -80,8 +80,8 @@
 
 <body class="explorer theme-default animate">
     <o-menubar></o-menubar>   
+    <o-loader ></o-loader>
     <o-content></o-content>
-    <o-loader></o-loader>
 </body>
 
 <script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
@@ -126,7 +126,7 @@
     fl.App.loadPalette("GRID-SERVERS", "common/explorer/palettes/grid/servers/servers.js")
     fl.App.loadPalette("GRID-PROJECTS", "common/explorer/palettes/grid/projects/projects.js")
 
-
+    fl.App.loadPalette("LOADER", "common/explorer/palettes/loader/loader.js")
     fl.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")
     fl.App.loadPalette("DIALOGS", "common/explorer/palettes/dialogs/dialogs.js")
     fl.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")

@@ -42,7 +42,7 @@ class Sidebar extends forklift.PaletteBox {
             let me = this
 
             //Hide the main content screen (which shows the loading box)
-            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").hide()
+            forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").show()
 
             //Attempt to connect to server
             let auth = io.connect(`${ip}authenticate`)
@@ -56,7 +56,7 @@ class Sidebar extends forklift.PaletteBox {
                 //Wait 1.5 seconds until the error screen shows and reset the loader
                 setTimeout(() => {
                     forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").showConnecting()
-                    forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").show()
+                    forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").hide()
                     //Not connecting anymore
                     me.connecting = false;
                 }, 1500)
@@ -92,8 +92,7 @@ class Sidebar extends forklift.PaletteBox {
                             })
                             connect.onCancel(() => {
                                 //When the cancel button is pressed, close the box and send disconnect
-                                let content = forklift.App.getPaletteInstance("MAIN").getBox("CONTENTS")
-                                content.style.display = ""
+                                forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").hide()
                                 connect.close()
                                 auth.emit("end", [""])
                                 me.connecting = false
@@ -107,7 +106,6 @@ class Sidebar extends forklift.PaletteBox {
                     //data.username
                     if (data.state == "new") {
                         connect.hide()
-                        console.log("sauikjghfusdjkgsui7fghksyukgjhmfsgdvb")
                         connect.confirm.display("New account?", `Do you want to create '${data.username}' as a new account?`, (data) => {
                             console.log(data)
                             if (data) {
