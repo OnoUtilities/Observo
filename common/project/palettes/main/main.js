@@ -43,7 +43,7 @@ class ConfigManager {
         this.serverList = path.join(home, '.observo/serverList.json')
 
         if (!jetpack.exists(this.configPath)) {
-            const template_c = require('./common/explorer/palettes/main/templates/config.json')
+            const template_c = require('../../../../common/explorer/palettes/main/templates/config.json')
             jetpack.write(this.configPath, template_c)
         }
         try {
@@ -54,7 +54,7 @@ class ConfigManager {
         }
 
         if (!jetpack.exists(this.serverList)) {
-            const template_r = require('./common/explorer/palettes/main/templates/serverList.json')
+            const template_r = require('../../../../common/explorer/palettes/main/templates/serverList.json')
             jetpack.write(this.serverList, template_r)
         }
         try {
@@ -65,20 +65,68 @@ class ConfigManager {
         }
 
         this.configContent = JSON.parse(jetpack.read(this.configPath))
-
-        this.data = {}
+        this.serverContent = JSON.parse(jetpack.read(this.serverList))
     }
+
     getServers() {
         return this.servers
     }
 
     /**
+     * Returns information on a selected server
+     * @param {string} name The name of the server you would like information on
+     * @returns {Object} A JSON object of the selected server
+     */
+    getServerInfo(name) {
+        return this.serverContent[name]
+    }
+
+    /**
+     * Add a server based on the three provided parameters
+     * @param {string} name Name of the server that will be set in the config file [NO SPACES]
+     * @param {string} title Title of the server that will be shown in the server listings
+     * @param {string} ip IP of the server that will be used to connect
+     */
+    addServer(name, title, ip) {
+        this.serverContent[name] = {
+            "name": title,
+            "ip": ip
+        }
+        jetpack.write(this.serverList, JSON.stringify(this.serverContent, null, 4))
+        console.log("SERVER [" + name + "] added with the title of [" + title + "] and the IP of [" + ip + "]")
+    }
+
+    /**
+     * Edit a single value of a server listing
+     * @param {stirng} name Name of the server you wish to edit
+     * @param {string} key Typically "name" or "ip", but can be anything
+     * @param {any} value Any value you'd like to set
+     */
+    editServer(name, key, value) {
+        this.serverContent[name][key] = value;
+        jetpack.write(this.serverList, JSON.stringify(this.serverContent, null, 4))
+        console.log("SERVER [" + name + "] edited to have the [" + key + "] of [" + this.serverContent[name][key] + "]")
+    }
+
+    /**
+     * Delete a server from the server list file
+     * @param {string} name Name of the server you wish to delete
+     */
+    deleteServer(name) {
+        console.log(this.serverContent)
+        delete this.serverContent[name]
+        console.log(this.serverContent)
+        jetpack.write(this.serverList, JSON.stringify(this.serverContent, null, 4))
+        console.log("SERVER [" + name + "] DELETED")
+    }
+
+    /**
      * Converts an inputed file into base64 with the option to convert it into a dataURL for img tags
-     * @param {String} file 
-     * @param {Boolean} returnDataURL 
+     * @param {String} file Path (can be relative or absolute) to image file [WILL BE UPDATE FOR ADDITIONAL INPUT]
+     * @param {Boolean} returnDataURL Return a format usable in the "src" attribute for the image tag
      */
     fileToB64(file, returnDataURL) {
-        let fileContents = jetpack.read(file, "buffer") //import an image as binary buffer
+        let fileContents = jetpack.read(file, "buffer") //Import an image as binary buffer
         let arr = new Uint8Array(fileContents); //Get an integer array based on the buffer
         let raw = String.fromCharCode.apply(null, arr); //Passes the array to the string converter (Normally would have to be a for loop, but "apply" circumvents that)
         let b64 = btoa(raw); //Encodes a string into base64. Use "atob(b64);" for proof
@@ -90,32 +138,61 @@ class ConfigManager {
 
     /**
      * Returns entire JSON of config file
-     * @returns {Object} configContent JSON of entire file
+     * @returns {Object} ConfigContent JSON of entire file
      */
     readAll() {
         return this.configContent
     }
 
     /**
+     * Returns a specific key or value in config file (subKey can be grabbed from both Objects and Arrays)
+     * @param {string} key Key to get value of, or if subValue is specified, set the parent object/array to get from
+     * @param {string} subKey Subkey of parent object/array
+     * @returns {any} Specific key or value (altered by params)
+     */
+    readValue(key, subKey) {
+        subKey = subKey || null
+        if (subKey != null) {
+            console.log("SUBKEY DEFINED")
+            console.log(Object.values(this.configContent[key]))
+            return Object.values(this.configContent[key])[subKey]
+        }
+        console.log("SUBKEY NOT DEFINED")
+        return this.configContent[key]
+    }
+
+
+    /**
      * Overwrite entire file with string
      * @param {string} contentIn Entire contents of file to write
      */
-    write(contentIn) {
+    writeAll(contentIn) {
         require("fs-jetpack").write(this.configPath, contentIn)
     }
 
     /**
-     * Writes a single value to the config file
-     * @param {string} key Key to write to.
+     * Creates or changes a single value in the config file
+     * TODO: Modify for "infinite" subkey depth for presets
+     * @param {string} key Key to write to
+     * @param {any} subKey [IF DEFINED] Subkey of parent key to write value to
      * @param {any} value Value to write to selected key
      */
-    writeValue(key, value) { //Change to accept array of values
-        if (this.configContent.hasOwnProperty(key)) {
+    writeValue(key, subKey, value) {
+        console.log(arguments.length)
+        if (arguments.length === 2) {
+            subKey = null
+            value = arguments[arguments.length - 1] //"value" is always the last given argument
+            console.log(subKey)
+            console.log(arguments.length - 1)
+            console.log(value)
             this.configContent[key] = value
             jetpack.write(this.configPath, JSON.stringify(this.configContent, null, 4))
-            console.log("Value [" + key + "] written to " + this.configPath + " with value [" + value + "]")
-        } else {
-            console.log("ERROR - [" + key + "] is not a valid key name")
+            console.log("Key [" + key + "] written to " + this.configPath + " with value [" + value + "]")
+        }
+        if (arguments.length === 3) {
+            this.configContent[key][subKey] = value
+            jetpack.write(this.configPath, JSON.stringify(this.configContent, null, 4))
+            console.log("Key [" + key + "." + subKey + "] written to " + this.configPath + " with value [" + value + "]")
         }
     }
 
@@ -133,13 +210,19 @@ class ConfigManager {
     }
 
     /**
-     * Returns an array of installed theme names, or the number of installed themes
-     * @returns {(string[]|number)} A list of themes listed in the config file or the number of themes (starting at 0)
+     * Returns an array of installed themes, or the number of themes installed
+     * @param {boolean} nameOfThemes Return the name of the themes rather than their values [MUST BE TRUE TO GET LENGTH]
+     * @param {boolean} getValues Return the values of installed themes (EX: theme_default) [nameOfThemes MUST BE SPECIFIED TO GET VALUES]
+     * @returns {string[]|number} A list of themes listed in the config file or the number of themes (starting at 0)
      */
-    getInstalledThemes(returnLength) { //Returns as an array
-        returnLength = returnLength || null
-        if (returnLength != null && returnLength) {
+    getInstalledThemes(nameOfThemes, getValues) {
+        nameOfThemes = nameOfThemes || null
+        getValues = getValues || null
+        if (getValues != null && getValues) {
             return Object.keys(this.configContent.themes).length
+        }
+        if (nameOfThemes != null && nameOfThemes) {
+            return Object.values(this.configContent.themes)
         }
         return Object.keys(this.configContent.themes)
     }
@@ -158,14 +241,14 @@ class ConfigManager {
 
     /**
      * Returns an array of installed languages, or the number of installed languages
-     * @param {boolean} nameOfLanguages return the name of the languages rather than their values [MUST BE TRUE TO GET LENGTH]
-     * @param {boolean} returnLength return the number of installed languages (Starting at 1) [nameOfLanguages MUST BE SPECIFIED TO GET LENGTH]
+     * @param {boolean} nameOfLanguages Return the name of the languages rather than their values [MUST BE TRUE TO GET LENGTH]
+     * @param {boolean} getValues return the values of installed languages (EX: en_US) [nameOfLanguages MUST BE SPECIFIED TO GET VALUES]
      * @returns {string[]|number} A list of langues listed in the config file or the number of languages (starting at 0)
      */
-    getInstalledLanguages(nameOfLanguages, returnLength) {
+    getInstalledLanguages(nameOfLanguages, getValues) {
         nameOfLanguages = nameOfLanguages || null
-        returnLength = returnLength || null
-        if (returnLength != null && returnLength) {
+        getValues = getValues || null
+        if (getValues != null && getValues) {
             return Object.keys(this.configContent.languages).length
         }
         if (nameOfLanguages != null && nameOfLanguages) {
@@ -223,6 +306,11 @@ class Prefrences extends forklift.PaletteBox {
     }
     onContentLoad() {
         let config = new ConfigManager(this)
+        /*
+        console.log(config.readValue("themes", "0"))
+        console.log(config.readValue("theme"))
+        config.writeValue("themes", "theme-dark", "NEWNAME")
+        config.writeValue("theme", 0)
         console.log(config.getInstalledLanguages(true))
         console.log(config.getInstalledLanguages(true, true))
         console.log(config.getInstalledLanguages())
@@ -233,14 +321,22 @@ class Prefrences extends forklift.PaletteBox {
         console.log(config.getTheme(true))
         console.log(config.getTheme())
         console.log(config.getVersion())
-        let themeSelector = new xel.Select(document.getElementById("themeSelector"))
-        let languageSelector = new xel.Select(document.getElementById("languageSelector"))
+        */
+        let themeSelector = new xel.Select(this.element.querySelector("#themeSelector"))
+        let languageSelector = new xel.Select(this.element.querySelector("#languageSelector"))
         themeSelector.onChange(() => {
-            console.log("lknaleFJHNalwefjn")
-            console.log(themeSelector.value)
-            //document.getElementsByTagName("body")[0].className = themeSelector.value ///////////////Possibly add theme preview////////////////
+
         })
-        return this
+        let applyButton = new xel.Button(this.element.querySelector("#applyPreferences"))
+        applyButton.onClick(() => {
+            document.getElementsByTagName("body")[0].classList.remove(config.getTheme(true))
+            document.getElementsByTagName("body")[0].classList.add(themeSelector.value)
+            //document.getElementsByTagName("body")[0].className = themeSelector.value ///////////////Possibly add theme preview////////////////
+            console.log("THEME CHANGED TO " + themeSelector.value)
+            //config.writeValue("theme", themeSelector.value)
+        })
+
+        let cancelButton = new xel.Button(this.element.querySelector("#cancelPrefrances"))
     }
 }
 //Theme selector & Autosave toggle
@@ -255,53 +351,7 @@ class PrefrencesHandler {
         this.prefrenceButton = new xel.MenuItem("#file-prefrences")
         this.prefrenceButton.onClick(() => {
             prefrencesDialog.open()
-            this.themeDark = new xel.MenuItem("#theme-dark")
-            this.themeDark.onClick(() => {
-                console.log("The theme is now Dark")
-                theme = "dark"
-                changes++
-                this.apply = new xel.MenuItem("#applyPreferences")
-                this.apply.onClick(() => {
-                    if(theme=="dark") {
-                    console.log("Changes have been saved")
-                    changes=0;
-                    }
-                })
-            })
-            this.themeDefualt = new xel.MenuItem("#theme-default")
-            this.themeDefualt.onClick(() => {
-                theme = "defualt"
-                changes++
-                console.log("The theme is now the defualt")
-                this.apply = new xel.MenuItem("#applyPreferences")
-                this.apply.onClick(() => {
-                    if(theme=="defualt"&&changes==1) {
-                    console.log("Changes have been saved")
-                    changes=0;
-                    }
-                })
-            })
-            this.autoSave = new xel.MenuItem("#autosave")
-            this.autoSave.onClick(() => {
-                autosave += 1;
-                changes++
-                if(autosave%2==1){
-                    console.log("The autosave has been enabled")
-                    this.apply = new xel.MenuItem("#applyPreferences")
-                    this.apply.onClick(() => {
-                        if(changes==1){
-                        console.log("Changes have been saved")
-                        changes=0;
-                        }
-                    })
-                } else {
-                    console.log("The autosave has been diabled")
-                    changes=0;
-                }
-            })
-            
         })
-
     }
 }
 

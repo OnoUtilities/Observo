@@ -17,9 +17,45 @@
                 </o-box>
             </o-box>
             <!-- End of Back Button-->
-            <o-box flex>
-             
+            <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                    <o-box flex style="margin-left:10px; margin-top:10px;">
+                        <x-label style="font-size: 24px;" class="rb-font observo-title">
+                            Server Name
+                        </x-label>
+                    </o-box>
+                    </o-box>
+            <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+             <o-box flex style="margin-left: 20px; margin-top: 10px;">
+                 <x-input id="server-name">
+                    <x-icon name="format-color-text"></x-icon>
+                    <x-label>Server Name</x-label>
+                 </x-input>
+             </o-box>
+                </o-box>
+                <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                        <o-box flex style="margin-left:10px; margin-top:10px;">
+                            <x-label style="font-size: 24px;" class="rb-font observo-title">
+                                ip Address
+                            </x-label>
+                        </o-box>
+                        </o-box>
+                <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                 <o-box flex style="margin-left: 20px; margin-top: 10px;">
+                     <x-input id="ip-address">
+                        <x-icon name="rss-feed"></x-icon>
+                        <x-label>ip Address</x-label>
+                     </x-input>
+                 </o-box>
             </o-box>
+            <o-box flex style="margin-left: 40px; margin-top: 20px;">
+                    <x-box>
+                        <x-button id="confirm">
+                            <x-icon name="check-circle"></x-icon>
+                            <x-label>Confirm</x-label>
+                        </x-button>
+                    </x-box>
+                 </o-box>
+        </o-box>
         </o-box>
     </o-box>
 </template>

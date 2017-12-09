@@ -1,7 +1,7 @@
 <template>
     <o-box flex row>
         <o-box flex>
-            <x-doctabs>
+            <x-doctabs id="doctabs">
                 <x-doctab selected>
                     <x-icon name="dashboard"></x-icon>
                     <x-label>Main page</x-label>
@@ -19,6 +19,26 @@
                     <x-label>Picklist</x-label>
                 </x-doctab>
             </x-doctabs>
+        </o-box>
+        <o-box flex style="flex: 0 0 auto; width: 70px; margin-right:.75px;">
+            <x-button style="width: 100%; height: 47px;">
+                <x-icon name="chat"></x-icon>
+                <x-popover style="width: 500px; height: 500px; overflow: hidden;">
+                        <x-card flex column id="chatCard">
+                                <header>
+                                    <o-box flex style="flex: 0 0 auto; height: 50px; font-weight: bold; text-align: center; margin: auto; vertical-align: center">
+                                        <h1>Chat</h1>
+                                    </o-box>
+                                </header>
+                            <o-box flex style="margin-left:75px;">
+                                <textarea id="text" rows="4" cols="37"></textarea>
+                            </o-box>
+                            <o-box flex style="margin-left:339.5px; margin-top: 5px;">
+                                <button id="send" type="button">Send</button>
+                            </o-box>
+                        </x-card>
+                </x-popover>
+            </x-button>
         </o-box>
         <o-box flex style="flex: 0 0 auto; width: 70px;">
             <x-button style="width: 100%; height: 47px;">
