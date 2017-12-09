@@ -2,8 +2,10 @@
 <html>
 
 <head>
+    <title>Observo Explorer</title>
     <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+
     <script src="./node_modules/forklift.js/forklift.js"></script>
     <script src="./node_modules/xel/xel.min.js"></script>
 
@@ -12,8 +14,10 @@
     <link rel="stylesheet/less" type="text/css" href="assets\style\common\explorer.less" />
     <link rel="stylesheet/less" type="text/css" href="assets\style\easyhelp.ss" />
 
+    <!-- DEVLOPEMENT ONLY! -->
     <script src="./node_modules/less/dist/less.min.js"></script>
 
+    <!-- xel.js Style -->
     <style>
         .x-menu-right {
             margin-left: auto;
@@ -68,31 +72,31 @@
             height: 100%;
             -webkit-app-region: drag;
         }
-
         body {
             overflow: hidden;
         }
-
-
     </style>
 
 </head>
 
+<!-- Observo Explorer -->
 <body class="explorer theme-default animate">
     <o-menubar></o-menubar>   
     <o-loader ></o-loader>
     <o-content></o-content>
 </body>
-
+<!-- Include Socket.io to be used for later use -->
 <script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
 <script>
     //Observo API Version
     const API = 1
 
+    //Require Electorn
     const { remote } = require('electron')
     const { dialog } = remote
     const { BrowserWindow } = remote;
 
+    //Require Path
     const path = require('path')
 
     //Require Import-Window
@@ -107,21 +111,21 @@
     //Parse window arguments (for windowID)
     let args = managerLocal.parseArgs()
 
-
-    //Define the window
+    //Define windowID (given from import-window)
     let windowID = args.id
 
+    //Grab the window (and use windowID)
     let win = new xel.Window(windowID)
-    //Create a menu bar and append buttons
+
 
     const globalLanguage = "en"
 
-    //Create a MenuTab and a the main ViewBox
-    //let tabs = new xel.MenuTabs("#menutab")
     let contextMenu = new xel.ContextMenu()
     let dialogInput = new xel.DialogInput()
     let prompt = new xel.Prompt()
     let drawer = new xel.Drawer()
+
+    //Load forklift palettes
     fl.App.loadPalette("GRID-HOME", "common/explorer/palettes/grid/home/home.js")
     fl.App.loadPalette("GRID-SERVERS", "common/explorer/palettes/grid/servers/servers.js")
     fl.App.loadPalette("GRID-PROJECTS", "common/explorer/palettes/grid/projects/projects.js")
@@ -131,9 +135,11 @@
     fl.App.loadPalette("DIALOGS", "common/explorer/palettes/dialogs/dialogs.js")
     fl.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
 
-
-
+    //Run forklift init sequence
     fl.App.run()
+
+
+    
 
 </script>
 
