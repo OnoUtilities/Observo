@@ -1,14 +1,14 @@
 {
-    "themes": {
-        "default":"Observo (default)",
-        "dark":"Dark (beta)"
-    },
-    "languages": {
-        "en-US": "English",
-        "en-PR": "Pirate"
-    },
-    "version": "0.1.1",
-    "first_use": false,
-    "language": "en",
-    "theme": 0
+  "themes": {
+    "theme-default": "Observo (default)",
+    "theme-dark": "Dark (beta)"
+  },
+  "languages": {
+    "en-US": "English",
+    "en-PR": "Pirate"
+  },
+  "version": "0.1.1",
+  "first_use": false,
+  "language": "en",
+  "theme": 0
 }

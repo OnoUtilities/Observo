@@ -67,7 +67,7 @@ class ObsevoHandler {
                 //         remaining: 81.403       // The remaining seconds to finish (3 decimals) 
                 //     } 
                 // } 
-                print(`[Observo Database] Downloaded ${Math.floor(state.percent * 100)}% - Elasped Time: ${Math.floor(state.time.elapsed)}`)
+                print(`[Observo Database] Downloaded ${Math.floor(state.percent * 100)}% - Elasped Time: ${Math.floor(state.time.elapsed)} seconds...`)
             })
             .on('error', function (err) {
                 // Do something with err 
@@ -239,5 +239,5 @@ Observo.onMariaFinishBoot(()=>{
     _DataCore = new DataCore()
     _RealTime = new RealTimeHandler()    
 })
-//After all we have to start observo somewhere.
+//After all, we have to start observo somewhere.
 Observo.run() 
