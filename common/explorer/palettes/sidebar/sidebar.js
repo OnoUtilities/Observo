@@ -6,9 +6,12 @@ class Sidebar extends forklift.PaletteBox {
     }
     onContentLoad() {
         let me = this
-        let servers = forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").storage.getServers()
+        let servers = forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").storage.getServers() //serverList
+        let x = 1;
+
         for (var key in servers) {
             if (servers.hasOwnProperty(key)) {
+
                 let server = servers[key]
 
                 this.element.querySelector("div").insertAdjacentHTML('beforeend', ` <x-box vertical class="box"></x-box>`)
@@ -31,6 +34,25 @@ class Sidebar extends forklift.PaletteBox {
                         me.autheticate(server.ip)
                     }
                 })
+
+                box.addEventListener("contextmenu", function () {
+                    let serverName = server.name
+
+                    contextMenu.openTemp((self, items) => {
+                        let remove = self.addItemAbove("<remove>")
+                        remove.setTitle(`Remove ${serverName}`)
+                        remove.setIcon("delete")
+                        remove.onClick(() => {
+                            console.log(server.name)
+                        })
+                        let edit = self.addItemBelow("<edit>")
+                        edit.setTitle("Edit")
+                        edit.setIcon("create")
+                        edit.onClick(() => {
+                                forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveDown()
+                            })
+                        })
+                    })
             }
         }
     }

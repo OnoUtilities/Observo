@@ -33,7 +33,7 @@ class StorageSystem { //TODO put into global-type file
         this.presets = path.join(home, '.observo/presets/')
 
         this.profilePath = path.join(home, '.observo/config.json')
-        this.serverList = path.join(home, '.observo/serverList.json')
+        this.serverList = path.join(home, '.observo/serverList.json') //serverList
 
 
         if (!jetpack.exists(this.profilePath)) {
