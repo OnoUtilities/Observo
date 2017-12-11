@@ -1,53 +1,51 @@
 <template>
     <x-card>
         <header>
-            <h1>Prefrances</h1>
+            <h1>Preferences</h1>
         </header>
         <x-box style="margin:auto; margin-top: 10px; padding-left:50px; padding-right:50px">
-            <x-icon name="format-paint" style="margin-right:5px"></x-icon>
+            <x-icon style="margin-right:5px" name="format-paint"></x-icon>
             <x-select id="themeSelector">
                 <x-menu>
-                    <x-menuitem value="theme-default" id="default" selected="true">
-                        <x-label>Observo (default)</x-label>
-                    </x-menuitem>
-                    <x-menuitem value="theme-dark" id="dark">
-                        <x-label>Dark (beta)</x-label>
-                    </x-menuitem>
+                    <!-- WILL BE FILLED IN BY "Preferances" -->
                 </x-menu>
             </x-select>
         </x-box>
 
         <x-box style="margin:auto; margin-top: 10px">
-                <x-icon name="language" style="margin-right:5px"></x-icon>
-                <x-select id="languageSelector">
-                    <x-menu>
-                        <x-menuitem value="en_US" id="english" selected="true">
-                            <x-label>English (default)</x-label>
-                        </x-menuitem>
-                        <x-menuitem value="en_PR" id="pirate">
-                            <x-label>Pirate &#128128;</x-label>
-                        </x-menuitem>
-                    </x-menu>
-                </x-select>
-            </x-box>
+            <x-icon style="margin-right:5px" name="language"></x-icon>
+            <x-select id="languageSelector">
+                <x-menu>
+                    <!-- WILL BE FILLED IN BY "Preferances" -->
+                </x-menu>
+            </x-select>
+        </x-box>
 
         <x-box style="margin: auto; margin-top: 10px; margin-bottom: 5px;">
-            <x-icon name="save" style="margin-right: 5px"></x-icon>
-            <x-checkbox id="autosave"></x-checkbox>
-            <x-label for="checkbox" id="auto">
+            <x-icon style="margin-right: 5px" name="notifications-active"></x-icon>
+            <x-checkbox id="notifications"></x-checkbox>
+            <x-label id="auto" for="checkbox">
                 <x-box vertical>
-                    <x-label>
-                        <strong>Auto Save</strong>
-                    </x-label>
-                    <x-label>Enables Auto Save</x-label>
+                    <x-label>Toggle Desktop Notifications</x-label>
+                    <!-- Use the "Notification" class in Electron for messages or other events -->
                 </x-box>
             </x-label>
         </x-box>
-        
+        <x-box style="margin: auto; margin-top: 10px; margin-bottom: 5px;">
+            <x-icon style="margin-right: 5px" name="music-note"></x-icon>
+            <x-checkbox id="sounds"></x-checkbox>
+            <x-label id="auto" for="checkbox">
+                <x-box vertical>
+                    <x-label>Toggle Sounds</x-label>
+                </x-box>
+            </x-label>
+        </x-box>
+
         <hr>
         <x-box style="display: flex; justify-content: center; align-items: flex-end; padding-top: 10px; padding-bottom: 10px">
+            <x-icon id="resetWarning" style="display:none" name="warning" title="You must restart Observo to apply these changes"></x-icon>
             <x-button id="applyPreferences">APPLY</x-button>
-            <x-button style="margin-left: 5px;" id="cancelPrefrances">CANCEL</x-button>
+            <x-button id="cancelPrefrances" style="margin-left: 5px;">CANCEL</x-button>
         </x-box>
     </x-card>
 </template>
