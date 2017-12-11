@@ -22,7 +22,7 @@
     "socket.io": "^2.0.4",
     "uuid": "^3.1.0",
     "vm2": "^3.5.2",
-    "xel": "0.0.63",
+    "xel": "^0.0.80",
     "xel-extend": "github:Import-Python/xel-extend"
   },
   "devDependencies": {
