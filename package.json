@@ -15,15 +15,15 @@
   "dependencies": {
     "electron-config": "^1.0.0",
     "electron-window": "^0.8.1",
-    "forklift.js": "github:Import-Python/forklift.js",
+    "fork-lift.js": "^0.1.8",
     "fs-jetpack": "^1.2.0",
-    "import-window": "github:Import-Python/import-window",
+    "import-window": "^1.0.0",
     "less": "^2.7.3",
     "socket.io": "^2.0.4",
     "uuid": "^3.1.0",
     "vm2": "^3.5.2",
     "xel": "^0.0.80",
-    "xel-extend": "github:Import-Python/xel-extend"
+    "xel-extend": "^1.0.3"
   },
   "devDependencies": {
     "electron": "1.8.1"

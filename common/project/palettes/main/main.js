@@ -274,6 +274,29 @@ class ConfigManager {
     }
 }
 
+/*
+class getFromPreset {
+    constructor(p) {
+        let customPreferances = {
+            0: {
+                "displayName": "Team Number",
+                "variableName": "team_number",
+                "icon": "people",
+                "input": {
+                    "type": "numberInput",
+                    "min": 0,
+                    "max": 9999
+                }
+            }
+        }
+    }
+
+    get customPreferances(){
+        return this.customPreferances
+    }
+}
+*/
+
 class DocTabs extends forklift.PaletteBox {
     constructor(p) {
         super(p)
@@ -323,29 +346,62 @@ class Prefrences extends forklift.PaletteBox {
         console.log(config.getVersion())
         */
         let themeSelector = new xel.Select(this.element.querySelector("#themeSelector"))
+        for (var i = 0; i < config.getInstalledThemes(true, true); i++) { //ADDS ALL THEMES [TODO: Make neater]
+            var selectedTheme = false;
+            if (config.getInstalledThemes()[i] == config.getTheme(true)) selectedTheme = true //If the current theme in the array equals the current theme, make it selected
+            themeSelector.addItem(config.getInstalledThemes()[i], config.getInstalledThemes(true)[i], null, selectedTheme)
+        }
+
         let languageSelector = new xel.Select(this.element.querySelector("#languageSelector"))
-        themeSelector.onChange(() => {
+        for (var i = 0; i < config.getInstalledLanguages(true, true); i++) { //ADDS ALL LANGUAGES [TODO: Make neater]
+            var selectedLanguage = false; //
+            if (config.getInstalledLanguages()[i] == config.getLanguage(true)) selectedLanguage = true //If the current Language in the array equals the current language, make it selected
+            languageSelector.addItem(config.getInstalledLanguages()[i], config.getInstalledLanguages(true)[i], null, selectedLanguage)
+        }
 
-        })
+        let notificationsButton = this.element.querySelector("#notifications")
+        if (config.readValue("notifications")) {
+            notificationsButton.setAttribute("toggled", "")
+        }
+
+        let soundsButton = this.element.querySelector("#resetWarning")
+        if (config.readValue("sounds")) {
+            soundsButton.setAttribute("toggled", "")
+        }
+
+        let restartWarning = this.element.querySelector("#resetWarning")
         let applyButton = new xel.Button(this.element.querySelector("#applyPreferences"))
-        applyButton.onClick(() => {
-            document.getElementsByTagName("body")[0].classList.remove(config.getTheme(true))
-            document.getElementsByTagName("body")[0].classList.add(themeSelector.value)
-            //document.getElementsByTagName("body")[0].className = themeSelector.value ///////////////Possibly add theme preview////////////////
-            console.log("THEME CHANGED TO " + themeSelector.value)
-            //config.writeValue("theme", themeSelector.value)
-        })
 
+        let getState = (element) => { //Compatable with checkboxes, switches, singe radio buttons, and possibly other things that are given the "toggled" attribute
+            return (element.getAttribute("toggled") != null)
+        }
+
+        /*
+        let customPreferances = new getFromPreset(this).customPreferances
+
+        for(preferance in JSON.parse(customPreferances)){
+            console.log(preferance)
+        }
+        */
+
+        applyButton.onClick(() => {
+            config.writeValue("theme", themeSelector.value)
+            document.getElementsByTagName("body")[0].className = themeSelector.value ///////////////Possibly add theme preview////////////////            
+
+            config.writeValue("language", languageSelector.value)
+            config.writeValue("sounds", getState(soundsButton))
+            config.writeValue("notifications", getState(notificationsButton))
+
+        })
+        //TODO: Add cancel button
         let cancelButton = new xel.Button(this.element.querySelector("#cancelPrefrances"))
+        console.log(cancelButton)
     }
 }
 //Theme selector & Autosave toggle
 class PrefrencesHandler {
     constructor(p) {
         let prefrencesDialog = new xel.Dialog()
-        let theme = "defualt"
-        let autosave = 0;
-        let changes = 0;
         prefrencesDialog.dialog.innerHTML = '<o-prefrences></o-prefrences>'
         prefrencesDialog.dialog.className = "prefrences"
         this.prefrenceButton = new xel.MenuItem("#file-prefrences")
