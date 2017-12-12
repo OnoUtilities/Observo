@@ -203,9 +203,12 @@ class Content extends forklift.PaletteBox {
 class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)
-        this.addBox("CONTENTS", "o-content", Content)
+        this.addBox("CONTENT", "o-content", Content)
         this.addBox("BOX", "o-box", Box)
         this.addBox("MENUBAR", "o-menubar", Menubar)
+    }
+    onUnitLoad() {
+
     }
 }
 

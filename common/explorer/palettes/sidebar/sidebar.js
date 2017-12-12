@@ -12,13 +12,37 @@ class Sidebar extends forklift.PaletteBox {
         let box = boxes[boxes.length - 1]
 
         box.insertAdjacentHTML('beforeend', `<x-label class="title"></x-label>`)
-        title.innerHTML = title
+        let labels = this.element.querySelectorAll("x-label")
+        let titleLabel = labels[labels.length - 1]
+        titleLabel.innerHTML = title
         this.items[id]["title"] = title
         this.items[id]["description"] = listDescriptions
+        this.items[id]["click"] = () => {}
+        this.items[id]["context"] = () => {}
+        
+        let me = this
 
-        for(let description in listDescription) {
+        for(let description in listDescriptions) {
             let value = listDescriptions[description]
             box.insertAdjacentHTML('beforeend', `<x-label class="text"><span class="bold">${description} : ${value} </span></x-label>`)
+        }
+        box.addEventListener("click", () => {
+            me.items[id]["click"].call()
+        })
+
+        box.addEventListener("contextmenu", () => {
+            me.items[id]["context"].call()
+        })
+
+    }
+    addClick(id, callback) {
+        if(this.items[id] != null) { 
+            this.items[id]["click"] = callback
+        }
+    }
+    addContext(id, callback) {
+        if(this.items[id] != null) { 
+            this.items[id]["context"] = callback
         }
     }
     getEntry(id, entry) {

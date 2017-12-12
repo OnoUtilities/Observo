@@ -10,11 +10,11 @@ class Home extends forklift.PaletteBox {
 
         //When servers button is clicked, move to page
         this.servers.addEventListener("click", () => {
-            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveLeft()
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveLeft()
         })
         //When projects button is clicked, move to page
         this.projects.addEventListener("click", () => {
-            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveRight()
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveRight()
         })
 
         //Opens about page via about icon
