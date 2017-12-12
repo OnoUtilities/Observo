@@ -131,8 +131,12 @@ class Content extends forklift.PaletteBox {
         this.gridY = 0
         
     }
+    onUnitLoad() {
+
+    }
     updatePosition(x, y, time) {
         //keyframes
+        this.element.style.pointerEvents = "none"
         let keyframes = [ 
             { transform: `translate(${this.posX}px, ${this.posY}px)` }, //to
             { transform: `translate(${x}px, ${y}px)` } //from
@@ -145,31 +149,36 @@ class Content extends forklift.PaletteBox {
             fill: "forwards"
         }
 
-        this.element.animate(
+        let animation = this.element.animate(
             keyframes,
             timing
         )
         this.posX = x
         this.posY = y
+
+        let me = this
+        animation.onfinish = function() {
+            me.element.style.pointerEvents = ""
+        };
     }
     moveTo(x, y, time=1000) {
         x = this.posX + (this.dPosX * x)
         y = this.posY + (this.dPosY * Y)
         this.updatePosition(time)   
     }
-    moveUp(time=1000) {
+    moveUp(time=750) {
         let y = this.posY + this.dPosY
         this.updatePosition(this.posX, y,time)   
     }
-    moveDown(time=1000) {
+    moveDown(time=750) {
         let y = this.posY - this.dPosY
         this.updatePosition(this.posX, y, time)   
     }
-    moveLeft(time=1000) {
+    moveLeft(time=750) {
         let x = this.posX + this.dPosX
         this.updatePosition(x, this.posY,time)   
     }
-    moveRight(time=1000) {
+    moveRight(time=750) {
         let x = this.posX - this.dPosX
         this.updatePosition(x, this.posY, time)   
     }
