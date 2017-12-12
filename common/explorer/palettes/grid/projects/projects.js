@@ -8,11 +8,11 @@ class Projects extends forklift.PaletteBox {
         //Projects page back button
         this.back = this.element.querySelector("#back")
         this.back.addEventListener("click", () => {
-            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveLeft()
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveLeft()
         })
         this.addProject = this.element.querySelector("#addProject")
         this.addProject.addEventListener("click", () => {
-            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveDown()
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveDown()
         })
     }
 }
@@ -29,13 +29,13 @@ class AddProject extends forklift.PaletteBox {
         // Code for the back button
         this.back = this.element.querySelector("#back")
         this.back.addEventListener("click", () => {
-            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveUp()
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
         })
         // Code for confirm button 
         this.test = this.element.querySelector('#confirm')
         this.test.addEventListener("click", () => {
             console.log("The server name is " + projectName)
-           forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENTS").moveUp()
+           forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
         })
     }
 }

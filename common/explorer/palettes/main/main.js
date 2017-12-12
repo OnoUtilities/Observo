@@ -120,78 +120,63 @@ class Content extends forklift.PaletteBox {
         this.loadBox("elements/o-content/content.shadow.html")
         this.loadContent("elements/o-content/content.html")
         this.storage = new StorageSystem(this)
-        this.posX = 0
-        this.posY = 0
-    }
-    removeXClasses()  {
-        this.element.classList.remove("center-to-left");
-        this.element.classList.remove("left-to-center");
-        this.element.classList.remove("center-to-right");
-        this.element.classList.remove("right-to-center");
-    }
-    removeYClasses() {
-        this.element.classList.remove("center-to-bottom");
-        this.element.classList.remove("bottom-to-center");
-        this.element.classList.remove("center-to-top");
-        this.element.classList.remove("top-to-center");
-    }
-    removeAllClasses() {
-        this.removeYClasses()
-        this.removeXClasses()
-    }
-    moveLeft() {
-        if (this.posX == 0) {
-            this.removeAllClasses()
-            this.element.classList.add("center-to-left");
-            this.posX = -1
-        }
-        if (this.posX == 1) {
-            this.removeAllClasses()
-            this.element.classList.add("right-to-center");
-            this.posX = 0
-        }
-    }
-    moveRight() {
-        if (this.posX == 0) {
-            this.removeAllClasses()
-            this.element.classList.add("center-to-right");
-            this.posX = 1
-        }
-        if (this.posX == -1) {
-            this.removeAllClasses()
-            this.element.classList.add("left-to-center");
-            this.posX = 0
-        }
-        console.log(this.posX)
-    }
 
-    moveUp() {
-        if (this.posY == 0) {
-            this.removeYClasses()
-            this.element.classList.add("center-to-top");
-            this.posY = 1
-        }
-        if (this.posY == -1) {
-            this.removeYClasses()
-            this.element.classList.add("bottom-to-center");
-            this.posY = 0
-        }
-        console.log(this.posY)
-    }
-    moveDown() {
-        if (this.posY == 1) {
-            this.removeYClasses()
-            this.element.classList.add("top-to-center");
-            this.posY = 0
-        }
-        if (this.posY == 0) {
-            this.removeYClasses()
-            this.element.classList.add("center-to-bottom");
-            this.posY = -1
-        }
+        this.posX = -888
+        this.posY = 0
+
+        this.dPosX = 888
+        this.dPosY = 666
+
+        this.gridX = 0
+        this.gridY = 0
         
     }
+    updatePosition(x, y, time) {
+        //keyframes
+        let keyframes = [ 
+            { transform: `translate(${this.posX}px, ${this.posY}px)` }, //to
+            { transform: `translate(${x}px, ${y}px)` } //from
+        ]
+        //timings
+        let timing = {
+            duration: time,
+            iterations: 1,
+            easing: "ease",
+            fill: "forwards"
+        }
+
+        this.element.animate(
+            keyframes,
+            timing
+        )
+        this.posX = x
+        this.posY = y
+    }
+    moveTo(x, y, time=1000) {
+        x = this.posX + (this.dPosX * x)
+        y = this.posY + (this.dPosY * Y)
+        this.updatePosition(time)   
+    }
+    moveUp(time=1000) {
+        let y = this.posY + this.dPosY
+        this.updatePosition(this.posX, y,time)   
+    }
+    moveDown(time=1000) {
+        let y = this.posY - this.dPosY
+        this.updatePosition(this.posX, y, time)   
+    }
+    moveLeft(time=1000) {
+        let x = this.posX + this.dPosX
+        this.updatePosition(x, this.posY,time)   
+    }
+    moveRight(time=1000) {
+        let x = this.posX - this.dPosX
+        this.updatePosition(x, this.posY, time)   
+    }
     
+    /**
+     * ---------------------------------------------
+     */
     hide() {
         this.element.style.display = "none"
     }
