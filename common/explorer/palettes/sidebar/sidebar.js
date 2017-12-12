@@ -12,8 +12,6 @@ class Sidebar extends forklift.PaletteBox {
         let box = boxes[boxes.length - 1]
 
         box.insertAdjacentHTML('beforeend', `<x-label class="title"></x-label>`)
-        let labels = this.element.querySelectorAll("x-label")
-        let title = labels[labels.length - 1]
         title.innerHTML = title
         this.items[id]["title"] = title
         this.items[id]["description"] = listDescriptions
@@ -21,9 +19,6 @@ class Sidebar extends forklift.PaletteBox {
         for(let description in listDescription) {
             let value = listDescriptions[description]
             box.insertAdjacentHTML('beforeend', `<x-label class="text"><span class="bold">${description} : ${value} </span></x-label>`)
-            labels = this.element.querySelectorAll("x-label")
-            let location = labels[labels.length - 1]
-            location.innerHTML = location.innerHTML + server.ip
         }
     }
     getEntry(id, entry) {
