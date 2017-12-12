@@ -321,11 +321,11 @@ class Box extends forklift.PaletteBox {
     }
 }
 
-class Prefrences extends forklift.PaletteBox {
+class Preferences extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-prefrences/prefrences.shadow.html")
-        this.loadContent("elements/o-prefrences/prefrences.html")
+        this.loadBox("elements/o-preferences/preferences.shadow.html")
+        this.loadContent("elements/o-preferences/preferences.html")
     }
     onContentLoad() {
         let config = new ConfigManager(this)
@@ -394,19 +394,22 @@ class Prefrences extends forklift.PaletteBox {
 
         })
         //TODO: Add cancel button
-        let cancelButton = new xel.Button(this.element.querySelector("#cancelPrefrances"))
+        let cancelButton = new xel.Button(this.element.querySelector("#cancel"))
         console.log(cancelButton)
+         cancelButton.onClick(() => {
+             fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").preferences.preferencesDialog.close()
+         })
     }
 }
 //Theme selector & Autosave toggle
-class PrefrencesHandler {
+class PreferencesHandler {
     constructor(p) {
-        let prefrencesDialog = new xel.Dialog()
-        prefrencesDialog.dialog.innerHTML = '<o-prefrences></o-prefrences>'
-        prefrencesDialog.dialog.className = "prefrences"
-        this.prefrenceButton = new xel.MenuItem("#file-prefrences")
+        this.preferencesDialog = new xel.Dialog()
+        this.preferencesDialog.dialog.innerHTML = '<o-preferences></o-preferences>'
+        this.preferencesDialog.dialog.className = "preferences"
+        this.prefrenceButton = new xel.MenuItem("#file-preferences")
         this.prefrenceButton.onClick(() => {
-            prefrencesDialog.open()
+            this.preferencesDialog.open()
         })
     }
 }
@@ -574,7 +577,7 @@ class Content extends forklift.PaletteBox {
     }
     onUnitLoad() {
         let me = this
-        this.prefrences = new PrefrencesHandler(me)
+        this.preferences = new PreferencesHandler(me)
         this.connectionInfo = new DisconnectHandler(me)
         this.helpInfo = new HelpHandler(me)
         this.userList = new ListUsers(me)
@@ -615,7 +618,7 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("LOADING", "o-loader", Loader)
         this.addBox("BOX", "o-box", Box)
         this.addBox("CONTENT", "o-content", Content)
-        this.addBox("PREFRENCES", "o-prefrences", Prefrences)
+        this.addBox("PREFERENCES", "o-preferences", Preferences)
         //this.addBox("REFRESH", "o-refresh", Refresh)
         this.addBox("HELP", "o-help", Help)
     }
