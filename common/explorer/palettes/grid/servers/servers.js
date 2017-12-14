@@ -60,6 +60,7 @@ class AddServers extends forklift.PaletteBox {
         this.loadContent("elements/o-grid-add-server/grid-add-server.html")
     }
     onUnitLoad() {
+        let sidebar= this.element.querySelector("o-sidebar").object; 
         let serverName = document.getElementById('server-name').value // Variable for the text in the server name input box
         //getElementById stores the text in the input box in a variable
         let ipAddress = document.getElementById('ip-address').value  // Variable for the text in the ip address input box
@@ -71,9 +72,15 @@ class AddServers extends forklift.PaletteBox {
         // Code for confirm button 
         this.test = this.element.querySelector('#confirm')
         this.test.addEventListener("click", () => {
-            console.log("The server name is " + serverName)
-            console.log("The ip is " + ipAddress)  
-           forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
+            console.log("The server name is " + document.getElementById('server-name').value)
+            console.log("The ip is " + document.getElementById('ip-address').value)  
+           sidebar.addItem(serverName, ipAddress, {"Version": "0.1"})
+           sidebar.addClick(serverName, () => {
+               this.connect("")
+           })
+           sidebar.addContext(serverName, () => {
+               
+           })
         })
     }
 }
