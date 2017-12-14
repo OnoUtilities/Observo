@@ -14,18 +14,7 @@ class Servers extends forklift.PaletteBox {
             forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveDown()
         })
 
-        let se = forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").storage.getServers() //serverList
-        let sidebar = this.element.querySelector("o-sidebar").object;
-
-        sidebar.addItem("DEV", "Developement", {
-            "Version": "0.1"
-        })
-        sidebar.addClick("DEV", () => {
-            this.connect("")
-        })  
-        sidebar.addContext("DEV", ()=> {
-            
-        })      
+        this.sidebar = this.element.querySelector("o-sidebar").object
     }
     //Open the window to the server
     //TODO: Add another paramter for sessionKey
@@ -60,24 +49,54 @@ class AddServers extends forklift.PaletteBox {
         this.loadContent("elements/o-grid-add-server/grid-add-server.html")
     }
     onUnitLoad() {
-        let serverName = document.getElementById('server-name').value // Variable for the text in the server name input box
-        //getElementById stores the text in the input box in a variable
-        let ipAddress = document.getElementById('ip-address').value  // Variable for the text in the ip address input box
         // Code for the back button
         this.back = this.element.querySelector("#back")
         this.back.addEventListener("click", () => {
             forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
         })
         // Code for confirm button 
-        this.test = this.element.querySelector('#confirm')
-        this.test.addEventListener("click", () => {
-            console.log("The server name is " + serverName)
-            console.log("The ip is " + ipAddress)  
-           forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
+        this.confirm = this.element.querySelector('#confirm')
+        this.confirm.addEventListener("click", () => {
+            this.addServer()
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
         })
+        this.updateSidebar()
+    }
+    addServer() {
+        forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config
+
+        let replaceAll = function (str, find, replace) {
+            return str.replace(new RegExp(find, 'g'), replace);
+        }
+
+        let serverTitle = this.element.querySelector('#server-name').value // Variable for the text in the server name input box
+        let ipAddress = this.element.querySelector('#ip-address').value  // Variable for the text in the ip address input box
+        let id = serverTitle.toLowerCase()
+        id = replaceAll(id, " ", "_")
+        fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.addServer(id, serverTitle, ipAddress)
+        this.updateSidebar()
+        
+    }
+    updateSidebar() {
+        console.log("sss")
+        let sidebar = fl.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").sidebar
+        let servers = fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.getServers()
+        
+        sidebar.element.querySelector("div").innerHTML = ""
+        for (let server in servers) {
+            let value = servers[server] //server is the id of the array
+            sidebar.addItem(server, value.name, {
+                "Address": value.ip
+            })
+            sidebar.addClick(server, () => {
+                this.connect("")
+            })
+            sidebar.addContext(server, () => {
+
+            })
+        }
     }
 }
-
 // Work on the input boxes for "add server" 
 // Make rename and IP in the input boxes
 // When "edit" is clicked, "ADD SERVER" changes to "SERVER SETTINGS"

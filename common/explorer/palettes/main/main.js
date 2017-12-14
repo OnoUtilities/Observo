@@ -30,7 +30,7 @@ class Content extends forklift.PaletteBox {
         super(e)
         this.loadBox("elements/o-content/content.shadow.html")
         this.loadContent("elements/o-content/content.html")
-
+        this.config = new ConfigManager(this)
         this.posX = -888
         this.posY = 0
 
@@ -40,9 +40,6 @@ class Content extends forklift.PaletteBox {
         this.gridX = 0
         this.gridY = 0
 
-    }
-    onUnitLoad() {
-        this.storage = new ConfigManager(this)
     }
     updatePosition(x, y, time) {
         //keyframes
@@ -134,6 +131,11 @@ class ConfigManager {
             this.config = null
         }
 
+        this.reloadServers()
+
+        this.configContent = JSON.parse(jetpack.read(this.configPath))
+    }
+    reloadServers() {
         if (!jetpack.exists(this.serverList)) {
             const template_r = require('../../../../common/explorer/palettes/main/templates/serverList.json')
             jetpack.write(this.serverList, template_r)
@@ -144,12 +146,10 @@ class ConfigManager {
         } catch (e) {
             this.servers = null
         }
-
-        this.configContent = JSON.parse(jetpack.read(this.configPath))
         this.serverContent = JSON.parse(jetpack.read(this.serverList))
     }
-
     getServers() {
+        this.reloadServers()
         return this.servers
     }
 
