@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
 
-    <script src="./node_modules/fork-lift.js/forklift.js"></script>
+    <script src="./node_modules/fork-lift.js/forklift.node.js"></script>
     <script src="./node_modules/xel/xel.min.js"></script>
 
     <link rel="stylesheet" href="assets/style/easyhelp.css" />
@@ -125,7 +125,8 @@
     let prompt = new xel.Prompt()
     let drawer = new xel.Drawer()
 
-    //Load forklift palettes
+    //Load forklift palettes 
+    /*
     fl.App.loadPalette("GRID-HOME", "common/explorer/palettes/grid/home/home.js")
     fl.App.loadPalette("GRID-SERVERS", "common/explorer/palettes/grid/servers/servers.js")
     fl.App.loadPalette("GRID-PROJECTS", "common/explorer/palettes/grid/projects/projects.js")
@@ -134,7 +135,8 @@
     fl.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")
     fl.App.loadPalette("DIALOGS", "common/explorer/palettes/dialogs/dialogs.js")
     fl.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
-
+*/
+    fl.App.loadAll("common/explorer/")
     //Run forklift init sequence
     fl.App.run()
 

@@ -195,6 +195,7 @@ class ServerProjectsHandler {
 </x-box>*/
 //put in sidebar.html o add the test button
 //Bruce needs to fix this 
+/*
 class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)
@@ -203,3 +204,5 @@ class Palette extends forklift.PaletteLoader {
     }
 }
 module.exports = Palette
+
+*/
