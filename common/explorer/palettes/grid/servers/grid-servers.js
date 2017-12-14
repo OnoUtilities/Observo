@@ -49,6 +49,13 @@ class AddServers extends forklift.PaletteBox {
         this.loadContent("elements/o-grid-add-server/grid-add-server.html")
     }
     onUnitLoad() {
+<<<<<<< HEAD
+=======
+        let sidebar= this.element.querySelector("o-sidebar").object; 
+        let serverName = document.getElementById('server-name').value // Variable for the text in the server name input box
+        //getElementById stores the text in the input box in a variable
+        let ipAddress = document.getElementById('ip-address').value  // Variable for the text in the ip address input box
+>>>>>>> a42c64d8636396b431bdb02d5a04eb3210e4ccfc
         // Code for the back button
         this.back = this.element.querySelector("#back")
         this.back.addEventListener("click", () => {
