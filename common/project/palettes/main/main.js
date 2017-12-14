@@ -577,6 +577,7 @@ class Content extends forklift.PaletteBox {
     }
     onUnitLoad() {
         let me = this
+        console.log(this)
         this.preferences = new PreferencesHandler(me)
         this.connectionInfo = new DisconnectHandler(me)
         this.helpInfo = new HelpHandler(me)

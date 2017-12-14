@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
 
-    <script src="./node_modules/fork-lift.js/forklift.js"></script>
+    <script src="./node_modules/fork-lift.js/forklift.node.js"></script>
     <script src="./node_modules/xel/xel.min.js"></script>
 
     <link rel="stylesheet" href="assets/style/easyhelp.css" />
@@ -16,66 +16,6 @@
 
     <!-- DEVLOPEMENT ONLY! -->
     <script src="./node_modules/less/dist/less.min.js"></script>
-
-    <!-- xel.js Style -->
-    <style>
-        .x-menu-right {
-            margin-left: auto;
-            margin-right: 0;
-        }
-
-        .x-menu-right .x-menuitem-right {
-            width: 60px;
-            padding: 1px;
-            overflow: none !important;
-            -webkit-app-region: none;
-        }
-
-        .x-menu-right .x-menuitem-right .x-icon {
-            padding-left: 15px;
-            height: 25px !important;
-            width: 25px !important;
-        }
-
-        .x-menu-right .x-menuitem {
-            -webkit-app-region: no-drag;
-        }
-
-        .x-menu-right .x-minimize:hover {
-            background: gray !important;
-        }
-
-        .x-menu-right .x-zoom:hover {
-            background: gray !important;
-        }
-
-        .x-menu-right .x-close:hover {
-            background: #dd4b39 !important;
-        }
-
-        .x-menu-center {
-            margin: 0 auto;
-        }
-
-        .x-menu-left {
-            width: 200px;
-            min-height: 100%;
-            height: 100%;
-        }
-
-        .x-expand-drag {
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-            flex: 1;
-            -webkit-align-self: auto;
-            align-self: auto;
-            height: 100%;
-            -webkit-app-region: drag;
-        }
-        body {
-            overflow: hidden;
-        }
-    </style>
 
 </head>
 
@@ -125,21 +65,15 @@
     let prompt = new xel.Prompt()
     let drawer = new xel.Drawer()
 
-    //Load forklift palettes
-    fl.App.loadPalette("GRID-HOME", "common/explorer/palettes/grid/home/home.js")
-    fl.App.loadPalette("GRID-SERVERS", "common/explorer/palettes/grid/servers/servers.js")
-    fl.App.loadPalette("GRID-PROJECTS", "common/explorer/palettes/grid/projects/projects.js")
-
-    fl.App.loadPalette("LOADER", "common/explorer/palettes/loader/loader.js")
-    fl.App.loadPalette("SIDEBAR", "common/explorer/palettes/sidebar/sidebar.js")
-    fl.App.loadPalette("DIALOGS", "common/explorer/palettes/dialogs/dialogs.js")
-    fl.App.loadPalette("MAIN", "common/explorer/palettes/main/main.js")
-
+    
+    //Load forklift palettes 
+    fl.App.loadAll("common/explorer/")
     //Run forklift init sequence
     fl.App.run()
 
 
     
+    let runtime = require("./runtime/runtime.js")
 
 </script>
 
