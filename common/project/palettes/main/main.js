@@ -8,7 +8,7 @@ const path = require('path')
 class MenuBar extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-menubar/menubar.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-menubar/menubar.html")
     }
     onContentLoad() {
@@ -300,7 +300,7 @@ class getFromPreset {
 class DocTabs extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-doctabs/doctabs.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-doctabs/doctabs.html")
     }
 }
@@ -324,7 +324,7 @@ class Box extends forklift.PaletteBox {
 class Preferences extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-preferences/preferences.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-preferences/preferences.html")
     }
     onContentLoad() {
@@ -419,7 +419,7 @@ class PreferencesHandler {
         super(p)
         this.refreshServer = new xel.MenuItem("#refresh-server")
         this.refreshServer.onClick(() => {
-            this.loadBox("elements/o-refresh/refresh.shadow.html")
+            this.loadBox()
             this.loadContent("elements/o-refresh/refresh.html")
         })
     }
@@ -432,7 +432,7 @@ class PreferencesHandler {
 class Help extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-help/help.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-help/help.html")
     }
 }
