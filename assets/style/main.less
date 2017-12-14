@@ -10,6 +10,7 @@ html {
 body {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 // === XEL STYLE ===
@@ -67,10 +68,6 @@ body {
     -webkit-app-region: drag;
 }
 
-body {
-    overflow: hidden;
-}
-
 // === XEL STUFF END ===
 // === NON-COLOR STYLES ===
 x-menubar {
@@ -106,14 +103,9 @@ o-content {
 }
 
 o-doctabs {
-    x-doctabs {
-        background: @mood-aqua;
-    }
+    x-doctabs {}
     x-button {
-        background: @lightgray;
-        color: @mood-aqua;
         x-popover {
-            background: white;
         }
     }
     x-popover {
