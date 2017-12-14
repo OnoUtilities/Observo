@@ -199,7 +199,7 @@ class Palette extends forklift.PaletteLoader {
         //this.newProject = new NewProjectHandler()
         //this.addServer = new AddServerHandler()
         //this.aboutOpen = new AboutHandler()
-        //this.connect = new ConnectHandler()
+        this.connect = new ConnectHandler()
     }
 }
 

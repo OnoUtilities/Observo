@@ -18,7 +18,7 @@ class Servers extends forklift.PaletteBox {
     }
     //Open the window to the server
     //TODO: Add another paramter for sessionKey
-    connect(ip) {
+    connect(ip, sessionKey) {
         let mainWin = managerRemote.createWindow({
             show: false,
             width: 1000,
@@ -30,7 +30,7 @@ class Servers extends forklift.PaletteBox {
             },
             icon: path.join(managerRemote.getDir(), 'assets/icons/png/1024x1024.png')
         })
-        mainWin.setURL(managerRemote.getDir(), "project.html", { server_ip: ip })
+        mainWin.setURL(managerRemote.getDir(), "project.html", { serverIP: ip, sessionKey: sessionKey})
         mainWin.win.setMinimumSize(800, 700);
         mainWin.win.webContents.on('did-finish-load', () => {
             mainWin.win.show()
@@ -89,7 +89,7 @@ class AddServers extends forklift.PaletteBox {
                 "Address": value.ip
             })
             sidebar.addClick(server, () => {
-                this.connect("")
+                Runtime.AUTHETICATE.run(value.ip)
             })
             sidebar.addContext(server, () => {
 

@@ -1,8 +1,9 @@
 class AUTHETICATE {
     constructor() {
     }
-    autheticate(ip) {
-
+    run(ip) {
+        let me = this
+        me.connecting = true
         //Hide the main content screen (which shows the loading box)
         forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").show()
 
@@ -71,12 +72,25 @@ class AUTHETICATE {
                     connect.confirm.display("New account?", `Do you want to create '${data.username}' as a new account?`, (data) => {
                         console.log(data)
                         if (data) {
-                            auth.emit("createAccount", { username: connect.getUsername(), password: connect.getPassword() })
+                            auth.emit("create", { username: connect.getUsername(), password: connect.getPassword() })
                         }
                         connect.show()
                     })
+                }
+                if (data.state == "sucess") {
+                    connect.close()
+                    forklift.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").connect(ip, data.sessionKey)
                 }
             })
         })
     }
 }
+
+
+
+
+const Runtime = {}
+Runtime.AUTHETICATE = new AUTHETICATE()
+
+
+module.exports = Runtime
