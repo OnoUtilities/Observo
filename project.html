@@ -6,7 +6,7 @@
     </title>
     <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
-    <script src="./node_modules/fork-lift.js/forklift.js"></script>
+    <script src="./node_modules/fork-lift.js/forklift.node.js"></script>
     <script src="./node_modules/xel/xel.min.js"></script>
 
     <link rel="stylesheet/less" type="text/css" href="assets\style\main.less" />
@@ -111,8 +111,11 @@
     let prompt = new xel.Prompt()
     let drawer = new xel.Drawer()
 
-    forklift.App.loadPalette("MAIN", "common/project/palettes/main/main.js")
-    forklift.App.loadPalette("SIDEBAR", "common/project/palettes/sidebar/sidebar.js")
+    //forklift.App.loadPalette("MAINS", "common/project/palettes/main/main.js")
+    //forklift.App.loadPalette("SIDEBAR", "common/project/palettes/sidebar/sidebar.js")
+ 
+    forklift.App.loadAll("common/project/")
+ 
     forklift.App.run()
 
 </script>

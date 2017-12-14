@@ -71,9 +71,37 @@
                 background: white;
             }
         }
-        x-popover{
-            width:400px;
+        x-popover{   
+            x-card {
+                background: @lightgray;
+            }
+            .chatCard {
+                background: @lightgray;
+                .chatItem {
+                    width: 700px;
+                    min-height: 80px;
+                    justify-content: space-between;
+                    margin: 5px;
+                    flex: 0 0 auto; 
+                    flex-shrink: 2;
+                    .img {
+                        flex: 0 0 auto; width: 64px; padding: 10px
+                    }
+                    .message {
+                        margin: 10px;
+                        .text {
+                            padding-top: 7px;
+                            font-weight: bold;
+                        }
+                        .user {
+                            opacity: 0.9;
+                        }
+                    }
+                }
+                
+            }
             
+
             x-popover{
                 flex-direction: column;
                 width: fit-content;
@@ -126,11 +154,6 @@
             color: black;
         }
     }
-    .explorer {
-        .box {
-            background: @green
-        }
-    }
     .actionsMenuBar{
         background: @lightgray;
         width: fit-content;
@@ -142,7 +165,6 @@
         }
     }
     .userListItem{
-        display: flex;
         height: 80px;
         justify-content: space-between;
         align-items: center;
