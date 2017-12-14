@@ -6,9 +6,8 @@
 @mood-aqua: #00acd7;
 @dark-aqua: darken(@mood-aqua, 10%);
 @light-aqua: #99ceec;
-
 .theme-default {
-    --primary-color: black; //XEL
+    --primary-color: @mood-aqua; //XEL
     background: #0099bf;
     x-menubar {
         background: @aqua;
@@ -17,7 +16,7 @@
         }
     }
     x-select {
-        background: @lightgray; 
+        background: @lightgray;
         x-menu {
             background: @lightgray;
         }
@@ -27,19 +26,16 @@
             color: black !important;
         }
     }
-    x-dialog{
-        h1{
-            text-align: center;
-        }
-        .name{
+    x-dialog {
+        h1 {}
+        .name {
             color: @mood-aqua;
         }
-    }
-    //Observo Elements
+    } //Observo Elements
     o-content {
         o-sidebar {
             background: @lightgray;
-            ::-webkit-scrollbar-thumb {
+             ::-webkit-scrollbar-thumb {
                 background-color: darken(@aqua, 20%);
             }
             .box {
@@ -52,16 +48,13 @@
         o-sidebar-view {
             background: @dark-aqua;
         }
-        .userSettingsButton{
+        .userSettingsButton {
             background: @dark-aqua;
-            width: 32px;
-            height: 32px;
-            border-radius: 3px;
             border: 3px @lightgray solid;
         }
     }
     o-doctabs {
-        x-doctabs{
+        x-doctabs {
             background: @mood-aqua;
         }
         x-button {
@@ -71,66 +64,30 @@
                 background: white;
             }
         }
-        x-popover{   
-            x-card {
-                background: @lightgray;
-            }
+        x-popover {
+            x-card {}
             .chatCard {
                 background: @lightgray;
                 .chatItem {
-                    width: 700px;
-                    min-height: 80px;
-                    justify-content: space-between;
-                    margin: 5px;
-                    flex: 0 0 auto; 
-                    flex-shrink: 2;
-                    .img {
-                        flex: 0 0 auto; width: 64px; padding: 10px
-                    }
+                    .img {}
                     .message {
-                        margin: 10px;
-                        .text {
-                            padding-top: 7px;
-                            font-weight: bold;
-                        }
-                        .user {
-                            opacity: 0.9;
-                        }
+                        .text {}
+                        .user {}
                     }
                 }
-                
             }
-            
-
-            x-popover{
-                flex-direction: column;
-                width: fit-content;
-            }
+            x-popover {}
         }
-
-        #open-button{
-        }
-        
-        #userCard{
-            margin: 0px;
-        }
+        #open-button {}
+        #userCard {}
     }
     o-connect {
-        x-button {
-            background: @lightgray;
-            color: @mood-aqua;
-        }
-        .side {
-
-        }
+        x-button {}
+        .side {}
         .main {
-            .title {
-            }
-            .input-text {
-    
-            }
+            .title {}
+            .input-text {}
             .input-button {
-                font-weight: bold;
                 .cancel {
                     color: @red;
                 }
@@ -154,40 +111,16 @@
             color: black;
         }
     }
-    .actionsMenuBar{
+    .actionsMenuBar {
         background: @lightgray;
-        width: fit-content;
-        height: fit-content;
-        float: right;
-        x-label{
-            justify-content: center;
-            align-items: center;
-        }
+        x-label {}
     }
-    .userListItem{
-        height: 80px;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .preferences{
-        padding: 0px;
-        border-radius: 15px;
-        width: fit-content;
-        x-card{
-            header{
-                h1{
-                    margin: 0 auto;
-                }
-                border-radius: 10px 10px 0 0;
-                height: fit-content;
+    .userListItem {}
+    .preferences {
+        x-card {
+            header {
+                h1 {}
             }
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border-radius: 10px;
-            margin: 0px;
         }
     }
-
 }

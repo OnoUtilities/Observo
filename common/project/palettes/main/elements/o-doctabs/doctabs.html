@@ -20,17 +20,16 @@
                 </x-doctab>
             </x-doctabs>
         </o-box>
-        <o-box flex style="flex: 0 0 auto; width: 70px; margin-right:.75px;">
+        <x-buttons style="flex: 0 0 auto;">
             <x-button style="width: 100%; height: 47px;">
                 <x-icon name="chat"></x-icon>
                 <x-popover style="width: 700px; height: 700px; overflow-x: hidden; overflow-y: scroll">
                     <o-box flex column class="chatCard" style="width: 700px; height: 700px;">
-                        
                         <o-box flex column>
                             <o-box flex column style="flex: 0 0 auto;">
                                 <o-box flex row style="background-color: aqua" class="chatItem right">
                                     <!-- /start of item/ -->
-                                   
+
                                     <o-box flex column class="message">
                                         <o-box flex class="text">
                                             <x-label>Hello Im brendan</x-label>
@@ -40,36 +39,38 @@
                                         </o-box>
                                     </o-box>
                                     <o-box flex column class="img">
-                                            <o-box flex style="flex: 0 0 auto; height: 64px;"><img src="http://via.placeholder.com/64x64" /></o-box>
-                                            <o-box flex></o-box>
+                                        <o-box flex style="flex: 0 0 auto; height: 64px;">
+                                            <img src="http://via.placeholder.com/64x64" />
                                         </o-box>
+                                        <o-box flex></o-box>
+                                    </o-box>
 
                                     <!-- /end of item/ -->
                                 </o-box>
                                 <o-box flex row style="background-color: white" class="chatItem right">
-                                        <!-- /start of item/ -->
-                                        <o-box flex column class="img">
-                                                <o-box flex style="flex: 0 0 auto; height: 64px;"><img src="http://via.placeholder.com/64x64" /></o-box>
-                                                <o-box flex></o-box>
-                                            </o-box>
-                                        <o-box flex column class="message">
-                                            <o-box flex class="text">
-                                                <x-label>Hello Im brendan</x-label>
-                                            </o-box>
-                                            <o-box flex class="user">
-                                                <x-label>User - 1 min ago</x-label>
-                                            </o-box>
+                                    <!-- /start of item/ -->
+                                    <o-box flex column class="img">
+                                        <o-box flex style="flex: 0 0 auto; height: 64px;">
+                                            <img src="http://via.placeholder.com/64x64" />
                                         </o-box>
-    
-                                        <!-- /end of item/ -->
+                                        <o-box flex></o-box>
                                     </o-box>
+                                    <o-box flex column class="message">
+                                        <o-box flex class="text">
+                                            <x-label>Hello Im brendan</x-label>
+                                        </o-box>
+                                        <o-box flex class="user">
+                                            <x-label>User - 1 min ago</x-label>
+                                        </o-box>
+                                    </o-box>
+
+                                    <!-- /end of item/ -->
+                                </o-box>
                             </o-box>
                         </o-box>
                     </o-box>
                 </x-popover>
             </x-button>
-        </o-box>
-        <o-box flex style="flex: 0 0 auto; width: 70px;">
             <x-button style="width: 100%; height: 47px;">
                 <x-icon name="supervisor-account"></x-icon>
                 <x-popover style="width: 500px; height: 500px; overflow: hidden;">
@@ -79,7 +80,7 @@
                                 <h1>Connected Users</h1>
                             </o-box>
                         </header>
-                        <o-box flex style="flex-grow: 2; min-height: 80%; max-height: 80%; overflow-y: scroll;" id="userlist">
+                        <o-box flex style="flex-grow: 2; max-height: 80%; overflow-y: scroll;" id="userlist">
                             <!-- WHEN USERS ARE NOT DETECTED -->
                             <!-- TODO - Make this section look nicer -->
                             <o-box style="display:flex; flex-flow: column; justify-content: center;">
@@ -93,6 +94,6 @@
                     </x-card>
                 </x-popover>
             </x-button>
-        </o-box>
+        </x-buttons>
     </o-box>
 </template>
