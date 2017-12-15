@@ -81,7 +81,7 @@ class AddServers extends forklift.PaletteBox {
         console.log("sss")
         let sidebar = fl.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").sidebar
         let servers = fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.getServers()
-        
+        console.log(sidebar.element)
         sidebar.element.querySelector("div").innerHTML = ""
         for (let server in servers) {
             let value = servers[server] //server is the id of the array
@@ -92,7 +92,13 @@ class AddServers extends forklift.PaletteBox {
                 Runtime.AUTHETICATE.run(value.ip)
             })
             sidebar.addContext(server, () => {
-
+                contextMenu.openTemp((self, items) => {
+                    let edit = self.addItemBelow("Edit")
+                    edit.setTitle("Edit")
+                    edit.onClick(() => {
+                        console.log("RAWR")
+                    })
+                })
             })
         }
     }
