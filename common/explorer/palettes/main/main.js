@@ -168,10 +168,11 @@ class ConfigManager {
      * @param {string} title Title of the server that will be shown in the server listings
      * @param {string} ip IP of the server that will be used to connect
      */
-    addServer(name, title, ip) {
+    addServer(name, title, ip, outhKey = null) {
         this.serverContent[name] = {
             "name": title,
-            "ip": ip
+            "ip": ip,
+            "outhKey": outhKey
         }
         jetpack.write(this.serverList, JSON.stringify(this.serverContent, null, 4))
         console.log("SERVER [" + name + "] added with the title of [" + title + "] and the IP of [" + ip + "]")
