@@ -31,7 +31,7 @@ class ConfigManager {
 
         const cwd = process.cwd()
         const portableHome = path.join(cwd, 'portable')
-        if (require('fs').existsSync(portableHome)) {
+        if (jetpack.exists(portableHome)) {
             process.env.OBSERVO_HOME = portableHome
         }
         const home = process.env.OBSERVO_HOME || require('os').homedir()
@@ -43,7 +43,7 @@ class ConfigManager {
         this.serverList = path.join(home, '.observo/serverList.json')
 
         if (!jetpack.exists(this.configPath)) {
-            const template_c = require('../../../../common/explorer/palettes/main/templates/config.json')
+            const template_c = require('../../../../assets/templates/config.json')
             jetpack.write(this.configPath, template_c)
         }
         try {
@@ -54,7 +54,7 @@ class ConfigManager {
         }
 
         if (!jetpack.exists(this.serverList)) {
-            const template_r = require('../../../../common/explorer/palettes/main/templates/serverList.json')
+            const template_r = require('../../../../assets/templates/serverList.json')
             jetpack.write(this.serverList, template_r)
         }
         try {
@@ -153,11 +153,11 @@ class ConfigManager {
     readValue(key, subKey) {
         subKey = subKey || null
         if (subKey != null) {
-            console.log("SUBKEY DEFINED")
+            //console.log("SUBKEY DEFINED")
             console.log(Object.values(this.configContent[key]))
             return Object.values(this.configContent[key])[subKey]
         }
-        console.log("SUBKEY NOT DEFINED")
+        //console.log("SUBKEY NOT DEFINED")
         return this.configContent[key]
     }
 
@@ -167,7 +167,7 @@ class ConfigManager {
      * @param {string} contentIn Entire contents of file to write
      */
     writeAll(contentIn) {
-        require("fs-jetpack").write(this.configPath, contentIn)
+        jetpack.write(this.configPath, contentIn)
     }
 
     /**
@@ -308,16 +308,16 @@ class DocTabs extends forklift.PaletteBox {
 class Loader extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-loader/loader.shadow.html")
-        this.loadContent()
+        this.loadBox("elements/o-loader/loader.shadow.html") //NOT EMPTY
+        this.loadContent()	//DOES NOT EXIST
     }
 }
 
 class Box extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-box/box.shadow.html")
-        this.loadContent()
+        this.loadBox("elements/o-box/box.shadow.html") //NOT EMPTY
+        this.loadContent() //DOES NOT EXIST
     }
 }
 
@@ -329,34 +329,19 @@ class Preferences extends forklift.PaletteBox {
     }
     onContentLoad() {
         let config = new ConfigManager(this)
-        /*
-        console.log(config.readValue("themes", "0"))
-        console.log(config.readValue("theme"))
-        config.writeValue("themes", "theme-dark", "NEWNAME")
-        config.writeValue("theme", 0)
-        console.log(config.getInstalledLanguages(true))
-        console.log(config.getInstalledLanguages(true, true))
-        console.log(config.getInstalledLanguages())
-        console.log(config.getInstalledThemes(true))
-        console.log(config.getInstalledThemes())
-        console.log(config.getLanguage())
-        console.log(config.getServers())
-        console.log(config.getTheme(true))
-        console.log(config.getTheme())
-        console.log(config.getVersion())
-        */
+
         let themeSelector = new xel.Select(this.element.querySelector("#themeSelector"))
         for (var i = 0; i < config.getInstalledThemes(true, true); i++) { //ADDS ALL THEMES [TODO: Make neater]
             var selectedTheme = false;
             if (config.getInstalledThemes()[i] == config.getTheme(true)) selectedTheme = true //If the current theme in the array equals the current theme, make it selected
-            themeSelector.addItem(config.getInstalledThemes()[i], config.getInstalledThemes(true)[i], null, selectedTheme)
+            themeSelector.addItem(config.getInstalledThemes()[i], config.getInstalledThemes(true)[i], null, selectedTheme) //"null" is for the "icon" value, which is not needed
         }
 
         let languageSelector = new xel.Select(this.element.querySelector("#languageSelector"))
         for (var i = 0; i < config.getInstalledLanguages(true, true); i++) { //ADDS ALL LANGUAGES [TODO: Make neater]
-            var selectedLanguage = false; //
+            var selectedLanguage = false;
             if (config.getInstalledLanguages()[i] == config.getLanguage(true)) selectedLanguage = true //If the current Language in the array equals the current language, make it selected
-            languageSelector.addItem(config.getInstalledLanguages()[i], config.getInstalledLanguages(true)[i], null, selectedLanguage)
+            languageSelector.addItem(config.getInstalledLanguages()[i], config.getInstalledLanguages(true)[i], null, selectedLanguage) //"null" is for the "icon" value, which is not needed
         }
 
         let notificationsButton = this.element.querySelector("#notifications")
@@ -388,20 +373,20 @@ class Preferences extends forklift.PaletteBox {
             config.writeValue("theme", themeSelector.value)
             document.getElementsByTagName("body")[0].className = themeSelector.value ///////////////Possibly add theme preview////////////////            
 
+            //TODO: Detect whether the following elements have been changed and display the restart warning
             config.writeValue("language", languageSelector.value)
             config.writeValue("sounds", getState(soundsButton))
             config.writeValue("notifications", getState(notificationsButton))
-
         })
-        //TODO: Add cancel button
+
         let cancelButton = new xel.Button(this.element.querySelector("#cancel"))
         console.log(cancelButton)
-         cancelButton.onClick(() => {
-             fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").preferences.preferencesDialog.close()
-         })
+        cancelButton.onClick(() => {
+            fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").preferences.preferencesDialog.close()
+        })
     }
 }
-//Theme selector & Autosave toggle
+
 class PreferencesHandler {
     constructor(p) {
         this.preferencesDialog = new xel.Dialog()
@@ -413,21 +398,6 @@ class PreferencesHandler {
         })
     }
 }
-
-/*class Refresh extends forklift.PaletteBox {
-    constructor(p){
-        super(p)
-        this.refreshServer = new xel.MenuItem("#refresh-server")
-        this.refreshServer.onClick(() => {
-            this.loadBox()
-            this.loadContent("elements/o-refresh/refresh.html")
-        })
-    }
-}*/
-//Doesn't Work
-//Bruce Needs to fix this
-//Help Would be nice :P
-//////////////////////////////////////////////////////////////
 
 class Help extends forklift.PaletteBox {
     constructor(p) {
@@ -447,6 +417,7 @@ class HelpHandler {
         })
     }
 }
+
 class ListUsers { //Orginize and document. Will be heavily modified for API integration
     constructor(p) {
         this.mainArea = document.querySelector("#userlist") //Select the o-box with ID "userlist"
@@ -558,7 +529,6 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
     }
 }
 
-
 class DisconnectHandler {
     constructor(p) {
         let item = new xel.MenuItem("#file-disconnect")
@@ -569,6 +539,7 @@ class DisconnectHandler {
         })
     }
 }
+
 class Content extends forklift.PaletteBox {
     constructor(p) {
         super(p)
@@ -610,7 +581,6 @@ class Content extends forklift.PaletteBox {
     }
 }
 
-
 class Palette extends forklift.PaletteLoader {
     constructor(p) {
         super(p)
@@ -620,9 +590,8 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("BOX", "o-box", Box)
         this.addBox("CONTENT", "o-content", Content)
         this.addBox("PREFERENCES", "o-preferences", Preferences)
-        //this.addBox("REFRESH", "o-refresh", Refresh)
         this.addBox("HELP", "o-help", Help)
     }
 }
 
-module.exports = Palette //needed to work
+module.exports = Palette //Needed to work

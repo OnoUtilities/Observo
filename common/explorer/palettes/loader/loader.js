@@ -1,7 +1,8 @@
+//Spinner that appears when connecting to a server
 class Loader extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-loader/loader.shadow.html")
+        this.loadBox("elements/o-loader/loader.shadow.html") //NOT EMPTY
         this.loadContent("elements/o-loader/loader.html")
     }
     onContentLoad() {
@@ -10,8 +11,8 @@ class Loader extends forklift.PaletteBox {
     onUnitLoad() {
         this.spinner = this.element.shadow.querySelector("#spinner")
         this.x = this.element.shadow.querySelector("#x")
-        this.title =  this.element.shadow.querySelector("#title")
-        
+        this.title = this.element.shadow.querySelector("#title")
+
     }
     showConnecting() {
         this.x.style.display = "none"
@@ -22,7 +23,7 @@ class Loader extends forklift.PaletteBox {
         this.x.style.display = ""
         this.spinner.style.display = "none"
         this.title.innerHTML = text
-    } 
+    }
     hide() {
         this.element.style.display = "none"
     }

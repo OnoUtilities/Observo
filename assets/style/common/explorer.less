@@ -1,11 +1,11 @@
 body {
     height: 100%;
     overflow: hidden;
-    user-select: none;
+    user-select: none; //[TO DOCUMENT]
     o-menubar {
         z-index: 100;
         x-menubar {
-            -webkit-app-region: drag;   
+            -webkit-app-region: drag;
         }
     }
     o-loader {
@@ -16,7 +16,7 @@ body {
         z-index: 1;
         o-sidebar {
             .div {
-                ::-webkit-scrollbar {
+                 ::-webkit-scrollbar {
                     width: 1px;
                 }
             }
@@ -24,7 +24,7 @@ body {
                 height: 100px;
                 padding-top: 5px;
                 padding-bottom: 20px;
-                    cursor: pointer !important;
+                cursor: pointer !important;
                 .title {
                     font-weight: bold;
                     font-size: 24px;
@@ -41,12 +41,11 @@ body {
             height: 50px;
         }
     }
-    dialog::backdrop { pointer-events: none; }
+    dialog::backdrop {
+        pointer-events: none; //Don't allow users to click off the dialog to close it
+    }
     .fullwidth {
         width: 100%;
         min-width: 100%;
-    }  
+    }
 }
-
-
-

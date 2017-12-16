@@ -1,37 +1,47 @@
 <template>
-        <x-label style="font-size: 24px; text-align: center;">New Project Settings</x-label>
-        <x-label style="font-size: 18px; margin-left: 45px;"><strong>Presets</strong></x-label>
+
+    <x-label style="font-size: 24px; text-align: center;">New Project Settings</x-label>
+    <x-label style="font-size: 18px; margin-left: 45px;">
+        <strong>Presets</strong>
+    </x-label>
     <x-box style="margin-left: 10px;">
         <x-select style="height: 50px; width: 200px">
             <x-menu>
                 <x-menuitem value="defualt" selected="true">
-            <x-label >
-              <x-box vertical>
-                <x-label><strong>Default</strong></x-label>
-              </x-box>
-            </x-label>
+                    <x-label>
+                        <x-box vertical>
+                            <x-label>
+                                <strong>Default</strong>
+                            </x-label>
+                        </x-box>
+                    </x-label>
                 </x-menuitem>
                 <x-menuitem>
-            <x-label id="FRCPreset">
-                <x-box vertical>
-                    <x-label><strong>FRC</strong></x-label>
-                    <x-label style="font-size: 12px;">Robot Scouting</x-label>
-                </x-box>
-            </x-label>
+                    <x-label id="FRCPreset">
+                        <x-box vertical>
+                            <x-label>
+                                <strong>FRC</strong>
+                            </x-label>
+                            <x-label style="font-size: 12px;">Robot Scouting</x-label>
+                        </x-box>
+                    </x-label>
                 </x-menuitem>
                 <x-menuitem>
-            <x-label  id="calenderPreset">
-                <x-box vertical>
-                    <x-label><strong>Calender</strong></x-label>
-                    <x-label style="font-size: 12px;">Event and Time Management</x-label>
-                </x-box>
-            </x-label>
+                    <x-label id="calenderPreset">
+                        <x-box vertical>
+                            <x-label>
+                                <strong>Calender</strong>
+                            </x-label>
+                            <x-label style="font-size: 12px;">Event and Time Management</x-label>
+                        </x-box>
+                    </x-label>
                 </x-menuitem>
             </x-menu>
-            </x-select>
-          </x-box>
-          <x-box style="display: flex; justify-content: center; align-items: flex-end;">
-                <x-button id="confirmPresets">Create New Project</x-button>
-                <x-button style="margin-left: 5px;" id="cancelPrsets">CANCEL</x-button>
-            </x-box>
+        </x-select>
+    </x-box>
+    <x-box style="display: flex; justify-content: center; align-items: flex-end;">
+        <x-button id="confirmPresets">Create New Project</x-button>
+        <x-button style="margin-left: 5px;" id="cancelPrsets">CANCEL</x-button>
+    </x-box>
+
 </template>

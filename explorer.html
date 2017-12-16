@@ -4,7 +4,6 @@
 <head>
     <title>Observo Explorer</title>
     <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
-    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
 
     <script src="./node_modules/fork-lift.js/forklift.node.js"></script>
     <script src="./node_modules/xel/xel.min.js"></script>
@@ -12,7 +11,7 @@
     <link rel="stylesheet" href="assets/style/easyhelp.css" />
     <link rel="stylesheet/less" type="text/css" href="assets\style\main.less" />
     <link rel="stylesheet/less" type="text/css" href="assets\style\common\explorer.less" />
-    <link rel="stylesheet/less" type="text/css" href="assets\style\easyhelp.ss" />
+    <link rel="stylesheet/less" type="text/css" href="assets\style\easyhelp.css" />
 
     <!-- DEVLOPEMENT ONLY! -->
     <script src="./node_modules/less/dist/less.min.js"></script>
@@ -20,9 +19,10 @@
 </head>
 
 <!-- Observo Explorer -->
+
 <body class="explorer theme-default animate">
-    <o-menubar></o-menubar>   
-    <o-loader ></o-loader>
+    <o-menubar></o-menubar>
+    <o-loader></o-loader>
     <o-content></o-content>
 </body>
 <!-- Include Socket.io to be used for later use -->
@@ -32,9 +32,15 @@
     const API = 1
 
     //Require Electorn
-    const { remote } = require('electron')
-    const { dialog } = remote
-    const { BrowserWindow } = remote;
+    const {
+        remote
+    } = require('electron')
+    const {
+        dialog
+    } = remote
+    const {
+        BrowserWindow
+    } = remote;
 
     //Require Path
     const path = require('path')
@@ -71,10 +77,6 @@
     fl.App.loadAll("common/explorer/")
     //Run forklift init sequence
     fl.App.run()
-
-
-    
-    
 </script>
 
 </html>

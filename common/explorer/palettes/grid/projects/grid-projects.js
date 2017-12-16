@@ -1,7 +1,7 @@
 class Projects extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-grid-projects/grid-projects.shadow.html")
+        this.loadBox("elements/o-grid-projects/grid-projects.shadow.html") //NOT EMPTY
         this.loadContent("elements/o-grid-projects/grid-projects.html")
     }
     onUnitLoad() {
@@ -20,7 +20,7 @@ class Projects extends forklift.PaletteBox {
 class AddProject extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-grid-add-project/grid-add-project.shadow.html")
+        this.loadBox("elements/o-grid-add-project/grid-add-project.shadow.html") //NOT EMPTY
         this.loadContent("elements/o-grid-add-project/grid-add-project.html")
     }
     onUnitLoad() {
@@ -35,10 +35,11 @@ class AddProject extends forklift.PaletteBox {
         this.test = this.element.querySelector('#confirm')
         this.test.addEventListener("click", () => {
             console.log("The server name is " + projectName)
-           forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
         })
     }
 }
+
 class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)

@@ -1,4 +1,4 @@
 # Observo
-A multi-purpose data collection tool.
+A multi-purpose, real-time data collection tool.
 
 ## Coming Soon™

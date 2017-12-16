@@ -4,7 +4,7 @@ const path = require('path')
 class Menubar extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-menubar/menubar.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-menubar/menubar.html")
     }
     onContentLoad() {
@@ -18,17 +18,16 @@ class Menubar extends forklift.PaletteBox {
 class Box extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-box/box.shadow.html")
-        this.loadContent()
+        this.loadBox("elements/o-box/box.shadow.html") //NOT EMPTY
+        this.loadContent() //DOES NOT EXIST
     }
 }
 
-//let sidebar = forklift.App.getPaletteInstance("SIDEBAR").getBoxObject("SIDEBAR")
-//Fix this - Bruce
+//Main page content under the doctabs (should scale when sidebar changes)
 class Content extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-content/content.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-content/content.html")
         this.config = new ConfigManager(this)
 
@@ -48,9 +47,12 @@ class Content extends forklift.PaletteBox {
     updatePosition(x, y, time) {
         //keyframes
         this.element.style.pointerEvents = "none"
-        let keyframes = [
-            { transform: `translate(${this.posX}px, ${this.posY}px)` }, //to
-            { transform: `translate(${x}px, ${y}px)` } //from
+        let keyframes = [{
+                transform: `translate(${this.posX}px, ${this.posY}px)`
+            }, //to
+            {
+                transform: `translate(${x}px, ${y}px)`
+            } //from
         ]
         //timings
         let timing = {
@@ -108,6 +110,7 @@ class Content extends forklift.PaletteBox {
         this.element.style.display = ""
     }
 }
+
 class ConfigManager {
     constructor(parent) {
         this.parent = parent
@@ -117,7 +120,7 @@ class ConfigManager {
 
         const cwd = process.cwd()
         const portableHome = path.join(cwd, 'portable')
-        if (require('fs').existsSync(portableHome)) {
+        if (jetpack.exists(portableHome)) {
             process.env.OBSERVO_HOME = portableHome
         }
         const home = process.env.OBSERVO_HOME || require('os').homedir()
@@ -129,7 +132,7 @@ class ConfigManager {
         this.serverList = path.join(home, '.observo/serverList.json')
 
         if (!jetpack.exists(this.configPath)) {
-            const template_c = require('../../../../common/explorer/palettes/main/templates/config.json')
+            const template_c = require('../../../../assets/templates/config.json')
             jetpack.write(this.configPath, template_c)
         }
         try {
@@ -145,7 +148,7 @@ class ConfigManager {
     }
     reloadServers() {
         if (!jetpack.exists(this.serverList)) {
-            const template_r = require('../../../../common/explorer/palettes/main/templates/serverList.json')
+            const template_r = require('../../../../assets/templates/serverList.json')
             jetpack.write(this.serverList, template_r)
         }
         try {
@@ -243,11 +246,11 @@ class ConfigManager {
     readValue(key, subKey) {
         subKey = subKey || null
         if (subKey != null) {
-            console.log("SUBKEY DEFINED")
+            //console.log("SUBKEY DEFINED")
             console.log(Object.values(this.configContent[key]))
             return Object.values(this.configContent[key])[subKey]
         }
-        console.log("SUBKEY NOT DEFINED")
+        //console.log("SUBKEY NOT DEFINED")
         return this.configContent[key]
     }
 
@@ -257,7 +260,7 @@ class ConfigManager {
      * @param {string} contentIn Entire contents of file to write
      */
     writeAll(contentIn) {
-        require("fs-jetpack").write(this.configPath, contentIn)
+        jetpack.write(this.configPath, contentIn)
     }
 
     /**

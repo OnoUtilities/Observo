@@ -1,14 +1,14 @@
 class Sidebar extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-sidebar/sidebar.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-sidebar/sidebar.html")
     }
     onContentLoad() {
         let me = this
         this.contentBox = this.element.querySelector("o-box")
-        
-        
+
+
     }
     show() {
         this.contentBox.style.width = "200px"
@@ -24,7 +24,7 @@ class Sidebar extends forklift.PaletteBox {
 class View extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-sidebar-view/sidebar-view.shadow.html")
+        this.loadBox("elements/o-sidebar-view/sidebar-view.shadow.html") //NOT EMPTY
         this.loadContent("elements/o-sidebar-view/sidebar-view.html")
         this.toggle = false
 
@@ -42,7 +42,7 @@ class View extends forklift.PaletteBox {
         this.parent = forklift.App.getPaletteInstance("SIDEBAR").getBoxObject("SIDEBAR")
 
         this.sidebarItem = new xel.MenuItem("#view-sidebar")
-    
+
         this.sidebarItem.onClick(() => {
             run()
         });

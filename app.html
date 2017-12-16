@@ -5,73 +5,13 @@
         Observo
     </title>
     <link rel="stylesheet" href="node_modules/xel/stylesheets/material.theme.css">
-    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+
     <script src="./node_modules/forklift.js/forklift.js"></script>
     <script src="./node_modules/xel/xel.min.js"></script>
 
     <link rel="stylesheet/less" type="text/css" href="assets\style\main.less" />
 
     <script src="./node_modules/less/dist/less.min.js"></script>
-
-    <style>
-        .x-menu-right {
-            margin-left: auto;
-            margin-right: 0;
-        }
-
-        .x-menu-right .x-menuitem-right {
-            width: 60px;
-            padding: 1px;
-            overflow: none !important;
-            -webkit-app-region: none;
-        }
-
-        .x-menu-right .x-menuitem-right .x-icon {
-            padding-left: 15px;
-            height: 25px !important;
-            width: 25px !important;
-        }
-
-        .x-menu-right .x-menuitem {
-            -webkit-app-region: no-drag;
-        }
-
-        .x-menu-right .x-minimize:hover {
-            background: gray !important;
-        }
-
-        .x-menu-right .x-zoom:hover {
-            background: gray !important;
-        }
-
-        .x-menu-right .x-close:hover {
-            background: #dd4b39 !important;
-        }
-
-        .x-menu-center {
-            margin: 0 auto;
-        }
-
-        .x-menu-left {
-            width: 200px;
-            min-height: 100%;
-            height: 100%;
-        }
-
-        .x-expand-drag {
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-            flex: 1;
-            -webkit-align-self: auto;
-            align-self: auto;
-            height: 100%;
-            -webkit-app-region: drag;
-        }
-
-        body {
-            overflow: hidden;
-        }
-    </style>
 
 </head>
 
@@ -91,35 +31,6 @@
     const managerLocal = require("import-window")
 
     const xel = require("xel-extend")
-
-    function preferencesManager() {
-        let fs = require('fs')
-
-        fs.access('./preferences.json', fs.constants.R_OK | fs.constants.W_OK, (err) => { //I don't know what the middle parts mean
-            if (err != null) { //If the file doesn't exist
-                fs.writeFile("./preferences.json", //File name
-                    //Below is the default preferances file as a literal (hence the lack of whitespace)
-                    `
-{
-    \"theme\":\"theme-dark\"
-}`,
-                    function (err) {
-                        if (err) throw err
-                        console.log("File written successfully") //Print out a success message
-                    })
-            }
-            fs.readFile('./preferences.json', 'utf8', (err, data) => {
-                var preferences = JSON.parse(data.toString()) //Preferences as JSON
-                console.log("[Preferences] " + document.getElementsByTagName('body').length +
-                    " values set in \"preferences.json\"")
-                theme = preferences.theme //How to access as well as get the theme
-                if (theme != "theme-default") {
-                    document.getElementsByTagName('body').item(0).className = theme //Sets the theme, if not default
-                    console.log("[Preferences] Theme changed to: " + theme)
-                }
-            })
-        });
-    }
 
     window.onload = preferencesManager() //When "window" is fully loaded, apply preferances
 

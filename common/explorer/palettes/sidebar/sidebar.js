@@ -1,7 +1,7 @@
 class Sidebar extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-sidebar/sidebar.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-sidebar/sidebar.html")
         this.items = {}
     }
@@ -19,10 +19,10 @@ class Sidebar extends forklift.PaletteBox {
         this.items[id]["description"] = listDescriptions
         this.items[id]["click"] = () => {}
         this.items[id]["context"] = () => {}
-        
+
         let me = this
 
-        for(let description in listDescriptions) {
+        for (let description in listDescriptions) {
             let value = listDescriptions[description]
             box.insertAdjacentHTML('beforeend', `<x-label class="text"><span class="bold">${description} : ${value} </span></x-label>`)
         }
@@ -36,18 +36,18 @@ class Sidebar extends forklift.PaletteBox {
 
     }
     addClick(id, callback) {
-        if(this.items[id] != null) { 
+        if (this.items[id] != null) {
             this.items[id]["click"] = callback
         }
     }
     addContext(id, callback) {
-        if(this.items[id] != null) { 
+        if (this.items[id] != null) {
             this.items[id]["context"] = callback
         }
     }
     getEntry(id, entry) {
-        if(this.items[id] != null) {
-            if(this.items[id]["description"][entry] !=null) {
+        if (this.items[id] != null) {
+            if (this.items[id]["description"][entry] != null) {
                 return this.items[id]["desription"][entry]
             }
         }
@@ -59,4 +59,5 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("SIDEBAR", "o-sidebar", Sidebar)
     }
 }
+
 module.exports = Palette

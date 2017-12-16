@@ -1,7 +1,7 @@
 class Servers extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-grid-servers/grid-servers.shadow.html")
+        this.loadBox("elements/o-grid-servers/grid-servers.shadow.html") //NOT EMPTY
         this.loadContent("elements/o-grid-servers/grid-servers.html")
     }
     onUnitLoad() {
@@ -30,7 +30,10 @@ class Servers extends forklift.PaletteBox {
             },
             icon: path.join(managerRemote.getDir(), 'assets/icons/png/1024x1024.png')
         })
-        mainWin.setURL(managerRemote.getDir(), "project.html", { serverIP: ip, sessionKey: sessionKey})
+        mainWin.setURL(managerRemote.getDir(), "project.html", {
+            serverIP: ip,
+            sessionKey: sessionKey
+        })
         mainWin.win.setMinimumSize(800, 700);
         mainWin.win.webContents.on('did-finish-load', () => {
             mainWin.win.show()
@@ -41,11 +44,10 @@ class Servers extends forklift.PaletteBox {
     }
 }
 
-
 class AddServers extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-grid-add-server/grid-add-server.shadow.html")
+        this.loadBox("elements/o-grid-add-server/grid-add-server.shadow.html") //NOT EMPTY
         this.loadContent("elements/o-grid-add-server/grid-add-server.html")
     }
     onUnitLoad() {
@@ -70,12 +72,12 @@ class AddServers extends forklift.PaletteBox {
         }
 
         let serverTitle = this.element.querySelector('#server-name').value // Variable for the text in the server name input box
-        let ipAddress = this.element.querySelector('#ip-address').value  // Variable for the text in the ip address input box
+        let ipAddress = this.element.querySelector('#ip-address').value // Variable for the text in the ip address input box
         let id = serverTitle.toLowerCase()
         id = replaceAll(id, " ", "_")
         fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.addServer(id, serverTitle, ipAddress)
         this.updateSidebar()
-        
+
     }
     updateSidebar() {
         console.log("sss")

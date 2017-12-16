@@ -1,7 +1,7 @@
 class Connect extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-connect/connect.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-connect/connect.html")
     }
 }
@@ -9,7 +9,7 @@ class Connect extends forklift.PaletteBox {
 class Confirm extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-confirm/confirm.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-confirm/confirm.html")
     }
     yes() {}
@@ -52,7 +52,7 @@ class Confirm extends forklift.PaletteBox {
 }
 
 class ConnectHandler {
-    constructor() { }
+    constructor() {}
     open(func) {
         this.connectDialog = new xel.Dialog()
         this.connectDialog.dialog.innerHTML = '<o-connect></o-connect>'
@@ -112,7 +112,7 @@ class ConnectHandler {
 class NewProject extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-newproject/newproject.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-newproject/newproject.html")
     }
 }
@@ -132,7 +132,7 @@ class NewProjectHandler {
 class AddServer extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-server/server.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-server/server.html")
     }
 }
@@ -153,7 +153,7 @@ class AddServerHandler {
                 this.newServer.onClick(() => {
                     let addNewServer = forklift.App.getPaletteInstance("SIDEBAR").connect
                 })
-            }) 
+            })
         })
     }
 }
@@ -161,7 +161,7 @@ class AddServerHandler {
 class NewServer extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-newserver/newserver.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-newserver/newserver.html")
     }
 }
@@ -169,7 +169,7 @@ class NewServer extends forklift.PaletteBox {
 class About extends forklift.PaletteBox {
     constructor(e) {
         super(e)
-        this.loadBox("elements/o-about/about.shadow.html")
+        this.loadBox()
         this.loadContent("elements/o-about/about.html")
     }
 }
@@ -185,6 +185,14 @@ class AboutHandler {
     }
 }
 
+class Settings extends forklift.PaletteBox {
+    constructor(e) {
+        super(e)
+        this.loadBox()
+        this.loadContent("elements/o-settings/userSettings.html")
+    }
+}
+
 class Palette extends forklift.PaletteLoader {
     constructor(id) {
         super(id)
@@ -194,6 +202,7 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("SERVER", "o-server", AddServer)
         this.addBox("ABOUT", "o-about", About)
         this.addBox("CONFIRM", "o-confirm", Confirm)
+        this.addBox("SETTINGS", "o-settings", Settings)
     }
     onUnitLoad() {
         //this.newProject = new NewProjectHandler()

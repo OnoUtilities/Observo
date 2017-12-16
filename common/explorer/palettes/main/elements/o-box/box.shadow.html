@@ -1,42 +1,48 @@
 <template>
-        <style>
-            :host([row]) {
-                display: flex;
 
-                flex-direction: row;
-   
-                flex-wrap: nowrap;
-   
-                justify-content: flex-start;
+    <style>
+         :host([row]) {
+            display: flex;
 
-                align-content: stretch;
+            flex-direction: row;
 
-                align-items: stretch;
-            }
-            :host([row-center]) {
-                display: flex; 
-                flex-flow: row; 
-                justify-content:center;
-            }
-             :host([column]) {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                justify-content: flex-start;
-                align-content: stretch;
-                align-items: stretch;
-                flex-direction: column;
-            }
-            :host([column-center]) {
-                display: flex; 
-                flex-flow: column; 
-                justify-content:center;
-                align-items: center;
-            }
-            :host([flex]) {
-                flex: 1;
-                align-self: auto;
-            }
-        </style>
-            <slot></slot>
-    </template>
+            flex-wrap: nowrap;
+
+            justify-content: flex-start;
+
+            align-content: stretch;
+
+            align-items: stretch;
+        }
+
+         :host([row-center]) {
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+        }
+
+         :host([column]) {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-content: stretch;
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+         :host([column-center]) {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+         :host([flex]) {
+            flex: 1;
+            align-self: auto;
+        }
+    </style>
+    <slot></slot>
+
+</template>
