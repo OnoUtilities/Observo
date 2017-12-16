@@ -103,6 +103,16 @@ class AddServers extends forklift.PaletteBox {
         }
     }
 }
+class Projects extends forklift.PaletteBox {
+    constructor(p) {
+        super(p)
+        this.loadBox("elements/o-grid-project-server/grid-project-server.shadow.html")
+        this.loadContent("elements/o-grid-project-server/grid-project-server.html")
+    }
+    onUnitLoad() {
+        
+    }
+}
 // Work on the input boxes for "add server" 
 // Make rename and IP in the input boxes
 // When "edit" is clicked, "ADD SERVER" changes to "SERVER SETTINGS"
@@ -117,6 +127,7 @@ class Palette extends forklift.PaletteLoader {
         super(id)
         this.addBox("SERVERS", "o-grid-servers", Servers)
         this.addBox("ADDSERVER", "o-grid-add-server", AddServers)
+        this.addBox("PROJECTS", "o-grid-project-server", Projects)
     }
 }
 

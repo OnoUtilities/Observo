@@ -31,8 +31,12 @@ class Content extends forklift.PaletteBox {
         this.loadBox("elements/o-content/content.shadow.html")
         this.loadContent("elements/o-content/content.html")
         this.config = new ConfigManager(this)
-        this.posX = -888
-        this.posY = 0
+
+        this.oPosX = -888
+        this.oPosY = 0
+
+        this.posX = this.oPosX
+        this.posY = this.oPosY
 
         this.dPosX = 888
         this.dPosY = 666
@@ -69,9 +73,11 @@ class Content extends forklift.PaletteBox {
         };
     }
     moveTo(x, y, time = 1000) {
-        x = this.posX + (this.dPosX * x)
-        y = this.posY + (this.dPosY * Y)
-        this.updatePosition(time)
+        x = this.oPosX - (this.dPosX * x)
+        y = this.oPosY + (this.dPosY * y)
+        console.log(x)
+        console.log(y)
+        this.updatePosition(x, y, time)
     }
     moveUp(time = 750) {
         let y = this.posY + this.dPosY
@@ -83,6 +89,8 @@ class Content extends forklift.PaletteBox {
     }
     moveLeft(time = 750) {
         let x = this.posX + this.dPosX
+        console.log(x)
+        console.log(this.posY)
         this.updatePosition(x, this.posY, time)
     }
     moveRight(time = 750) {
