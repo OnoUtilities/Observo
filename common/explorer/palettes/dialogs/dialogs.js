@@ -67,18 +67,14 @@ class ConnectHandler {
             this.connectBtn = this.connectDialog.dialog.querySelector("#connect")
             this.cancelBtn = this.connectDialog.dialog.querySelector("#cancel")
 
+            this.username = new xel.Input(this.connectDialog.dialog.querySelector("#username"))
+            this.password = new xel.Input(this.connectDialog.dialog.querySelector("#password"))
             this.connectDialog.open()
             func.call()
         }, 100)
     }
     close() {
         this.connectDialog.close()
-    }
-    onUnitLoad() {
-        let me = this
-        this.newProject = new NewProjectHandler(me)
-        this.addServer = new AddServerHandler(me)
-        this.aboutOpen = new AboutHandler(me)
     }
     onConnect(func) {
         this.connectBtn.addEventListener("click", () => {
