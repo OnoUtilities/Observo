@@ -380,7 +380,6 @@ class Preferences extends forklift.PaletteBox {
         })
 
         let cancelButton = new xel.Button(this.element.querySelector("#cancel"))
-        console.log(cancelButton)
         cancelButton.onClick(() => {
             fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").preferences.preferencesDialog.close()
         })
@@ -548,7 +547,6 @@ class Content extends forklift.PaletteBox {
     }
     onUnitLoad() {
         let me = this
-        console.log(this)
         this.preferences = new PreferencesHandler(me)
         this.connectionInfo = new DisconnectHandler(me)
         this.helpInfo = new HelpHandler(me)

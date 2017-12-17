@@ -23,52 +23,8 @@
         <x-buttons style="flex: 0 0 auto;">
             <x-button style="width: 100%; height: 47px;">
                 <x-icon name="chat"></x-icon>
-                <x-popover style="width: 700px; height: 700px; overflow-x: hidden; overflow-y: scroll">
-                    <o-box flex column class="chatCard" style="width: 700px; height: 700px;">
-                        <o-box flex column>
-                            <o-box flex column style="flex: 0 0 auto;">
-                                <o-box flex row style="background-color: aqua" class="chatItem right">
-                                    <!-- /start of item/ -->
-
-                                    <o-box flex column class="message">
-                                        <o-box flex class="text">
-                                            <x-label>Hello Im brendan</x-label>
-                                        </o-box>
-                                        <o-box flex class="user">
-                                            <x-label>User - 1 min ago</x-label>
-                                        </o-box>
-                                    </o-box>
-                                    <o-box flex column class="img">
-                                        <o-box flex style="flex: 0 0 auto; height: 64px;">
-                                            <img src="http://via.placeholder.com/64x64" />
-                                        </o-box>
-                                        <o-box flex></o-box>
-                                    </o-box>
-
-                                    <!-- /end of item/ -->
-                                </o-box>
-                                <o-box flex row style="background-color: white" class="chatItem right">
-                                    <!-- /start of item/ -->
-                                    <o-box flex column class="img">
-                                        <o-box flex style="flex: 0 0 auto; height: 64px;">
-                                            <img src="http://via.placeholder.com/64x64" />
-                                        </o-box>
-                                        <o-box flex></o-box>
-                                    </o-box>
-                                    <o-box flex column class="message">
-                                        <o-box flex class="text">
-                                            <x-label>Hello Im brendan</x-label>
-                                        </o-box>
-                                        <o-box flex class="user">
-                                            <x-label>User - 1 min ago</x-label>
-                                        </o-box>
-                                    </o-box>
-
-                                    <!-- /end of item/ -->
-                                </o-box>
-                            </o-box>
-                        </o-box>
-                    </o-box>
+                <x-popover id="chatContainer" style="width: 700px; height: 700px; overflow-x: hidden; overflow-y: scroll">
+                    <o-chat></o-chat>
                 </x-popover>
             </x-button>
             <x-button style="width: 100%; height: 47px;">
@@ -85,9 +41,8 @@
                             <!-- TODO - Make this section look nicer -->
                             <o-box style="display:flex; flex-flow: column; justify-content: center;">
                                 <x-icon name="not-interested"></x-icon>
-                                <h3>No users detected
-                                    <h3>
-                                        <x-label>Check connection between computers</x-label>
+                                <h3>No users detected </h3>
+                                <x-label>Check connection between computers</x-label>
                             </o-box>
                             <!-- WHEN USERS ARE NOT DETECTED -->
                         </o-box>
