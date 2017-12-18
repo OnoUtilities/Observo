@@ -79,11 +79,23 @@ class AUTHETICATE {
                 }
                 if (data.state == "sucess") {
                     connect.close()
-                    forklift.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").connect(ip, data.sessionKey)
+                    //forklift.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").connect(ip, data.sessionKey)
+                    forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").showConnecting()
+                    forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").hide()
+                    forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveTo(-1,-3, 0)
                 }
             })
         })
     }
+}
+class CONNECTION {
+    constructor() {
+    
+    }
+    connect(uuid, sessionID) {
+        let auth = io.connect(`${ip}`)
+    }
+  
 }
 
 

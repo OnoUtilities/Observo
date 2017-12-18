@@ -1,0 +1,33 @@
+<template>
+
+    <o-box flex row id="container" style="justify-content: flex-start; height: 100%;">
+        <o-box flex column>
+            <o-box flex style="align-self: stretch; flex-grow: 2;">
+
+            </o-box>
+            <o-box flex row style="flex: 0 0 auto; height: 100px; margin-left: 10px;">
+                <o-box flex style=" flex: 0 0 auto; width: 10%;">
+                    <x-button id="disconnect" style="color: red;">
+                        <x-box>
+                            <x-icon name="fa-times" iconset="assets/icons/icon.svg"></x-icon>
+                        </x-box>
+                    </x-button>
+                </o-box>
+                <o-box flex style=" flex: 0 0 auto;width: 5%;">
+                </o-box>
+                <o-box flex style=" flex: 0 0 auto;width: 85%;">
+                    <o-box flex row-center>
+                        <x-button id="addProject" style="width: 55%">
+                            <x-box>
+                                <x-icon name="dns"></x-icon>
+                                <x-label>ADD PROJECT</x-label>
+                            </x-box>
+                        </x-button>
+                    </o-box>
+                </o-box>
+            </o-box>
+        </o-box>
+        <o-sidebar></o-sidebar>
+    </o-box>
+
+</template>
