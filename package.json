@@ -9,7 +9,6 @@
   },
   "build": {
     "appId": "org.onoutilities.observo",
-    "category": "public.app-category.education",
     "files": [
       "dist/",
       "node_modules/",
@@ -36,7 +35,9 @@
       ]
     },
     "win": {
-      "target": "nsis",
+      "target": "nsis"
+    },
+    "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     },
