@@ -9,6 +9,11 @@
   },
   "build": {
     "appId": "org.onoutilities.observo",
+    "publish": {
+      "repo": "my-private-repo",
+      "user": "Import-Python@Ono",
+      "owner": "Import-Python"
+    },
     "files": [
       "dist/",
       "node_modules/",
@@ -48,7 +53,7 @@
       ]
     }
   },
-  "repository": "https://github.com/OnoUntilities/Observo",
+  "repository": "https://github.com/OnoUtilities/Observo",
   "keywords": [
     "observo"
   ],
