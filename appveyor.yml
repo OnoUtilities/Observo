@@ -3,7 +3,7 @@ cache:
   - node_modules
 environment:
   GH_TOKEN:
-      secure: +p1bShK3JA+fawI7zp4mW54NBRchLe7uAWLsglfoUr1JIxE12nOz6jYVrQySfp2x
+      secure: Sbxps47tKcy9kQCjzpTRpXJAliV/7gW75g9RSsWMwz42Oqc70B2RIPkZRJqXfahe
   matrix:
     - nodejs_version: 8
 install:
