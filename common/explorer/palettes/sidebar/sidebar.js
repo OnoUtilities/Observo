@@ -52,7 +52,6 @@ class Sidebar extends forklift.PaletteBox {
             }
         }
     }
-    
 }
 class Palette extends forklift.PaletteLoader {
     constructor(id) {

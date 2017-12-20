@@ -62,8 +62,7 @@ class AddServers extends forklift.PaletteBox {
         this.confirm.addEventListener("click", () => {
             this.addServer()
             this.updateSidebar()
-            fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
-
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
         })
     }
     addServer() {
@@ -106,7 +105,7 @@ class AddServers extends forklift.PaletteBox {
                     let deletes = self.addItemBelow("Delete")
                     deletes.setTitle("Delete")
                     deletes.onClick(() => {
-                        fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.deleteServer(server)
+                        fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.deleteServer()
                     })
                 })
             })
@@ -127,7 +126,7 @@ class AddServers extends forklift.PaletteBox {
                 this.updateSidebar()
     }
     deleteServer() {
-        forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").deleteServer()
+        
     }
 }
 class Projects extends forklift.PaletteBox {
