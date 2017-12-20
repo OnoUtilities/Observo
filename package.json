@@ -1,51 +1,51 @@
 {
-  "name": "Observo",
+  "name": "observo",
   "version": "0.0.1",
   "description": "Data Manipulation Tool for Robotics Competition",
   "main": "app.js",
   "scripts": {
     "postinstall": "install-app-deps",
-    "dist": "npm run build && build --publish onTagOrDraft",
-    "build": {
-      "appId": "org.onoutilities.observo",
-      "category": "public.app-category.education",
-      "files": [
-        "dist/",
-        "node_modules/",
-        "common/",
-        "assets/",
-        "runtime/",
-        "app.js",
-        "explorer.html",
-        "project.html",
-        "package.json"
-      ],
-      "dmg": {
-        "contents": [
-          {
-            "x": 130,
-            "y": 220
-          },
-          {
-            "x": 410,
-            "y": 220,
-            "type": "link",
-            "path": "/Applications"
-          }
-        ]
-      },
-      "win": {
-        "target": "nsis",
-        "oneClick": false,
-        "allowToChangeInstallationDirectory": true
-      },
-      "linux": {
-        "target": [
-          "AppImage",
-          "deb"
-        ]
-      }
+    "dist": "build --publish onTagOrDraft"
+  },
+  "build": {
+    "appId": "org.onoutilities.observo",
+    "category": "public.app-category.education",
+    "files": [
+      "dist/",
+      "node_modules/",
+      "common/",
+      "assets/",
+      "runtime/",
+      "app.js",
+      "explorer.html",
+      "project.html",
+      "package.json"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     },
+    "win": {
+      "target": "nsis",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
   },
   "repository": "https://github.com/OnoUntilities/Observo",
   "keywords": [
