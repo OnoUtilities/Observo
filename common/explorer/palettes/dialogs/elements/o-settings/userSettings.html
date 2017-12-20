@@ -4,17 +4,24 @@
         <header>
             <h1 style="text-align:center">USER SETTINGS</h1>
         </header>
+        <h3>Your avatar:</h3>
         <x-box>
-            <x-label>Your avatar: </x-label>
             <img id="userAvatar">
             <x-icon name="insert-photo"></x-icon>
             <input type="file" accept="image/*" id="avatarInput">
+            <x-button id="submitAvatar">
+                <x-label>Submit</x-label>
+            </x-button>
+
         </x-box>
         <x-input skin="flat" value="" id="userName">
             <x-icon name="person"></x-icon>
             <x-label>Username</x-label>
         </x-input>
         <x-label id="userID">Your ID is [UNKNOWN ID]</x-label>
+        <x-button>
+            <x-label>Apply</x-label>
+        </x-button>
     </x-card>
 
 </template>

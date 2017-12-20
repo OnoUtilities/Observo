@@ -1,0 +1,65 @@
+<template>
+    
+        <o-box flex row style="justify-content: flex-start; height: 100%;">
+            <o-box flex column>
+                <!-- Start Back Button -->
+                <o-box flex row style="flex: 0 0 auto; height: 55px; padding-top: 10px">
+                    <o-box flex style="margin-left: 10px">
+                        <x-button id="back">
+                            <x-box>
+                                <x-icon name="keyboard-arrow-up"></x-icon>
+                            </x-box>
+                        </x-button>
+                    </o-box>
+                    <o-box flex style="flex: 0 0 auto; width: 220px;">
+                        <x-label style="font-size: 32px;" class="rb-font observo-title">
+                            Add Project
+                        </x-label>
+                    </o-box>
+                </o-box>
+                <!-- End of Back Button-->
+                <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                    <o-box flex style="margin-left:10px; margin-top:10px;">
+                        <x-label style="font-size: 24px;" class="rb-font observo-title">
+                            Project Name
+                        </x-label>
+                    </o-box>
+                </o-box>
+                <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                    <o-box flex style="margin-left: 20px; margin-top: 10px;">
+                        <x-input id="project-name">
+                            <x-icon name="format-color-text"></x-icon>
+                            <x-label>Project Name</x-label>
+                        </x-input>
+                    </o-box>
+                </o-box>
+                <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                    <o-box flex style="margin-left:10px; margin-top:10px;">
+                        <x-label style="font-size: 24px;" class="rb-font observo-title">
+                            Presets
+                        </x-label>
+                    </o-box>
+                </o-box>
+                <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                    <o-box flex style="margin-left: 20px; margin-top: 10px;">
+                        <x-selector ip="presets">
+                            <x-menu>
+                                <x-menuitem>
+                                    <x-label>FRC Robot Scouting</x-label>
+                                </x-menuitem>
+                            </x-menu>
+                        </x-selector>
+                    </o-box>
+                </o-box>
+                <o-box flex style="margin-left: 40px; margin-top: 20px;">
+                    <x-box>
+                        <x-button id="confirm">
+                            <x-icon name="check-circle"></x-icon>
+                            <x-label>Confirm</x-label>
+                        </x-button>
+                    </x-box>
+                </o-box>
+            </o-box>
+        </o-box>
+    
+    </template>

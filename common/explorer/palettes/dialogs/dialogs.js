@@ -187,6 +187,28 @@ class Settings extends forklift.PaletteBox {
         this.loadBox()
         this.loadContent("elements/o-settings/userSettings.html")
     }
+    onContentLoad() {
+        this.avatarInput = this.element.querySelector("#avatarInput")
+        this.submitButton = new xel.Button(this.element.querySelector("#submitAvatar"))
+        this.submitButton.onClick(() => {
+            console.log(this.fileToB64(this.avatarInput.files[0].path, true))
+        })
+    }
+    /**
+     * Converts an inputed file into base64 with the option to convert it into a dataURL for img tags
+     * @param {String} file Path (can be relative or absolute) to image file [WILL BE UPDATE FOR ADDITIONAL INPUT]
+     * @param {Boolean} returnDataURL Return a format usable in the "src" attribute for the image tag
+     */
+    fileToB64(file, returnDataURL) {
+        let fileContents = require("fs-jetpack").read(file, "buffer") //Import an image as binary buffer
+        let arr = new Uint8Array(fileContents); //Get an integer array based on the buffer
+        let raw = String.fromCharCode.apply(null, arr); //Passes the array to the string converter (Normally would have to be a for loop, but "apply" circumvents that)
+        let b64 = btoa(raw); //Encodes a string into base64. Use "atob(b64);" for proof
+        if (returnDataURL) { //If the caller would like just the base64, they specify otherwise
+            return "data:image/jpeg;base64," + b64; //Put into a readable format for the "src" attribute
+        }
+        return b64.toString() //Make sure that b64 is a String and return
+    }
 }
 
 class Palette extends forklift.PaletteLoader {
