@@ -62,7 +62,7 @@ class AUTHETICATE {
                         })
                     })
                 } else {
-                    //pass login to server with data.sessionKey
+                    
                 }
             })
             auth.on("account", (data) => {
@@ -77,7 +77,7 @@ class AUTHETICATE {
                         connect.show()
                     })
                 }
-                if (data.state == "sucess") {
+                if (data.state == "success") {
                     connect.close()
                     //forklift.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").connect(ip, data.sessionKey)
                     forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").showConnecting()

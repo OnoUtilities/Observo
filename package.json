@@ -4,14 +4,55 @@
   "description": "Data Manipulation Tool for Robotics Competition",
   "main": "app.js",
   "scripts": {
-    "start": "electron ."
+    "postinstall": "install-app-deps",
+    "dist": "npm run build && build --publish onTagOrDraft"
+  },
+  "build": {
+    "appId": "org.onoutilities.observo",
+    "category": "public.app-category.education",
+    "files": [
+      "dist/",
+      "node_modules/",
+      "common/",
+      "assets/",
+      "runtime/",
+      "app.js",
+      "explorer.html",
+      "project.html",
+      "package.json"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
   },
   "repository": "https://github.com/OnoUntilities/Observo",
   "keywords": [
     "observo"
   ],
   "author": "OnoUtilities",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "dependencies": {
     "electron-config": "^1.0.0",
     "electron-window": "^0.8.1",
@@ -26,6 +67,7 @@
     "xel-extend": "^1.0.3"
   },
   "devDependencies": {
-    "electron": "1.8.1"
+    "electron": "1.8.1",
+    "electron-builder": "^19.49.0"
   }
 }
