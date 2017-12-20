@@ -9,11 +9,6 @@
   },
   "build": {
     "appId": "org.onoutilities.observo",
-    "publish": {
-      "repo": "my-private-repo",
-      "user": "Import-Python@Ono",
-      "owner": "Import-Python"
-    },
     "files": [
       "dist/",
       "node_modules/",
