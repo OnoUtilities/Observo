@@ -25,44 +25,37 @@ class Chat extends forklift.PaletteBox {
                 this.input.clear()
             }
         }, true)
-        //UNCOMMENT FOR TIME COUNTERS BY MINUTE
-        /*
-                setInterval(() => {
-                    for (var i = 0; i < this.messageCount; i++) {
-                        this.timer = this.mainArea.querySelector("#messageTimer" + i)
-                        console.log(this.timer + "   " + "#messageTimer" + i)
-                        this.timer.setAttribute("lifetime", (parseInt(this.timer.getAttribute("lifetime")) + 1))
-                        this.timer.textContent = this.timer.getAttribute("lifetime")
-                    }
-                }, 60000)
-                */
     }
     placeMessage(icon = "http://via.placeholder.com/64x64", username = "UNDEFINED", messageIndex, message) {
         if (messageIndex >= this.messageCutoff) {
             this.mainArea.removeChild(this.mainArea.querySelector("#message" + (messageIndex - this.messageCutoff)))
         }
         console.log(message + "\t[RECEIVED]")
-        this.template =
-            `
-        <o-box flex row id="message${messageIndex}" style="background-color: white" class="chatItem right">
-        <o-box flex column class="img">
-            <o-box flex style="flex: 0 0 auto; height: 64px;">
-                <img src="${icon}" />
-            </o-box>
-            <o-box flex></o-box>
-        </o-box>
-        <o-box flex column class="message">
-            <o-box flex class="text">
-                <x-label>${message}</x-label>
-            </o-box>
-            <o-box flex class="user">
-                <x-label>${username} - <span lifetime="0" id="messageTimer${messageIndex}">>1</span> minutes ago</x-label>
-            </o-box>
-        </o-box>
-    </o-box>
-        `
+        this.template = `<o-chat-item id="message${messageIndex}" message="${message}" user="${username}" icon="${icon}"></o-chat-item>`
         this.mainArea.insertAdjacentHTML("beforeend", this.template)
         this.messageCount++
+    }
+}
+
+class ChatItem extends forklift.PaletteBox {
+    constructor(p) {
+        super(p)
+        this.loadBox("elements/o-chat/o-chat-item.html")
+        this.loadContent("elements/o-chat/o-chat-item.html")
+    }
+    onContentLoad() {
+        console.log("CONTENT CALLED")
+        this._icon = this.element.getAttribute("icon")
+        this._user = this.element.getAttribute("user")
+        this._message = this.element.getAttribute("message")
+        this.messageID = this.element.querySelector("#messageText")
+
+        this.messageID.innerHTML = this._message
+        console.log(this._icon)
+        console.log(this._message)
+        console.log(this._user)
+        console.log(this.messageID)
+
     }
 }
 
@@ -70,6 +63,7 @@ class Palette extends forklift.PaletteLoader {
     constructor(p) {
         super(p)
         this.addBox("CHAT", "o-chat", Chat)
+        this.addBox("CHATITEM", "o-chat-item", ChatItem)
     }
 }
 

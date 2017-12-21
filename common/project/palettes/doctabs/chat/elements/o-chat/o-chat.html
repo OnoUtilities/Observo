@@ -1,19 +1,16 @@
 <template>
 
     <o-box flex column class="chatCard" style="width: 700px; height: 700px;">
-        <o-box flex column>
-            <o-box flex column style="flex: 0 0 auto;">
-                <span id="chatItems">
-                    <!-- TO BE REPLACED WITH CHAT MESSAGES -->
-                </span>
-                <x-input id="chatInput">
-                    <!--
-                    <x-button>
-                        <x-label>Send</x-label>
-                    </x-button>
-                -->
-                </x-input>
-            </o-box>
+        <o-box flex column style="flex: 0 0 auto;">
+            <span id="chatItems">
+                <!-- TO BE REPLACED WITH CHAT MESSAGES -->
+            </span>
+            <x-box horizontal>
+                <x-input id="chatInput"></x-input>
+                <x-button>
+                    <x-label>Send</x-label>
+                </x-button>
+            </x-box>
         </o-box>
     </o-box>
 
