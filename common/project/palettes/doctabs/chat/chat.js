@@ -12,6 +12,9 @@ class Chat extends forklift.PaletteBox {
         super(p)
         this.loadBox()
         this.loadContent("elements/o-chat/o-chat.html")
+
+        //this.onDelete = () => {}
+
     }
     onContentLoad() {
         this.mainArea = this.element.querySelector("#chatItems")
@@ -35,12 +38,15 @@ class Chat extends forklift.PaletteBox {
         this.mainArea.insertAdjacentHTML("beforeend", this.template)
         this.messageCount++
     }
+    onDelete(callback) {
+        this.onDelete = callback
+    }
 }
 
 class ChatItem extends forklift.PaletteBox {
     constructor(p) {
         super(p)
-        this.loadBox("elements/o-chat/o-chat-item.html")
+        this.loadBox()
         this.loadContent("elements/o-chat/o-chat-item.html")
     }
     onContentLoad() {
