@@ -61,7 +61,6 @@ class AddServers extends forklift.PaletteBox {
         this.confirm = this.element.querySelector('#confirm')
         this.confirm.addEventListener("click", () => {
             this.addServer()
-            this.updateSidebar()
             forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
         })
     }
@@ -77,8 +76,30 @@ class AddServers extends forklift.PaletteBox {
         let id = serverTitle.toLowerCase()
         id = replaceAll(id, " ", "_")
         fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.addServer(id, serverTitle, ipAddress)
-        this.updateSidebar()
 
+        let sidebar = fl.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").sidebar
+        let server = id
+        sidebar.addItem(id, serverTitle, {
+            "Address": ipAddress
+        })
+        sidebar.addClick(id, () => {
+            Runtime.AUTHETICATE.run(ipAddress)
+        })
+        sidebar.addContext(id, () => {
+            contextMenu.openTemp((self, items) => {
+                let edit = self.addItemBelow("Edit")
+                edit.setTitle("Edit")
+                edit.onClick(() => {
+                    fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveLeft()
+                    this.editServer()
+                })
+                let deletes = self.addItemBelow("Delete")
+                deletes.setTitle("Delete")
+                deletes.onClick(() => {
+                    fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.deleteServer()
+                })
+            })
+        })
     }
     updateSidebar() {
         console.log("sss")
