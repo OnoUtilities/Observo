@@ -1,5 +1,6 @@
 {
   "name": "observo",
+  "email" : "onoutilities@gmail.com",
   "version": "0.0.1",
   "description": "Data Manipulation Tool for Robotics Competition",
   "main": "app.js",
