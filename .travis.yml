@@ -12,7 +12,6 @@ matrix:
       compiler: clang
 
 node_js:
-  - 8
   - 6
 
 cache:
@@ -34,7 +33,6 @@ addons:
 
 install:
   - nvm install 6
-  - nvm install 8
   - node -v
   - npm install electron-builder@next
   - npm install
