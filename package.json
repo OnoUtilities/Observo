@@ -1,6 +1,6 @@
 {
   "name": "observo",
-  "email" : "onoutilities@gmail.com",
+  "email": "onoutilities@gmail.com",
   "version": "0.0.1",
   "description": "Data Manipulation Tool for Robotics Competition",
   "main": "app.js",
@@ -64,6 +64,7 @@
     "fs-jetpack": "^1.2.0",
     "import-window": "^1.0.0",
     "less": "^2.7.3",
+    "moment": "^2.20.1",
     "socket.io": "^2.0.4",
     "uuid": "^3.1.0",
     "vm2": "^3.5.2",

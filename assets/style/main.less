@@ -121,13 +121,10 @@ o-doctabs {
         x-card {}
         .chatCard {
             .chatItem {
-                width: 700px;
                 min-height: 80px;
                 justify-content: space-between;
                 margin: 5px;
                 flex: 0 0 auto;
-                flex-shrink: 2;
-                overflow-y: scroll;
                 .img {
                     flex: 0 0 auto;
                     width: 64px;
@@ -135,23 +132,30 @@ o-doctabs {
                 }
                 .message {
                     margin: 10px;
+                    height: fit-content;
                     .text {
+                        justify-content: space-between;
                         padding-top: 7px;
                         font-weight: bold;
+                        overflow-wrap: break-word;
+                        width: 26ch;
+                    }
+                    x-button {
+                        padding: 3px;//TODO: Remove arrow
                     }
                     .info {
                         opacity: 0.9;
                     }
                 }
             }
-            x-box {
-                x-input {
-                    display: flex;
-                    flex-grow: 1;
-                }
-                x-button {
-                    align-self: flex-end;
-                }
+            x-input {
+                display: flex;
+                flex-grow: 1;
+                max-width: none;
+                margin-right: 5px;
+            }
+            x-button {
+                align-self: flex-end; //TODO: Fix scrollbar moving button over a few pixels
             }
         }
         x-popover {

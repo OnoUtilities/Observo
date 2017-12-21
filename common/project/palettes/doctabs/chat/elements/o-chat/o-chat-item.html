@@ -3,16 +3,30 @@
     <o-box flex row style="background-color: white" class="chatItem right">
         <o-box flex column class="img">
             <o-box flex style="flex: 0 0 auto; height: 64px;">
-                <img src="./assets/images/placeholder64.png" />
+                <img id="avatar" src="./assets/images/placeholder64.png" />
             </o-box>
             <o-box flex></o-box>
         </o-box>
         <o-box flex column class="message">
-            <o-box flex class="text">
-                <x-label id="messageText">INVALID</x-label>
+            <o-box flex row>
+                <o-box flex class="text">
+                    <x-label id="messageText">INVALID</x-label>
+                </o-box>
+                <x-button>
+                    <x-icon name="more-vert"></x-icon>
+                    <x-menu>
+                        <x-menuitem>
+                            <x-label>Edit</x-label>
+                        </x-menuitem>
+                        <x-menuitem>
+                            <x-label>Delete</x-label>
+                        </x-menuitem>
+                    </x-menu>
+                </x-button>
             </o-box>
             <o-box flex class="info">
-                <x-label id="lifetime">INVALID</x-label>
+                <!-- If the elipsis remains for more than a minute, there is an error -->
+                <x-label id="lifetime">A few seconds ago...</x-label>
             </o-box>
         </o-box>
     </o-box>
