@@ -74,7 +74,6 @@ class AddServers extends forklift.PaletteBox {
         let replaceAll = function (str, find, replace) {
             return str.replace(new RegExp(find, 'g'), replace);
         }
-
         let serverTitle = this.element.querySelector('#server-name').value // Variable for the text in the server name input box
         let ipAddress = this.element.querySelector('#ip-address').value // Variable for the text in the ip address input box
         let id = serverTitle.toLowerCase()
@@ -87,7 +86,12 @@ class AddServers extends forklift.PaletteBox {
             "Address": ipAddress
         })
         sidebar.addClick(id, () => {
+            if(ipAddress == "DEV") {
+                forklift.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").connect("")
+            }
+            else {
             Runtime.AUTHETICATE.run(ipAddress)
+            }
         })
         sidebar.addContext(id, () => {
             contextMenu.openTemp((self, items) => {
@@ -111,7 +115,12 @@ class AddServers extends forklift.PaletteBox {
                 "Address": value.ip
             })
             sidebar.addClick(server, () => {
+                if(value.ip == "DEV") {
+                    forklift.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").connect("")
+                }
+                else {
                 Runtime.AUTHETICATE.run(value.ip)
+                }
             })
             sidebar.addContext(server, () => {
                 contextMenu.openTemp((self, items) => {
@@ -129,6 +138,9 @@ class AddServers extends forklift.PaletteBox {
         let sidebar = fl.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").sidebar
         sidebar.removeItem(id)
         fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.deleteServer(id)
+    }
+    updateAuthKey(id, authKey) {
+
     }
 }
 class Projects extends forklift.PaletteBox {
