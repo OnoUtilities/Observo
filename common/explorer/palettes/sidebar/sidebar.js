@@ -37,6 +37,12 @@ class Sidebar extends forklift.PaletteBox {
         })
 
     }
+    removeItem(id) {
+        if (this.element.querySelector(`#${id}`)  != null) {
+            this.element.querySelector(`#${id}`).remove()
+        }
+        
+    }
     addClick(id, callback) {
         if (this.items[id] != null) {
             this.items[id]["click"] = callback

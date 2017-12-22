@@ -60,11 +60,15 @@ class AddServers extends forklift.PaletteBox {
         // Code for confirm button 
         this.confirm = this.element.querySelector('#confirm')
         this.confirm.addEventListener("click", () => {
+            console.log("ERROR one of the parameters is too short")
+            if(this.element.querySelector('#server-name').value.length>0 && this.element.querySelector('#ip-address').value.length>0) {
             this.addServer()
             forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
+            }
         })
     }
     addServer() {
+        let me = this
         forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config
 
         let replaceAll = function (str, find, replace) {
@@ -87,25 +91,19 @@ class AddServers extends forklift.PaletteBox {
         })
         sidebar.addContext(id, () => {
             contextMenu.openTemp((self, items) => {
-                let edit = self.addItemBelow("Edit")
-                edit.setTitle("Edit")
-                edit.onClick(() => {
-                    fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveLeft()
-                    this.editServer()
-                })
                 let deletes = self.addItemBelow("Delete")
                 deletes.setTitle("Delete")
+                deletes.setIcon("delete")
                 deletes.onClick(() => {
-                    fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.deleteServer()
+                    me.deleteServer(id)
                 })
             })
         })
     }
     updateSidebar() {
-        console.log("sss")
+        let me = this
         let sidebar = fl.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").sidebar
         let servers = fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.getServers()
-        console.log(sidebar.element)
         sidebar.element.querySelector("div").innerHTML = ""
         for (let server in servers) {
             let value = servers[server] //server is the id of the array
@@ -117,37 +115,20 @@ class AddServers extends forklift.PaletteBox {
             })
             sidebar.addContext(server, () => {
                 contextMenu.openTemp((self, items) => {
-                    let edit = self.addItemBelow("Edit")
-                    edit.setTitle("Edit")
-                    edit.onClick(() => {
-                        fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveLeft()
-                        this.editServer()
-                    })
                     let deletes = self.addItemBelow("Delete")
                     deletes.setTitle("Delete")
+                    deletes.setIcon("delete")
                     deletes.onClick(() => {
-                        fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.deleteServer()
+                        me.deleteServer(server)
                     })
                 })
             })
         }
     }
-    editServer() {
-        forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config
-        
-                let replaceAll = function (str, find, replace) {
-                    return str.replace(new RegExp(find, 'g'), replace);
-                }
-        
-                let serverTitle = this.element.querySelector('#server-name').value // Variable for the text in the server name input box
-                let ipAddress = this.element.querySelector('#ip-address').value // Variable for the text in the ip address input box
-                let id = serverTitle.toLowerCase()
-                id = replaceAll(id, " ", "_")
-                fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.editServer(id, serverTitle, ipAddress)
-                this.updateSidebar()
-    }
-    deleteServer() {
-        
+    deleteServer(id) {
+        let sidebar = fl.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").sidebar
+        sidebar.removeItem(id)
+        fl.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.deleteServer(id)
     }
 }
 class Projects extends forklift.PaletteBox {
