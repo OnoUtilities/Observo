@@ -141,7 +141,7 @@ o-doctabs {
                         width: 26ch;
                     }
                     x-button {
-                        padding: 3px;//TODO: Remove arrow
+                        padding: 3px; //TODO: Remove arrow
                     }
                     .info {
                         opacity: 0.9;
@@ -196,23 +196,55 @@ x-drawer[position~="top"] {
     .box {}
 }
 
-.actionsMenuBar {
-    width: fit-content;
-    height: fit-content;
-    float: right;
-    x-label {
-        justify-content: center;
-        align-items: center;
-    }
-}
-
 .userListItem {
     display: flex;
     height: 80px;
     justify-content: space-between;
-    align-items: center;
+    flex: 0 0 auto;
+    .userAvatar {
+        width: fit-content;
+        justify-content: center;
+        align-content: center;
+        img {
+            border-radius: 5%;
+            height: 64px;
+            width: 64px;
+            margin: auto;
+        }
+    }
+    .userName {
+        width: fit-content;
+        x-label {
+            margin: auto;
+        }
+    }
+    .roleName {
+        width: fit-content;
+        x-button {
+            width: fit-content;
+            margin: auto;
+        }
+    }
+    .actionsButton {
+        width: fit-content;
+        margin-left: 5px;
+        margin-right: 5px;
+        x-menubar {
+            border-radius: 2px;
+            width: fit-content;
+            height: fit-content;
+            margin: auto;
+            x-label {
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
 }
 
+.rollList{  ///For .actionsButton dialog
+    width: 1000px;
+}
 .preferences {
     padding: 0px;
     border-radius: 15px;
@@ -231,6 +263,19 @@ x-drawer[position~="top"] {
         justify-content: center;
         border-radius: 10px;
         margin: 0px;
+    }
+}
+
+.roleDialog {
+    width: fit-content;
+    padding: 10px;
+    border-radius: 15px;
+    text-align: center;
+    x-button {
+        margin: auto;
+    }
+    .rollList{
+        background-color: #0F0;
     }
 }
 

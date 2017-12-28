@@ -98,7 +98,7 @@ class ConfigManager {
 
     /**
      * Edit a single value of a server listing
-     * @param {stirng} name Name of the server you wish to edit
+     * @param {string} name Name of the server you wish to edit
      * @param {string} key Typically "name" or "ip", but can be anything
      * @param {any} value Any value you'd like to set
      */
@@ -106,6 +106,15 @@ class ConfigManager {
         this.serverContent[name][key] = value;
         jetpack.write(this.serverList, JSON.stringify(this.serverContent, null, 4))
         console.log("SERVER [" + name + "] edited to have the [" + key + "] of [" + this.serverContent[name][key] + "]")
+    }
+
+    /**
+     * Once connection is established and "Remember me" is checked, get an authkey from the server for automatic login
+     * @param {string} serverName Name of server you are connecting to
+     * @param {*} key Key received from the server
+     */
+    addAuthKey(serverName, key) {
+        this.editServer(serverName, "authKey", key)
     }
 
     /**
@@ -274,29 +283,6 @@ class ConfigManager {
     }
 }
 
-/*
-class getFromPreset {
-    constructor(p) {
-        let customPreferances = {
-            0: {
-                "displayName": "Team Number",
-                "variableName": "team_number",
-                "icon": "people",
-                "input": {
-                    "type": "numberInput",
-                    "min": 0,
-                    "max": 9999
-                }
-            }
-        }
-    }
-
-    get customPreferances(){
-        return this.customPreferances
-    }
-}
-*/
-
 class DocTabs extends forklift.PaletteBox {
     constructor(p) {
         super(p)
@@ -309,7 +295,7 @@ class Loader extends forklift.PaletteBox {
     constructor(p) {
         super(p)
         this.loadBox("elements/o-loader/loader.shadow.html") //NOT EMPTY
-        this.loadContent()	//DOES NOT EXIST
+        this.loadContent() //DOES NOT EXIST
     }
 }
 
@@ -456,30 +442,28 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
             editRoleStatus = ""
         }
 
-        function listPermissions(userID) {
-            let permissionsBox = `<x-popover>`
-            for (var i = 1; i < Object.values(roles[currentUserInfo.role]).length; i++) { //Skips the role name and then lists out the permissions and their values
-                permissionsBox += `<x-label>` + Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i] + "</x-label>"
-                //console.log(Object.keys(roles[currentUserInfo.role])[i] + " - " + Object.values(roles[currentUserInfo.role])[i])
+        function listRoles(userID){
+            var out = `<x-select id="${userID}"><x-menu>`
+            for(var role in roles){
+                out += `<x-menuitem value="${role}" selected="${roles[role] == roles[currentUserInfo.role]}"><x-label>${roles[role]["name"]}</x-label></x-menuitem>`
             }
-            permissionsBox += "</x-popover>"
-            //console.log(permissionsBox)
-            return permissionsBox
+            out += `</x-menu></x-select>`
+            return out
         }
 
         let template =
             `<o-box flex row style="flex: 0 0 auto;" class="userListItem" id="listItem-${currentUserID}">
-                <o-box flex style="width: fit-content;">
-                    <img style="border-radius: 5%; height: 64px; width: 64px" src="data:image/png;base64,${currentUserInfo.avatar}">
+                <o-box flex row-center class="userAvatar">
+                    <img src="data:image/png;base64,${currentUserInfo.avatar}">
                 </o-box>
-                <o-box flex style="width: fit-content;">
+                <o-box flex row-center class="userName">
                     <x-label>${currentUserInfo.name}</x-label>
                 </o-box>
-                <o-box flex style="margin-right: 10px; width: fit-content;">
-                    <x-button style="width: fit-content" id="roleButton-${currentUserID}"><x-label>${this.userData.roles[currentUserInfo.role].name}</x-label>${listPermissions(currentUserID)}</x-button>
+                <o-box flex row-center class="roleName">
+                    <x-button id="roleButton-${currentUserID}"><x-label>${this.userData.roles[currentUserInfo.role].name}</x-label></x-button>
                 </o-box>
-                <o-box flex style="width: fit-content; margin-right: 5px">
-                    <x-menubar class="actionsMenuBar">
+                <o-box flex row-center class="actionsButton">
+                    <x-menubar>
                         <x-menuitem id="actionsMenu-${currentUserID}">
                             <x-label>Actions</x-label>
                             <x-menu>
@@ -500,23 +484,44 @@ class ListUsers { //Orginize and document. Will be heavily modified for API inte
         this.mainArea.insertAdjacentHTML("beforeend", template)
         this.mainArea.querySelector("#actionsMenu-" + currentUserID).addEventListener("click", () => {
             this.mainArea.querySelector("#kickButton-" + currentUserID).addEventListener("click", () => {
-                let kickDialog = this.userActionDialog
-                kickDialog.dialog.innerHTML = `<h1>Kick <span title="ID - ${currentUserID}" class="name">${currentUserInfo.name}</span>?</h1><x-button><x-label id="confirm">Confirm</x-label></x-button>` //Placeholder HTML for kick dialog
-                kickDialog.open();
+                this.kickDialog = this.userActionDialog
+                this.kickDialog.dialog.className = "roleDialog"
+                this.kickDialog.dialog.innerHTML = `<h1>Kick <span title="ID - ${currentUserID}" class="name">${currentUserInfo.name}</span>?</h1><x-box horizontal><x-button id="confirm"><x-label>Yes</x-label></x-button><x-button id="cancel"><x-label>No</x-label></x-button></x-box>`
+                this.kickDialog.open();
+                this.confirmButton = new xel.Button(this.kickDialog.dialog.querySelector("#confirm"))
+                this.confirmButton.onClick(() => {
+                    console.log("CONFIRMED")
+                })
+                this.cancelButton = new xel.Button(this.kickDialog.dialog.querySelector("#cancel"))
+                this.cancelButton.onClick(() => {
+                    console.log("CANCELED")
+                })
             })
             this.mainArea.querySelector("#banButton-" + currentUserID).addEventListener("click", () => {
-                let banDialog = this.userActionDialog
-                banDialog.dialog.innerHTML = `<h1>Ban ${currentUserID}?</h1>` //Placeholder HTML for ban dialog
-                banDialog.open();
+                this.banDialog = this.userActionDialog
+                this.banDialog.dialog.className = "roleDialog"
+                this.banDialog.dialog.innerHTML = `<h1>Ban <span title="ID - ${currentUserID}" class="name">${currentUserInfo.name}</span>?</h1><x-box horizontal><x-button id="confirm"><x-label>Yes</x-label></x-button><x-button id="cancel"><x-label>No</x-label></x-button></x-box>`
+                this.banDialog.open();
+                this.confirmButton = new xel.Button(this.banDialog.dialog.querySelector("#confirm"))
+                this.confirmButton.onClick(() => {
+                    console.log("CONFIRMED")
+                })
+                this.cancelButton = new xel.Button(this.banDialog.dialog.querySelector("#cancel"))
+                this.cancelButton.onClick(() => {
+                    console.log("CANCELED")
+                })
             })
             this.mainArea.querySelector("#editRoleButton-" + currentUserID).addEventListener("click", () => {
                 let editRoleDialog = this.userActionDialog
-                editRoleDialog.dialog.innerHTML = `<h1>Edit role for ${currentUserID}?</h1>` //Placeholder HTML for edit user role dialog
+                editRoleDialog.dialog.className = "roleDialog"
+                editRoleDialog.dialog.innerHTML = `<h1>Edit role for <span title="ID - ${currentUserID}">${currentUserInfo.name}</span></h1><span class="rollList">${listRoles(currentUserID)}</span>` //Placeholder HTML for edit user role dialog
                 editRoleDialog.open();
+                this.confirmButton = new xel.Button(this.kickDialog.dialog.querySelector("#confirm"))
+                this.confirmButton.onClick(() => {
+                    console.log("CONFIRMED")
+                })
             })
         })
-
-
     }
 
     removeUser(userID) { //Pass just the ID string to remove user from list

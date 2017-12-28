@@ -15,10 +15,10 @@
                 <x-button>
                     <x-icon name="more-vert"></x-icon>
                     <x-menu>
-                        <x-menuitem>
+                        <x-menuitem id="editMessage">
                             <x-label>Edit</x-label>
                         </x-menuitem>
-                        <x-menuitem>
+                        <x-menuitem id="deleteMessage">
                             <x-label>Delete</x-label>
                         </x-menuitem>
                     </x-menu>
@@ -26,7 +26,7 @@
             </o-box>
             <o-box flex class="info">
                 <!-- If the elipsis remains for more than a minute, there is an error -->
-                <x-label id="lifetime">A few seconds ago...</x-label>
+                <x-label id="lifetime">ERROR</x-label>
             </o-box>
         </o-box>
     </o-box>
