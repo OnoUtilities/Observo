@@ -1,3 +1,5 @@
+
+  
 class Servers extends forklift.PaletteBox {
     constructor(e) {
         super(e)
@@ -49,6 +51,7 @@ class AddServers extends forklift.PaletteBox {
         super(e)
         this.loadBox("elements/o-grid-add-server/grid-add-server.shadow.html") //NOT EMPTY
         this.loadContent("elements/o-grid-add-server/grid-add-server.html")
+        
     }
     onUnitLoad() {
         this.updateSidebar()
@@ -90,7 +93,7 @@ class AddServers extends forklift.PaletteBox {
                 forklift.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").connect("")
             }
             else {
-            Runtime.AUTHETICATE.run(ipAddress)
+                PineApple.Stem.getStem("RUNTIME.EXPLORER", "AUTHETICATE").run(ipAddress)
             }
         })
         sidebar.addContext(id, () => {
@@ -119,7 +122,7 @@ class AddServers extends forklift.PaletteBox {
                     forklift.App.getPaletteInstance("GRID-SERVERS").getBoxObject("SERVERS").connect("")
                 }
                 else {
-                Runtime.AUTHETICATE.run(value.ip)
+                    PineApple.Stem.getStem("RUNTIME.EXPLORER", "AUTHETICATE").run(value.ip)
                 }
             })
             sidebar.addContext(server, () => {

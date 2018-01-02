@@ -67,6 +67,7 @@ class AUTHETICATE {
             })
             auth.on("account", (data) => {
                 //data.username
+                
                 if (data.state == "new") {
                     connect.hide()
                     connect.confirm.display("New account?", `Do you want to create '${data.username}' as a new account?`, (data) => {

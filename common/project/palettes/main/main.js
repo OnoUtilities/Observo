@@ -4,24 +4,6 @@
 
 const jetpack = require('fs-jetpack')
 const path = require('path')
-
-class MenuBar extends forklift.PaletteBox {
-    constructor(p) {
-        super(p)
-        this.loadBox()
-        this.loadContent("elements/o-menubar/menubar.html")
-    }
-    onContentLoad() {
-        let data = managerLocal.parseArgs()
-
-        this.title_menubar = new xel.TitleMenubar(data.id, "#menubar")
-        this.title_menubar.addClose()
-        this.title_menubar.addMinimize()
-        this.title_menubar.addZoom()
-        this.title_menubar.build()
-    };
-}
-
 class ConfigManager {
     constructor(parent) {
         this.parent = parent
@@ -587,7 +569,6 @@ class Content extends forklift.PaletteBox {
 class Palette extends forklift.PaletteLoader {
     constructor(p) {
         super(p)
-        this.addBox("MENUBAR", "o-menubar", MenuBar)
         this.addBox("DOCTABS", "o-doctabs", DocTabs)
         this.addBox("LOADING", "o-loader", Loader)
         this.addBox("BOX", "o-box", Box)
@@ -596,5 +577,4 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("HELP", "o-help", Help)
     }
 }
-
 module.exports = Palette //Needed to work

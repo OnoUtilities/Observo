@@ -32,9 +32,9 @@
     const API = 1
 
     //Require Electorn
-    const {
-        remote
-    } = require('electron')
+    
+    const PineApple = require("@onoutilities/pine-apple")
+    const { remote } = require('electron')
     const {
         dialog
     } = remote
@@ -70,13 +70,30 @@
     let dialogInput = new xel.DialogInput()
     let prompt = new xel.Prompt()
     let drawer = new xel.Drawer()
+    PineApple.Logging.inChrome()
+    PineApple.Logging.setPrefix("cyan", "Observo")
+    PineApple.Core.useChunks("observo") //The API but refered to as chunks
+    PineApple.Core.enableChunks() //Enable them chunks
+    PineApple.Chunks.start("OBSERVO.SOCKET", io)
 
-    let Runtime = require("./runtime/explorer.js")
-
+    PineApple.Core.useStem("runtime/explorer", {
+            permissions: ["*"],
+            vm: {
+                console: 'inherit',
+                sandbox: {
+                    forklift,
+                    setTimeout,
+                    API
+                }
+            }
+    }) 
     //Load forklift palettes 
     fl.App.loadAll("common/explorer/")
     //Run forklift init sequence
     fl.App.run()
+
+    console.log(PineApple)
+
 </script>
 
 </html>

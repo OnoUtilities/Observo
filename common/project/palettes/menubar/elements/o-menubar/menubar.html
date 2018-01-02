@@ -1,0 +1,100 @@
+<template>
+    <x-menubar id="menubar">
+        <x-menuitem>
+            <x-label>File</x-label>
+            <x-menu>
+                <x-menuitem id="file-disconnect">
+                    <x-icon name="exit-to-app"></x-icon>
+                    <x-label>Disconnect</x-label>
+                </x-menuitem>
+                <x-menuitem id="copy">
+                    <x-icon name="content-copy"></x-icon>
+                    <x-label>Make Copy</x-label>
+                </x-menuitem>
+                <x-menuitem id="file-preferences">
+                    <x-icon name="settings"></x-icon>
+                    <x-label>Prefrences</x-label>
+                </x-menuitem>
+            </x-menu>
+        </x-menuitem>
+        <x-menuitem>
+            <x-label>Edit</x-label>
+            <x-menu>
+                <x-menuitem id="undo">
+                    <x-icon name="undo"></x-icon>
+                    <x-label>Undo</x-label>
+                    <x-shortcut value="Control+Z"></x-shortcut>
+                </x-menuitem>
+                <x-menuitem id="redo">
+                    <x-icon name="redo"></x-icon>
+                    <x-label>Redo</x-label>
+                    <x-shortcut value="Control+Y"></x-shortcut>
+                </x-menuitem>
+
+                <span class="isAdmin">
+                    <!-- This will be hidden if the user cannot undo/redo the actions of other users -->
+                    <hr style="height:2px">
+                    <x-menuitem id="undoAnyUser">
+                        <x-icon name="supervisor-account"></x-icon>
+                        <x-icon name="undo"></x-icon>
+                        <x-label>Undo any action</x-label>
+                        <x-shortcut value="Control+Shift+Z"></x-shortcut>
+                    </x-menuitem>
+                    <x-menuitem id="redoAnyUser">
+                        <x-icon name="supervisor-account"></x-icon>
+                        <x-icon name="redo"></x-icon>
+                        <x-label>Redo any action</x-label>
+                        <x-shortcut value="Control+Shift+Y"></x-shortcut>
+                    </x-menuitem>
+                </span>
+            </x-menu>
+        </x-menuitem>
+        <x-menuitem>
+            <x-label>View</x-label>
+            <x-menu>
+                <x-menuitem id="view-sidebar">
+                    <x-icon name="check"></x-icon>
+                    <x-label>Show Sidebar</x-label>
+                </x-menuitem>
+                <x-menuitem id="view-members">
+                    <x-icon name="person"></x-icon>
+                    <x-label>View Members</x-label>
+                </x-menuitem>
+            </x-menu>
+        </x-menuitem>
+        <x-menuitem>
+            <x-label>Server</x-label>
+            <x-menu>
+                <x-menuitem>
+                    <x-label>Users</x-label>
+                    <x-menu>
+                        <x-menuitem id="users-mirror">
+                            <x-icon name="screen-share"></x-icon>
+                            <x-label>Mirror Screen</x-label>
+                        </x-menuitem>
+                    </x-menu>
+                </x-menuitem>
+                <x-menuitem>
+                    <x-icon name="refresh"></x-icon>
+                    <x-label>Refresh Server</x-label>
+                </x-menuitem>
+            </x-menu>
+        </x-menuitem>
+        <x-menuitem>
+            <x-label>Help</x-label>
+            <x-menu>
+                <x-menuitem id="help">
+                    <x-icon name="help"></x-icon>
+                    <x-label>Help</x-label>
+                </x-menuitem>
+                <x-menuitem>
+                    <x-icon name="bug-report"></x-icon>
+                    <x-label>Report Bug</x-label>
+                </x-menuitem>
+            </x-menu>
+        </x-menuitem>
+        <div class="x-expand-drag"></div>
+        <x-label class="observo-title">Observo</x-label>
+        <div class="x-expand-drag"></div>
+    </x-menubar>
+</template>

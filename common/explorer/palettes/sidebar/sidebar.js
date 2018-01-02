@@ -7,7 +7,6 @@ class Sidebar extends forklift.PaletteBox {
     }
     addItem(id, title, listDescriptions) {
         this.items[id] = {}
-        console.log("IM ADDING THE DIVE")
         this.element.querySelector("div").insertAdjacentHTML('beforeend', ` <x-box vertical class="box" id="${id}"></x-box>`)
         let boxes = this.element.querySelectorAll("x-box")
         let box = boxes[boxes.length - 1]
@@ -25,7 +24,6 @@ class Sidebar extends forklift.PaletteBox {
 
         for (let description in listDescriptions) {
             let value = listDescriptions[description]
-            console.log("IM INSERTING")
             box.insertAdjacentHTML('beforeend', `<x-label class="text"><span class="bold">${description} : ${value} </span></x-label>`)
         }
         box.addEventListener("click", () => {

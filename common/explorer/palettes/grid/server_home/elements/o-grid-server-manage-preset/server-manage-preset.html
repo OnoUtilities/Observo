@@ -1,0 +1,49 @@
+<template>
+
+    <o-box flex row id="container" style="justify-content: flex-start; height: 100%;">
+        <o-box flex column>
+            <o-box flex>
+                <o-box flex>
+                    <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                        <o-box flex style="margin-left:10px; margin-top:10px;">
+                            <x-label style="font-size: 24px;" class="rb-font observo-title">
+                                Preset URL
+                            </x-label>
+                        </o-box>
+                    </o-box>
+                </o-box>
+                <o-box flex>
+                    <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                        <o-box flex style="margin-left: 20px; margin-top: 10px;">
+                            <x-input id="preset-name" style="width: 1000px">
+                                <x-icon name="format-color-text"></x-icon>
+                                <x-label>Preset URL</x-label>
+                            </x-input>
+                        </o-box>
+                    </o-box>
+                </o-box>
+                <o-box flex>
+                    <o-box flex row style="flex: 0 0 auto; padding-top: 10px;">
+                        <o-box flex style="margin-left:10px; margin-top:10px;">
+                            <x-button id="confirm">
+                                <x-icon name="check-circle"></x-icon>
+                                <x-label>Confirm</x-label>
+                            </x-button>
+                        </o-box>
+                    </o-box>
+                </o-box>
+            </o-box>
+            <o-box flex row style="flex: 0 0 auto; height: 100px; margin-left: 10px;">
+                <o-box flex>
+                    <x-button id="back">
+                        <x-box>
+                            <x-icon name="keyboard-arrow-down"></x-icon>
+                        </x-box>
+                    </x-button>
+                </o-box>
+            </o-box>
+        </o-box>
+        <o-sidebar></o-sidebar>
+    </o-box>
+
+</template>

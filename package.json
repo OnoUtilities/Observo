@@ -58,6 +58,7 @@
   "author": "OnoUtilities",
   "license": "MIT",
   "dependencies": {
+    "@onoutilities/pine-apple": "0.0.9",
     "electron-config": "^1.0.0",
     "electron-window": "^0.8.1",
     "fork-lift.js": "^0.1.9",

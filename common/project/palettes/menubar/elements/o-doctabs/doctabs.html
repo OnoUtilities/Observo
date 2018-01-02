@@ -1,0 +1,54 @@
+<template>
+    <o-box flex row>
+        <o-box flex>
+            <x-doctabs id="doctabs">
+                <x-doctab selected>
+                    <x-icon name="dashboard"></x-icon>
+                    <x-label>Main page</x-label>
+                </x-doctab>
+                <x-doctab>
+                    <x-icon name="edit"></x-icon>
+                    <x-label>Data</x-label>
+                </x-doctab>
+                <x-doctab>
+                    <x-icon name="timeline"></x-icon>
+                    <x-label>Visualizations</x-label>
+                </x-doctab>
+                <x-doctab>
+                    <x-icon name="assignment"></x-icon>
+                    <x-label>Picklist</x-label>
+                </x-doctab>
+            </x-doctabs>
+        </o-box>
+        <x-buttons style="flex: 0 0 auto;">
+            <x-button style="width: 100%; height: 47px;">
+                <x-icon name="chat"></x-icon>
+                <x-popover id="chatContainer" style="width: 800px; height: 700px; overflow-x: hidden;">
+                    <o-chat></o-chat>
+                </x-popover>
+            </x-button>
+            <x-button style="width: 100%; height: 47px;">
+                <x-icon name="supervisor-account"></x-icon>
+                <x-popover style="width: 500px; height: 500px; overflow: hidden;">
+                    <x-card flex column id="userCard">
+                        <header>
+                            <o-box flex style="flex: 0 0 auto; height: 25px; font-weight: bold; text-align: center; margin: auto; vertical-align: center">
+                                <h3>Connected Users</h3>
+                            </o-box>
+                        </header>
+                        <o-box flex style="flex-grow: 2; max-height: 80%; overflow-y: scroll;" id="userlist">
+                            <!-- WHEN USERS ARE NOT DETECTED -->
+                            <!-- TODO - Make this section look nicer -->
+                            <o-box style="display:flex; flex-flow: column; justify-content: center;">
+                                <x-icon name="not-interested"></x-icon>
+                                <h3>No users detected </h3>
+                                <x-label>Check connection between computers</x-label>
+                            </o-box>
+                            <!-- WHEN USERS ARE NOT DETECTED -->
+                        </o-box>
+                    </x-card>
+                </x-popover>
+            </x-button>
+        </x-buttons>
+    </o-box>
+</template>
