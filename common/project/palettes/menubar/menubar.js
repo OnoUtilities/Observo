@@ -1,12 +1,11 @@
-
 class MenuBar extends forklift.PaletteBox {
     constructor(p) {
         super(p)
         this.loadBox()
-        this.loadContent("elements/o-menubar/menubar.html")
+        this.loadContent("o-menubar/menubar.html")
     }
     onContentLoad() {
-        let data = managerLocal.parseArgs()
+        let data = require("import-window").parseArgs()
 
         this.title_menubar = new xel.TitleMenubar(data.id, "#menubar")
         this.title_menubar.addClose()
@@ -16,12 +15,10 @@ class MenuBar extends forklift.PaletteBox {
     };
 }
 
-
 class Palette extends forklift.PaletteLoader {
     constructor(p) {
         super(p)
-
-        this.addBox("BAR", "o-menubar", MenuBar)
+        this.addBox("MENUBAR", "o-menubar", MenuBar)
     }
 }
 
