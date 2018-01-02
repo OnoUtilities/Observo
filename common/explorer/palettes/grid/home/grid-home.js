@@ -31,7 +31,7 @@ class Home extends forklift.PaletteBox {
         settingsMenu.dialog.innerHTML = '<o-settings></o-settings>'
         this.settings = this.element.querySelector("#settings")
         this.settings.addEventListener("click", () => {
-            settingsMenu.open()
+            forklift.App.getPaletteInstance("DIALOGS").preferences.open()
         })
     }
 }

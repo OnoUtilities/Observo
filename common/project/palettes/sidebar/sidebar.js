@@ -28,7 +28,7 @@ class View extends forklift.PaletteBox {
         this.loadContent("elements/o-sidebar-view/sidebar-view.html")
         this.toggle = false
 
-        this.menubar = forklift.App.getPaletteInstance("MAIN").getBoxObject("MENUBAR")
+        this.menubar = forklift.App.getPaletteInstance("MENUBAR").getBoxObject("MENUBAR")
     }
     onUnitLoad() {
         let me = this
