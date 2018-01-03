@@ -60,8 +60,18 @@ class ManagePreset extends forklift.PaletteBox {
         // Code for confirm button 
         this.confirm = this.element.querySelector('#confirm')
         this.confirm.addEventListener("click", () => {
-           
+            PineApple.Stem.getStem("RUNTIME.EXPLORER", "PROJECT").clonePreset(this.element.querySelector("#preset-url").value)
         })
+        this.sidebar = this.element.querySelector("o-sidebar").object
+    }
+    clearProjects() {
+        this.sidebar.element.querySelector("div").innerHTML = ""
+    }
+    add(name, server_version, client_version, color) {
+        this.sidebar.addItem(name, name, {
+            "Server": server_version,
+            "Client": client_version,
+        }, color)
     }
 }
 
@@ -82,7 +92,7 @@ class AddProject extends forklift.PaletteBox {
         this.confirm.addEventListener("click", () => {
             PineApple.Stem.getStem("RUNTIME.EXPLORER", "PROJECT").addProject(this.element.querySelector("#project-name").value)
         })
-    }
+            }
 }
 
 class Palette extends forklift.PaletteLoader {
@@ -90,7 +100,7 @@ class Palette extends forklift.PaletteLoader {
         super(id)
         this.addBox("SERVER-HOME", "o-grid-server-home", Home)
         this.addBox("SERVER-ADD-PROJECT", "o-grid-server-add-project", AddProject)
-        this.addBox("SERVER-MANAGE-PRESEt", "o-grid-server-manage-preset", ManagePreset)
+        this.addBox("SERVER-MANAGE-PRESET", "o-grid-server-manage-preset", ManagePreset)
     }
 }
 

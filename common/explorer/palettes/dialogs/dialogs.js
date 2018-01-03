@@ -30,7 +30,7 @@ class Confirm extends forklift.PaletteBox {
         this.message = this.element.querySelector("#message")
     }
     display(title, message, callback) {
-        let me = this
+        let me = this*
 
         this.show()
 

@@ -1,7 +1,8 @@
 
 
-import "OBSERVO.SOCKET.CHANNEl"
-
+import "OBSERVO.SOCKET.CHANNEL"
+import "OBSERVo.GIT"
+import "OBSERVO.FILE"
 
 class Session extends Observo.Socket.Channel {
     constructor() {
@@ -30,6 +31,7 @@ class Session extends Observo.Socket.Channel {
 
 
 
+
 class User extends Session {
     constructor() {
         super()
@@ -52,6 +54,64 @@ class User extends Session {
 }
 
 
+
+export class Download extends Observo.Git {
+    constructor() {
+        super()
+    }
+    clone(url) {
+        let location = forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.presets
+        let name = url.substring(url.lastIndexOf("/") + 1);
+        location = location + "/" + name
+        this.downloadFile(url, location, (state) => {
+            if (state) {
+                console.log("Download Successful")
+            } else {
+                console.log(error)
+            }
+        })
+    }
+}
+
+
+export class Preset extends Observo.File {
+    constructor() {
+        super()   
+        this.list = {}
+    }    
+    load() {
+        console.log("RUNNING")
+        let location = forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.presets
+        console.log(this.location)
+        this.makeDirectory(location, () => {
+            this.presets = this.walkDirectory(location, "manifest.json")
+            this.checkPreset()
+        })    
+    }
+    reloadPresets() {
+        let location = forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").config.presets
+        this.presets = this.walkDirectory(location, "manifest.json")
+        this.checkPreset()
+    }
+    checkPreset() {
+        console.log("CHECKING")
+        for (let preset in this.presets) {
+            this.parse(this.presets[preset])
+        }   
+        console.log(this.list)
+    }
+    parse(data) {
+        let json = this.read(data)
+        json = JSON.parse(json)
+        if (json.PAPI = 1 && json.name != null) {
+            this.list[json.id] = json
+        }
+    }
+    getList() {
+        return this.list
+    }
+}
+
 export class Project extends Session {
     constructor() {
         super()
@@ -67,27 +127,56 @@ export class Project extends Session {
         let preset = null
         this.socket.emit("add_project", { name: name, preset: preset })
     }
+    clonePreset(url) {
+        let download = use("RUNTIME.EXPLORER")["DOWNLOAD"]
+        download.clone(url)
+        this.socket.emit("add_preset", { url: url })
+        use("RUNTIME.EXPLORER")["PRESET"].reloadPresets()
+
+    }
     onVaildSession(socket) {
         forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").hide()
         forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveTo(-1,-3, 0)
         this.socket = socket
+        let presetManager = use("RUNTIME.EXPLORER")["PRESET"]
         socket.on("update_projects", function(data) {
             forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").clearProjects()
             for (let project in data.projects) {
-                console.log("PROJECT")
                 forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").add(data.projects[project].name, data.projects[project].preset)
+            }
+        })
+        socket.on("update_presets", function(data) {
+            forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-MANAGE-PRESET").clearProjects()
+            for (let preset in data.presets) {
+                //GET CLIENT VERSION TOO AND COMP
+                let version = ""
+                presetManager.reloadPresets()
+                console.print(presetManager.getList())
+                console.log("LIST")
+                let color = "blue"
+                if (presetManager.list[data.presets[preset].id] == undefined) {
+                    version = "NOT INSTALLED"
+                    color = "red"
+                } else {
+                    version = presetManager.list[preset].version
+                    color = "green"
+                }
+                forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-MANAGE-PRESET").add(data.presets[preset].name, data.presets[preset].version, version, color)
             }
         })
         socket.on("vaild_project", function(data) {
             forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveUp()
         })
         socket.on("invaild_project", function(data) {
-        
+            
         })
+        
+    
         socket.on("slider", function(data) {
             forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").setSlider(data.value)
         })
         socket.emit("update_projects")
+        socket.emit("update_presets")
     }
     onSlide(value) {
         console.log("dfhklhfkhdkfjkdsjfdshf")
@@ -103,3 +192,5 @@ export class Project extends Session {
        socket.disconnect()
     }
 }
+
+

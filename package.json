@@ -1,12 +1,12 @@
 {
   "name": "observo",
   "email": "onoutilities@gmail.com",
-  "version": "0.0.1",
+  "version": "0.0.10",
   "description": "Data Manipulation Tool for Robotics Competition",
   "main": "app.js",
   "scripts": {
     "postinstall": "install-app-deps",
-    "dist": "build --publish onTagOrDraft"
+    "dist": "build --publish"
   },
   "build": {
     "appId": "org.onoutilities.observo",
@@ -58,11 +58,12 @@
   "author": "OnoUtilities",
   "license": "MIT",
   "dependencies": {
-    "@onoutilities/pine-apple": "0.0.9",
+    "@onoutilities/pine-apple": "0.0.10",
     "electron-config": "^1.0.0",
     "electron-window": "^0.8.1",
     "fork-lift.js": "^0.1.9",
     "fs-jetpack": "^1.2.0",
+    "github-download": "^0.5.0",
     "import-window": "^1.0.0",
     "less": "^2.7.3",
     "moment": "^2.20.1",

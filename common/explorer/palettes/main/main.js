@@ -30,6 +30,8 @@ class Content extends forklift.PaletteBox {
         this.loadBox()
         this.loadContent("elements/o-content/content.html")
         this.config = new ConfigManager(this)
+        this.presets = {}
+
 
         this.oPosX = -888
         this.oPosY = 0
@@ -374,7 +376,7 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("MENUBAR", "o-menubar", Menubar)
     }
     onUnitLoad() {
-
+        PineApple.Stem.getStem("RUNTIME.EXPLORER", "PRESET").load()
     }
 }
 

@@ -5,9 +5,15 @@ class Sidebar extends forklift.PaletteBox {
         this.loadContent("elements/o-sidebar/sidebar.html")
         this.items = {}
     }
-    addItem(id, title, listDescriptions) {
+    addItem(id, title, listDescriptions, color= null) {
         this.items[id] = {}
-        this.element.querySelector("div").insertAdjacentHTML('beforeend', ` <x-box vertical class="box" id="${id}"></x-box>`)
+        let style = ""
+        if (color != null) {
+            style = `style="background-color: ${color} !important"`
+        } else {
+            style = ""
+        }
+        this.element.querySelector("div").insertAdjacentHTML('beforeend', ` <x-box vertical class="box" id="${id}" ${style}></x-box>`)
         let boxes = this.element.querySelectorAll("x-box")
         let box = boxes[boxes.length - 1]
 
