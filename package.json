@@ -1,7 +1,7 @@
 {
   "name": "observo",
   "email": "onoutilities@gmail.com",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Data Manipulation Tool for Robotics Competition",
   "main": "app.js",
   "scripts": {
