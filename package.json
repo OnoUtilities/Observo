@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "postinstall": "install-app-deps",
-    "dist": "build --publish"
+    "dist": "build --publish always"
   },
   "build": {
     "appId": "org.onoutilities.observo",
