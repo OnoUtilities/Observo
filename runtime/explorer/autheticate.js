@@ -70,6 +70,7 @@ export class Autheticate extends OBservo.Socket.Channel {
         forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").showConnecting()
         //let user = use("RUNTIME.EXPLORER")["USER"].run(this.ip, data.uuid, data.sessionKey)
         let project = use("RUNTIME.EXPLORER")["PROJECT"].run(this.ip, data.uuid, data.sessionKey)
+        this.dialogCanceled = true
         socket.close()
         
     }

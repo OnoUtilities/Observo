@@ -29,7 +29,6 @@ class Home extends forklift.PaletteBox {
         this.sidebar = this.element.querySelector("o-sidebar").object
         this.slider = this.element.querySelector("x-slider")
         this.slider.addEventListener("change", () => {
-            console.log("djkgfkjsdsdgjsdfjkgds")
             PineApple.Stem.getStem("RUNTIME.EXPLORER", "PROJECT").onSlide(this.slider.value)
         })
     }
@@ -40,8 +39,44 @@ class Home extends forklift.PaletteBox {
         this.sidebar.element.querySelector("div").innerHTML = ""
     }
     add(name, preset) {
+        console.log(name)
         this.sidebar.addItem(name, name, {
             "Preset": preset
+        })
+    }
+    open(name, ip, uuid, sessionKey) {
+        console.log(name)
+        let me = this
+        this.sidebar.addClick(name, () => {
+            console.log("CLICKED")
+            forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").showConnecting()
+            forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").show()
+            forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveTo(-1,0, 0)
+            me.connect(ip, uuid, sessionKey, name)
+        })
+    }
+    connect(ip, uuid, sessionKey, project) {
+        let mainWin = managerRemote.createWindow({
+            show: false,
+            width: 1000,
+            height: 800,
+            frame: false,
+            color: "#000",
+            webPreferences: {
+                zoomFactor: 0.9,
+            },
+            icon: path.join(managerRemote.getDir(), 'assets/icons/png/1024x1024.png')
+        })
+        mainWin.setURL(managerRemote.getDir(), "project.html", {
+            ip: ip,
+            uuid: uuid,
+            sessionKey: sessionKey,
+            project: project
+        })
+        mainWin.win.setMinimumSize(800, 700);
+        mainWin.win.webContents.on('did-finish-load', () => {
+            mainWin.win.show()
+            win.close();
         })
     }
 }
@@ -92,7 +127,8 @@ class AddProject extends forklift.PaletteBox {
         this.confirm.addEventListener("click", () => {
             PineApple.Stem.getStem("RUNTIME.EXPLORER", "PROJECT").addProject(this.element.querySelector("#project-name").value)
         })
-            }
+        this.select = new xel.Select(this.element.querySelector("x-select"))
+    }
 }
 
 class Palette extends forklift.PaletteLoader {

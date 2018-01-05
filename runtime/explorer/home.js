@@ -118,13 +118,14 @@ export class Project extends Session {
     }
     run(ip, uuid, sessionKey) {
         this.socket = null
+        this.ip = ip
         this.setSession(uuid, sessionKey)
         this.useChannel(ip, "core/project")    
     }
     addProject(name) {
         console.log(name)
         //PASS PRESET LATER
-        let preset = null
+        let preset = forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-ADD-PROJECT").select.value
         this.socket.emit("add_project", { name: name, preset: preset })
     }
     clonePreset(url) {
@@ -135,18 +136,29 @@ export class Project extends Session {
 
     }
     onVaildSession(socket) {
+        let me = this
         forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").hide()
         forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveTo(-1,-3, 0)
         this.socket = socket
         let presetManager = use("RUNTIME.EXPLORER")["PRESET"]
         socket.on("update_projects", function(data) {
             forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").clearProjects()
+            console.print(data.presets["frc_scouting"].name)
             for (let project in data.projects) {
-                forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").add(data.projects[project].name, data.projects[project].preset)
+                console.log("dsfiuudgdsifddgfuigdd")
+                console.log(data.projects[project].preset)
+                if (data.projects[project].preset == "undefined") {
+                    forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").add(data.projects[project].name, "Unknown")  
+                } else {
+                    //console.print(data.presets[`${data.projects[project].preset}`].name)
+                    forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").add(data.projects[project].name, `${data.presets[`${data.projects[project].preset}`].name} @ ${data.presets[`${data.projects[project].preset}`].version}`)  
+                }
+                forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").open(data.projects[project].name, me.ip, me.uuid, me.sessionKey)
             }
         })
         socket.on("update_presets", function(data) {
             forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-MANAGE-PRESET").clearProjects()
+            let first = false
             for (let preset in data.presets) {
                 //GET CLIENT VERSION TOO AND COMP
                 let version = ""
@@ -162,6 +174,13 @@ export class Project extends Session {
                     color = "green"
                 }
                 forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-MANAGE-PRESET").add(data.presets[preset].name, data.presets[preset].version, version, color)
+                let name = `${data.presets[preset].name} @ ${data.presets[preset].version}`
+                if (first == false) {
+                    first = true
+                    forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-ADD-PROJECT").select.addItem(data.presets[preset].id, name, null, true)
+                } else {
+                    forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-ADD-PROJECT").select.addItem(data.presets[preset].id, name)
+                }
             }
         })
         socket.on("vaild_project", function(data) {
