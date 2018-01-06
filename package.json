@@ -58,7 +58,7 @@
   "author": "OnoUtilities",
   "license": "MIT",
   "dependencies": {
-    "@onoutilities/pine-apple": "0.0.10",
+    "@onoutilities/pine-apple": "^1.0.0",
     "electron-config": "^1.0.0",
     "electron-window": "^0.8.1",
     "fork-lift.js": "^0.1.9",
@@ -75,6 +75,6 @@
   },
   "devDependencies": {
     "electron": "1.8.1",
-    "electron-builder": "^19.49.0"
+    "electron-builder": "^19.53.0"
   }
 }
