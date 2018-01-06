@@ -143,7 +143,6 @@ export class Project extends Session {
         let presetManager = use("RUNTIME.EXPLORER")["PRESET"]
         socket.on("update_projects", function(data) {
             forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").clearProjects()
-            console.print(data.presets["frc_scouting"].name)
             for (let project in data.projects) {
                 console.log("dsfiuudgdsifddgfuigdd")
                 console.log(data.projects[project].preset)

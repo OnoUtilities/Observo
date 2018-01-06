@@ -1,5 +1,7 @@
 import "Observo.File"
 import "Observo.Load"
+import "Observo.Socket"
+
 
 export class Preset extends Observo.File {
         constructor() {
@@ -62,10 +64,75 @@ export class Load extends Observo.Load {
     }
 }
 
-export class Main {
+class Session extends Observo.Socket.Channel {
     constructor() {
-
+        super()
     }
+    setSession(uuid, sessionKey) {
+        this.uuid = uuid
+        this.sessionKey = sessionKey
+    }
+    onConnect(socket) {
+        let me = this
+        socket.emit("check_api", { api: API })  //Emit API (and optional authKey) via the handshake EVENT to the server
+        socket.on("vaild_api", function (data) {
+            console.log(me.uuid)
+            console.log(me.sessionKey)
+            socket.emit("check_user", { uuid: me.uuid, sessionKey: me.sessionKey })
+        })
+        socket.on("vaild_user", function (data) {
+            me.onVaildSession(socket)
+        })
+        socket.on("invaild_user", function (data) {
+            socket.disconnect()
+        })
+        this.socket = socket
+    }
+}
+
+export class Main extends Session {
+    constructor() {
+        super()
+    }
+
+    onVaildSession(socket) {
+        /**
+         * Chat System
+         */
+        socket.on("update_chat", function (data) {
+            if(data.messages != null) {
+               for (let message in data.messages) {
+                let message = data.messages[message].message
+                let user = data.messages[message].user
+                let uuid = data.messages[message].uuid
+                let id = data.messages[message].id
+                //placeMessage("http://via.placeholder.com/64x64", "testUser", 5678956789, "bottom", this.input.value) //Change to send message once database is complete
+   
+                forklift.App.getPaletteInstance("CHAT").getBoxObject("CHAT").placeMessage("http://via.placeholder.com/64x64", user, uuid, id, "bottom", message)
+               }
+            } else if (data.message != null) {
+                let message = data.message
+                let user = data.user
+                let uuid = data.uuid
+                let id = data.id
+                forklift.App.getPaletteInstance("CHAT").getBoxObject("CHAT").placeMessage("http://via.placeholder.com/64x64", user, uuid, id, "bottom", message)
+            }
+        })
+    }
+    onDisconnect(socket) {
+      socket.disconnect()
+    }
+    onError(socket) {
+      socket.disconnect()
+    }
+    /*------------------------------------*/
+    sendChatMessage(message) {
+        this.socket.emit("on_chat", {message: message})
+    }
+
+
+
+    /*-------------------------------------*/
     run(args) {
         console.print(args)
         let load = use("RUNTIME.PROJECT")["LOAD"]
@@ -78,6 +145,10 @@ export class Main {
                 load.load(presets.list[p].folder)
             }
         }
+        console.print(args)
+        args.project = args.project.toLowerCase()
+        this.setSession(args.uuid, args.sessionKey)
+        this.useChannel(args.ip, `core/project/${args.project}`)
     }
     replaceAll(str, find, replace) {
         return str.replace(new RegExp(find, 'ig'), replace)

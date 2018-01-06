@@ -20,7 +20,6 @@ class Confirm extends forklift.PaletteBox {
         this.hide()
         let me = this
         this.yesBtn = this.element.querySelector("#yes").addEventListener("click", () => {
-            console.log("yes")
             me.yes()
         })
         this.noBtn = this.element.querySelector("#no").addEventListener("click", () => {
@@ -30,15 +29,16 @@ class Confirm extends forklift.PaletteBox {
         this.message = this.element.querySelector("#message")
     }
     display(title, message, callback) {
-        let me = this*
+        let me = this
 
         this.show()
 
         this.title.innerHTML = title
         this.message.innerHTML = message
         me.yes = () => {
-            me.hide()
-            callback(true)
+           
+           me.hide()
+           callback(true)
         }
         me.no = () => {
             me.hide()

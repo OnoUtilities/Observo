@@ -12,13 +12,14 @@ class Chat extends forklift.PaletteBox {
         this.loadContent("elements/o-chat/o-chat.html")
 
         this.avatar = "" //Change to get the avatar of the user
-
+        this.total = 0
         this.onDelete = () => {}
         this.onAvatarChange = () => {}
     }
     onContentLoad() {
         this.parentBox = this.element.querySelector("#chatCard")
         this.mainArea = this.element.querySelector("#chatItems")
+        this.scroll = this.element.querySelector("#scroll")
         this.messageCutoff = 10; //Adjustable in preferances. Amount of messages to cut off at
 
         //this.mainArea.parentElement.addEventListener("scroll", this.loadOldMessages())
@@ -38,8 +39,9 @@ class Chat extends forklift.PaletteBox {
 
     sendMessage() {
         //Something to emit that your message was sent
-        this.placeMessage("http://via.placeholder.com/64x64", "testUser", 5678956789 , messageCount, "bottom", this.input.value) //Change to send message once database is complete
-        this.input.clear()
+        //this.placeMessage("http://via.placeholder.com/64x64", "testUser", 5678956789 , messageCount, "bottom", this.input.value) //Change to send message once database is complete
+        PineApple.Stem.getStem("RUNTIME.PROJECT", "MAIN").sendChatMessage(this.input.value)
+        this.input.value = ""
     }
 
     receiveMessage() {
@@ -58,8 +60,17 @@ class Chat extends forklift.PaletteBox {
         //this.mainArea.removeChild(this.mainArea.querySelector("#message" + (messageIndex - this.messageCutoff)))  //Code fragment for removing the oldest displayed message
         console.log(message + "\t[RECEIVED]")
         this.template = `<o-chat-item id="message${messageID}" message="${message}" user="${username}" userID="${userID}" icon="${icon}" timestamp="${moment().format()}"></o-chat-item>`
-
-        this.mainArea.insertAdjacentHTML("beforeend", this.template)
+        console.log((this.scroll.scrollTop + 150) >= (this.scroll.scrollHeight - 650))
+       
+        this.mainArea.insertAdjacentHTML("beforeend", this.template)  
+        
+        if ((this.scroll.scrollTop + 150) >= (this.scroll.scrollHeight - 650)) {
+            this.scroll.scrollTop = this.scroll.scrollHeight - 650
+        }
+        console.log(this.mainArea.scrollTop)
+        console.log(this.scroll.scrollTop)
+        console.log(this.scroll.scrollHeight)
+        console.log(this.scroll.style.height)
     }
 
     loadOldMessages() {

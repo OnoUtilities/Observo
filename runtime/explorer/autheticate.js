@@ -35,9 +35,8 @@ export class Autheticate extends OBservo.Socket.Channel {
         })
         socket.on("vaild_signUp",  function (data) {
             me.connect.hide()
-            this.connect.confirm.display("New account?", `Do you want to create '${data.username}' as a new account?`, (data) => {
-                console.log(data)
-                if (data) {
+            forklift.App.getPaletteInstance("DIALOGS").connect.confirm.display("New account?", `Do you want to create '${data.username}' as a new account?`, (state) => {
+                if (state) {
                     socket.emit("check_signUp", { username: me.connect.getUsername(), password: me.connect.getPassword() })
                 }
                 me.connect.show()

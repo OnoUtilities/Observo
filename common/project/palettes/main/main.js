@@ -541,7 +541,6 @@ class Content extends forklift.PaletteBox {
         this.config = new ConfigManager(me);
         PineApple.Chunks.start("OBSERVO.VIEW")
         PineApple.Stem.getStem("RUNTIME.PROJECT", "MAIN").run(args)
-        
     }
     openExplorer() {
         let mainWin = managerRemote.createWindow({
