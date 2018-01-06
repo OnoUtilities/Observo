@@ -19,7 +19,7 @@ class ConfigManager {
         const home = process.env.OBSERVO_HOME || require('os').homedir()
         this.home = home
 
-        this.presets = path.join(home, '.observo/presets/')
+        this.presets = path.join(home, '.observo/presets')
 
         this.configPath = path.join(home, '.observo/config.json')
         this.serverList = path.join(home, '.observo/serverList.json')
@@ -538,7 +538,10 @@ class Content extends forklift.PaletteBox {
         this.connectionInfo = new DisconnectHandler(me)
         this.helpInfo = new HelpHandler(me)
         this.userList = new ListUsers(me)
-        let configManager = new ConfigManager(me);
+        this.config = new ConfigManager(me);
+        PineApple.Chunks.start("OBSERVO.VIEW")
+        PineApple.Stem.getStem("RUNTIME.PROJECT", "MAIN").run(args)
+        
     }
     openExplorer() {
         let mainWin = managerRemote.createWindow({
@@ -575,6 +578,9 @@ class Palette extends forklift.PaletteLoader {
         this.addBox("CONTENT", "o-content", Content)
         this.addBox("PREFERENCES", "o-preferences", Preferences)
         this.addBox("HELP", "o-help", Help)
+    }
+    onUnitLoad() {
+
     }
 }
 module.exports = Palette //Needed to work

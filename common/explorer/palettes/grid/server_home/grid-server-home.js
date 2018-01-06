@@ -44,7 +44,7 @@ class Home extends forklift.PaletteBox {
             "Preset": preset
         })
     }
-    open(name, ip, uuid, sessionKey) {
+    open(name, ip, uuid, sessionKey, preset) {
         console.log(name)
         let me = this
         this.sidebar.addClick(name, () => {
@@ -52,10 +52,10 @@ class Home extends forklift.PaletteBox {
             forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").showConnecting()
             forklift.App.getPaletteInstance("LOADER").getBoxObject("LOADER").show()
             forklift.App.getPaletteInstance("MAIN").getBoxObject("CONTENT").moveTo(-1,0, 0)
-            me.connect(ip, uuid, sessionKey, name)
+            me.connect(ip, uuid, sessionKey, name, preset)
         })
     }
-    connect(ip, uuid, sessionKey, project) {
+    connect(ip, uuid, sessionKey, project, preset) {
         let mainWin = managerRemote.createWindow({
             show: false,
             width: 1000,
@@ -71,7 +71,8 @@ class Home extends forklift.PaletteBox {
             ip: ip,
             uuid: uuid,
             sessionKey: sessionKey,
-            project: project
+            project: project,
+            preset: preset
         })
         mainWin.win.setMinimumSize(800, 700);
         mainWin.win.webContents.on('did-finish-load', () => {

@@ -153,7 +153,7 @@ export class Project extends Session {
                     //console.print(data.presets[`${data.projects[project].preset}`].name)
                     forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").add(data.projects[project].name, `${data.presets[`${data.projects[project].preset}`].name} @ ${data.presets[`${data.projects[project].preset}`].version}`)  
                 }
-                forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").open(data.projects[project].name, me.ip, me.uuid, me.sessionKey)
+                forklift.App.getPaletteInstance("GRID-SERVER-HOME").getBoxObject("SERVER-HOME").open(data.projects[project].name, me.ip, me.uuid, me.sessionKey, data.projects[project].preset)
             }
         })
         socket.on("update_presets", function(data) {

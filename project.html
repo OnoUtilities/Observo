@@ -23,14 +23,15 @@
 </body>
 <script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
 <script>
+
 </script>
 <script>
-    const {
-        remote
-    } = require("electron")
-    const {
-        BrowserWindow
-    } = remote
+    const API = 1
+    
+    const PineApple = require("@onoutilities/pine-apple")
+
+    const { remote } = require("electron")
+    const { BrowserWindow } = remote
 
     const managerLocal = require("import-window")
     const managerRemote = remote.require("import-window")
@@ -53,12 +54,28 @@
     let prompt = new xel.Prompt()
     let drawer = new xel.Drawer()
 
-    //forklift.App.loadPalette("MAINS", "common/project/palettes/main/main.js")
-    //forklift.App.loadPalette("SIDEBAR", "common/project/palettes/sidebar/sidebar.js")
+    PineApple.Logging.inChrome()
+    PineApple.Logging.setPrefix("cyan", "Observo")
+    PineApple.Core.useChunks("observo") //The API but refered to as chunks
+    PineApple.Core.enableChunks() //Enable them chunks
+    PineApple.Chunks.start("OBSERVO.SOCKET", io)
 
+    PineApple.Core.useStem("runtime/project", {
+            permissions: ["*"],
+            vm: {
+                console: 'inherit',
+                sandbox: {
+                    forklift,
+                    setTimeout,
+                    API
+                }
+            }
+    }) 
+ 
     forklift.App.loadAll("common/project/")
 
     forklift.App.run()
+
 </script>
 
 </html>

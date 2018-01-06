@@ -5,11 +5,8 @@ class Channel {
         this._loadChannel(self, ip, channel)
     }
     _loadChannel(self, ip, channel) {
-        console.log("NEW")
         let me = this
-        console.log(channel)
         let socket = PineApple.Chunks.getInstance("OBSERVO.SOCKET")
-        console.log(socket._io)
         let object = socket._io.connect(`${ip}${channel}`)
     
         //If server won't connect this event is thrown
