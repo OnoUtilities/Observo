@@ -58,7 +58,7 @@
   "author": "OnoUtilities",
   "license": "MIT",
   "dependencies": {
-    "@onoutilities/pine-apple": "^1.0.0",
+    "@onoutilities/pine-apple": "^2.1.0",
     "electron-config": "^1.0.0",
     "electron-window": "^0.8.1",
     "fork-lift.js": "^0.1.9",
@@ -70,11 +70,11 @@
     "socket.io": "^2.0.4",
     "uuid": "^3.1.0",
     "vm2": "^3.5.2",
-    "xel": "^0.0.80",
+    "xel": "^0.0.98",
     "xel-extend": "^1.0.3"
   },
   "devDependencies": {
     "electron": "1.8.1",
-    "electron-builder": "^19.53.0"
+    "electron-builder": "^19.53.2"
   }
 }

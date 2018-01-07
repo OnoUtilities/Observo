@@ -1,0 +1,8 @@
+{
+  "ignore": {
+    "@onoutilities/pine-apple": {
+      "versions": "2.0.0",
+      "reason": ""
+    }
+  }
+}

@@ -2,7 +2,6 @@ class Page {
     constructor() {
       
     }
-    
 }
 class Handler {
     constructor() {}

@@ -2,27 +2,21 @@ class Page {
     constructor() {
        
     }
-    
+    loadPage() {
+        
+    }
 }
 class Handler {
     constructor() {
         
     }
-    onLoad() {
-        
-    }
-    onSelect() {
- 
-    }
-    onDeselect() {
- 
-    }
-    onResize() {
- 
-    }
-    onClose() {
-        
-    }
+    onCreate(shadow) {}
+    onLoad() {}
+    onSelect() {}
+    onDeselect() {}
+    onResize() {}
+    onClose() {}
+    onAttributeChange(name, oldValue, newValue) {}
 }
 
 PineApple.Chunks.add({
