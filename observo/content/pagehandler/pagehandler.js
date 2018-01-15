@@ -5,14 +5,16 @@ class PageHandler {
         this.pages = {}
         this.instances = {}
     }
-    addPage(name, self) {
+    addPage(type, name, self) {
         this.pages[name] = self
+        let sidebar = PineApple.Chunks.getInstance("OBSERVO.CONTENT.SIDEBAR")
+        sidebar.addPage(type, name)
     }
-    loadPage(name, uuid = null) {
+    loadPage(type, name, uuid = null) {
         let view = PineApple.Chunks.getInstance("OBSERVO.VIEW")
         let element = PineApple.Chunks.getInstance("OBSERVO.CONTENT.ELEMENT")
-        
-        if (this._isPage(name) && uuid == null) {
+        console.print(this._isPage(name))
+        if (!this._isPage(name) && uuid == null) {
             uuid = uuidv4()
             if (this.instances[name] == null) {
                 this.instances[name] = {}
@@ -43,10 +45,12 @@ class PageHandler {
         return false
     }
     _isInstance(name, uuid) {
-        console.log(name)
-        console.log(uuid)
-        if (this.instances[name][uuid] != null) {
-            return true
+        if (this.instances[name] != null) {
+            if (this.instances[name][uuid] != undefined) {
+                return true
+            } else{ 
+                return false
+            }
         }
         return false
     }

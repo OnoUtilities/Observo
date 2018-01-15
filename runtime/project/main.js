@@ -30,7 +30,6 @@ export class Preset extends Observo.File {
             }   
         }
         parse(data) {
-            console.print(data)
             let folder = this.replaceAll(data, "manifest.json", "")
             let json = this.read(data)
             json = JSON.parse(json)
@@ -118,6 +117,14 @@ export class Main extends Session {
                 forklift.App.getPaletteInstance("CHAT").getBoxObject("CHAT").placeMessage("http://via.placeholder.com/64x64", user, uuid, id, "bottom", message)
             }
         })
+        /**
+         * Sidebar System
+         * 
+         */
+        socket.on("update_sidebar", function(data) {
+
+        })
+
     }
     onDisconnect(socket) {
       socket.disconnect()
@@ -125,6 +132,10 @@ export class Main extends Session {
     onError(socket) {
       socket.disconnect()
     }
+
+
+
+
     /*------------------------------------*/
     sendChatMessage(message) {
         this.socket.emit("on_chat", {message: message})
@@ -142,7 +153,8 @@ export class Main extends Session {
             console.log(p)
             console.print(presets.list[p].folder)
             if (p == args.preset) {
-                load.load(presets.list[p].folder)
+                let path = presets.list[p].folder + "\\frontend"
+                load.load(path)
             }
         }
         console.print(args)

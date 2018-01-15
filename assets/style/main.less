@@ -242,9 +242,11 @@ x-drawer[position~="top"] {
     }
 }
 
-.rollList{  ///For .actionsButton dialog
+.rollList {
+    ///For .actionsButton dialog
     width: 1000px;
 }
+
 .preferences {
     padding: 0px;
     border-radius: 15px;
@@ -274,9 +276,55 @@ x-drawer[position~="top"] {
     x-button {
         margin: auto;
     }
-    .rollList{
+    .rollList {
         background-color: #0F0;
     }
+}
+
+.tree-view {
+    margin-top: 10px;
+    font-family: 'Roboto', serif !important;
+    font-size: 25px;
+    color: black;
+    ul {
+        //CLASSES
+        .single {
+            //padding-left: 24px;
+            list-style-type: none;
+            .visual {
+                opacity: 0;
+            }
+        }
+        .mutiple {
+            list-style-type: none;
+        }
+        .hidden {
+            display: none;
+            height: 0px;
+            transition: height 500ms ease
+        }
+        .show {
+            display: block;
+            height: auto;
+            transition: height 500ms ease;
+        }
+        x-box:hover,
+        x-box:focus {
+            color: @gray;
+            cursor: pointer !important;
+        }
+        x-label {
+            cursor: pointer !important;
+        }
+    }
+    li {
+        opacity: 1;
+        -webkit-transition: height 0.5s ease-in-out;
+    }
+}
+
+.tree-view-show {
+    display: block;
 }
 
 @import "theme/dark/dark.less";

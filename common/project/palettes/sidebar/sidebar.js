@@ -7,11 +7,10 @@ class Sidebar extends forklift.PaletteBox {
     onContentLoad() {
         let me = this
         this.contentBox = this.element.querySelector("o-box")
-
-
+        this.sidebar = new xel.TreeView("#sidebar-tree", "sidebar")
     }
     show() {
-        this.contentBox.style.width = "200px"
+        this.contentBox.style.width = "300px"
         this.contentBox.style.display = ""
     }
     hide() {
@@ -49,6 +48,8 @@ class View extends forklift.PaletteBox {
         this.sidebarItem.setIcon("check")
 
         this.element.addEventListener("click", run)
+
+
     }
     show(data) {
         if (data == false || data == "false") {
