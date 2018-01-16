@@ -63,6 +63,9 @@ class Tab {
             if (!feedback) {
                
             }*/
+        } else {
+            this.showView(uuid)
+            this.tabs.setSelectedTab(uuid)
         }
     }
     addView(uuid) {
@@ -94,6 +97,7 @@ class Tab {
     }
     removeView(uuid) {
         if (this._isView(uuid)) {
+            PineApple.Chunks.getInstance("OBSERVO.CONTENT.PAGEHANDLER").onClose(uuid)
             this.getView(uuid).remove()
             delete this.views[uuid]
             //delete baseID if no View exist
