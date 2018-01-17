@@ -69,7 +69,6 @@ class Tab {
         }
     }
     addView(uuid) {
-        console.log( document.querySelector("#content"))
         document.querySelector("#content").insertAdjacentHTML("afterbegin", `<section data-id="${uuid}">
         <section   style="position: relative;  margin: auto; margin-top: 20%; right: 0; bottom: 0; left: 0; border-radius: 3px; text-align: center;">
         <x-label style="font-size: 72px;" class="rb-font">

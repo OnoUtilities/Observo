@@ -2,83 +2,76 @@ const uuidv4 = require('uuid/v4'); //Random
 
 class PageHandler {
     constructor() {
-        this.pages = {}
-        this.uuid = {}
+        this.pageTypes = {}
         this.instances = {}
-        this.icon = {}
-        this.dynamic = {}
+        this.initialized = {}
+        this.opened = {}
     }
-    addPage(type, name, icon, self, settings) {
-        this.pages[name] = self
-        this.icon[name] = icon
-    
+    addPage(self, settings) {
         if (settings != undefined || settings != null) {
-            if (settings.dynamic != null) {
-                this.dynamic[name] = true
+            if (settings.type != null) {
+                let type = settings.type
+                if (this.pageTypes[type] == null) {
+                    this.pageTypes[type] = {}
+                    this.pageTypes[type].self = self
+                    if (settings.name != null) {
+                        this.pageTypes[type].name = settings.name
+                    }
+                    if (settings.dynamic != null) {
+                        this.pageTypes[type].dynamic = settings.dynamic
+                    }  
+                    if (settings.icon != null) {
+                        this.pageTypes[type].icon = settings.icon
+                    } 
+                } else {
+                    console.log("Page TYPE already declared " + settings.type)
+                }
             }
-        }  else {
-            this.dynamic[name] = false
-        }
-
-
-        this.uuid[name] = null
-        let sidebar = PineApple.Chunks.getInstance("OBSERVO.CONTENT.SIDEBAR")
-
-        sidebar.addPage(type, name, icon, this.dynamic[name])
+        } 
     }
-    loadPage(type, name) {
+    loadPage(type, name, uuid) {
         let view = PineApple.Chunks.getInstance("OBSERVO.VIEW")
         let element = PineApple.Chunks.getInstance("OBSERVO.CONTENT.ELEMENT")
 
-        if (this._isPage(name) && this.uuid[name] == null) {
-            let uuid = uuidv4()
-            this.uuid[name] = uuid
-            if (this.instances[name] == null) {
-                this.instances[name] = {}
+        if (this._isPage(type) && this.opened[uuid] == null) {
+            if (this.instances[type] == null) {
+                this.instances[type] = {}
             }
             let tag = `${name}-${uuid}`
             tag = tag.replace(/\s/g, '')
-
-
-            this.instances[name][uuid] = new this.pages[name](uuid)
+            if (this.initialized[uuid] == null) {
+                this.instances[type][uuid] = new this.pageTypes[type].self(uuid)
+                element.createElement(tag, this.instances[type][uuid])
+                this.initialized[uuid] = true
+            }
             let options = {
                 name: name,
-                icon: this.icon[name]
-            }
-            element.createElement(tag, this.instances[name][uuid])
-
-            view.openView(uuid, options, this.instances[name][uuid])
+                icon:  this.pageTypes[type].icon
+          }
+           
+            view.openView(uuid, options, this.instances[type][uuid])
             let page = view.getView(uuid)
             page.innerHTML = `<${tag}></${tag}>`
+            this.opened[uuid] = true
         } else {
-            if (this.uuid[name] != null) {
-                if (this._isInstance(name, this.uuid[name])) {
-                    console.log("sdjkgdsjksdjkfdsjkgdgfskjfsdjfdkfsgjsgfjkdsgfjkdgsfjkgdsjkg")
-                    view.openView(this.uuid[name])
+            if (this.instances[type][uuid] != null) {
+                if (this._isInstance(name, uuid)) {
+                    view.openView(uuid)
                 }
             }
         }
     }
     onClose(uuid) {
-        //Look all names (key) in the uuid var
-        for (let name in this.uuid) {
-            //if uuid value matches the uuid value of given name in the uuid var proceed
-            if (uuid == this.uuid[name]) { 
-                //Check if its a real instance running
-                if(this._isInstance(name, uuid)) {
-                    //Delete the instance and the uuid out of this class
-                    delete this.instances[name][uuid]
-                    delete this.uuid[name]
-                }
-            }
-        }
+        delete this.opened[uuid]
     }
+
+
     /**
      * Private check for seeing if a page type is real
-     * @param {String} name Name of the page 
+     * @param {String} type Type of the page 
      */
-    _isPage(name) {
-        if (this.pages[name] != null) {
+    _isPage(type) {
+        if (this.pageTypes[type] != null) {
             return true
         }
         return false

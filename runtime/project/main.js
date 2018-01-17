@@ -1,7 +1,7 @@
 import "Observo.File"
 import "Observo.Load"
 import "Observo.Socket"
-
+import "Observo.Content.Sidebar"
 
 export class Preset extends Observo.File {
         constructor() {
@@ -88,6 +88,14 @@ class Session extends Observo.Socket.Channel {
         this.socket = socket
     }
 }
+export class Sidebar extends Observo.Content.Sidebar {
+    constructor() {
+        super()
+    }
+    update(data) {
+        this.updateSidebar(data)
+    }
+}
 
 export class Main extends Session {
     constructor() {
@@ -117,13 +125,12 @@ export class Main extends Session {
                 forklift.App.getPaletteInstance("CHAT").getBoxObject("CHAT").placeMessage("http://via.placeholder.com/64x64", user, uuid, id, "bottom", message)
             }
         })
-        /**
-         * Sidebar System
-         * 
-         */
-        socket.on("update_sidebar", function(data) {
-
+        socket.on("update_pages", function(data) {
+            let sidebar = use("RUNTIME.PROJECT")["SIDEBAR"]
+            sidebar.update(data)
         })
+
+        socket.emit("request_pages")
 
     }
     onDisconnect(socket) {
