@@ -40,7 +40,7 @@ class PageHandler {
             let tag = `${name}-${uuid}`
             tag = tag.replace(/\s/g, '')
             if (this.initialized[uuid] == null) {
-                this.instances[type][uuid] = new this.pageTypes[type].self(uuid)
+                this.instances[type][uuid] = new this.pageTypes[type].self()
                 element.createElement(tag, this.instances[type][uuid])
                 this.initialized[uuid] = true
             }
@@ -54,10 +54,8 @@ class PageHandler {
             page.innerHTML = `<${tag}></${tag}>`
             this.opened[uuid] = true
         } else {
-            if (this.instances[type][uuid] != null) {
-                if (this._isInstance(name, uuid)) {
+            if (this.instances[type] != null) {
                     view.openView(uuid)
-                }
             }
         }
     }

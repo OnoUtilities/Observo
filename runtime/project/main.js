@@ -92,8 +92,13 @@ export class Sidebar extends Observo.Content.Sidebar {
     constructor() {
         super()
     }
-    update(data) {
+    onUpdate(data) {
         this.updateSidebar(data)
+    }
+    onNewPage(type, name) {
+        console.log(type)
+        let main = use("RUNTIME.PROJECT")["MAIN"]
+        main.socket.emit("new_page", {type: type, name: name})
     }
 }
 
@@ -127,7 +132,8 @@ export class Main extends Session {
         })
         socket.on("update_pages", function(data) {
             let sidebar = use("RUNTIME.PROJECT")["SIDEBAR"]
-            sidebar.update(data)
+            console.print(data)
+            sidebar.onUpdate(data)
         })
 
         socket.emit("request_pages")
