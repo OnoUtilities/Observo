@@ -37,7 +37,7 @@ function window() { //WindowManager
   mainWin.win.setResizable(false)
   mainWin.win.setMinimumSize(800, 600);
   mainWin.win.setMaximumSize(800, 600);
-  //mainWin.openDevTools();
+  mainWin.openDevTools();
   mainWin.win.once('ready-to-show', () => {
     mainWin.win.show()
   })
